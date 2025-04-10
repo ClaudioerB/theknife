@@ -39,6 +39,7 @@
         </dependency>
 
     </dependencies>
+<<<<<<< HEAD
     <repositories>
         <repository>
             <id>central</id>
@@ -50,4 +51,15 @@
             </snapshots>
         </repository>
     </repositories>
+=======
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+    </build>
+
+>>>>>>> bc66daedd75e4c5f66f9bd217a3c3cb1cfd6c764
 </project>
