@@ -1,12 +1,10 @@
 package com.theknife;
 
-<<<<<<< HEAD
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-=======
 import java.util.Scanner;
->>>>>>> bc66daedd75e4c5f66f9bd217a3c3cb1cfd6c764
 
 public class Main {
     static Scanner input = new Scanner(System.in);
@@ -20,7 +18,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-<<<<<<< HEAD
         // Carica il file usando un path relativo
         String filePath = System.getProperty("user.dir")+"\\src\\main\\resources\\dataset_sanificato_2.csv"; // o "data/file.txt" se il file si trova in una sottodirectory
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -32,7 +29,5 @@ public class Main {
             System.out.println("File non trovato.");
             //System.out.println();
         }
-=======
->>>>>>> bc66daedd75e4c5f66f9bd217a3c3cb1cfd6c764
     }
 }
