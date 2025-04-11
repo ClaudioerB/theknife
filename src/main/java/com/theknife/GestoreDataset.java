@@ -8,8 +8,8 @@ public class GestoreDataset {
     }
 
     private int numeroRighe() {
-        
-        return dati.length;
+
+        return 1;
     }
     public String[] ricercaGenerale(String input, String dati[][]) {
         String[] risultati = new String[20];
