@@ -3,3 +3,10 @@ target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.l
 target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
 target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
 target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+target/maven-archiver/pom.properties
+target/classes/com/theknife/mangiadati.class
+target/classes/com/theknife/Main.class
+target/classes/com/theknife/index.html
+target/classes/com/theknife/Grafica.class
+target/theknife-1.0-SNAPSHOT.jar
+.gitignore
