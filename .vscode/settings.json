@@ -5,5 +5,5 @@
         "titleBar.activeBackground": "#2027B8",
         "titleBar.activeForeground": "#F9F9FE"
     },
-    "java.debug.settings.onBuildFailureProceed": true
+    "java.debug.settings.onBuildFailureProceed": true,
 }
