@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
+    static String HOME = System.getProperty("user.dir");
     static Scanner input = new Scanner(System.in);
     
     public static void SOP(String s) {
@@ -18,16 +19,22 @@ public class Main {
     }
 
     public static void main(String[] args) {
-         //Carica il file usando un path relativo
-        //String filePath = System.getProperty("user.dir")+"/src/main/resources/Dataset/datafiles/dataset_sanificato_2.csv"; // o "data/file.txt" se il file si trova in una sottodirectory
-        String filePath = System.getProperty("user.dir")+"/src/main/resources/Dataset/datafiles/dataset_sanificato_2.csv"; // o "data/file.txt" se il file si trova in una sottodirectory
+        String[][] mat = new String[17738][13];
+        String filePath = HOME+"/src/main/resources/Dataset/datafiles/dataset_ristoranti.csv"; // o "data/file.txt" se il file si trova in una sottodirectory
+        String[] appoggio;
+        int iRow = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                appoggio = line.split(";");
+                for(int i = 0; i<13;i++){
+                    mat[iRow][i] = appoggio[i];
+                }
+                iRow++;
             }
+            SOP(mat[2][0]);
         } catch (IOException e) {
-            System.out.println("File non trovato.");
+            SOP("File non trovato.");
         }
         //System.out.println(System.getProperty("user.dir")+"/src/main/resources/Dataset/datafiles/dataset_sanificato_2.csv");
     }
