@@ -10,3 +10,4 @@ target/classes/com/theknife/index.html
 target/classes/com/theknife/Grafica.class
 target/theknife-1.0-SNAPSHOT.jar
 .gitignore
+target/classes/com/theknife/GestoreDataset.class
