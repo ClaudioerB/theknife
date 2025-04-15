@@ -35,6 +35,7 @@ public class GestoreDataset {
 
     public void setDataSetPosition(int iRow, int iCol, String value) {
         this.dataSet.get(iRow)[iCol] = value;
+        scriviFile();
     }
 
     public String getDataSetPosition(int iRow, int iCol) {
@@ -55,17 +56,19 @@ public class GestoreDataset {
 
     public void setRiga(int iRow, String[] riga) {
         this.dataSet.set(iRow, riga);
+        scriviFile();
     }
 
     public void eliminaRiga(int iRow) {
         this.dataSet.remove(iRow);
-
+        scriviFile();
     }
 
     public void aggiungiRiga(String[] riga) {
         this.dataSet.add(riga);
+        scriviFile();
     }
-    /*private void scriviFile() {
+    private void scriviFile() {
         try {
             FileWriter fileWriter = new FileWriter(filePath);
             for (String[] riga : dataSet) {
@@ -83,7 +86,7 @@ public class GestoreDataset {
             e.printStackTrace();
         }
 
-    }*/
+    }
     private void inserimentoDati() {
         String[] appoggio;
         int iRow = 0;
