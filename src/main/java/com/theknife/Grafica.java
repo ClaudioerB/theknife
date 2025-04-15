@@ -2,12 +2,14 @@ package com.theknife;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 public class Grafica extends Application {
+    static String HOME = System.getProperty("user.dir");
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -15,7 +17,14 @@ public class Grafica extends Application {
 
         WebView browser = new WebView();
         WebEngine engine = browser.getEngine();
-        String url = Grafica.class.getResource("index.html").toExternalForm();
+
+        Image logoPath = new Image(Grafica.class.getResource("/grafica/logo.png").toExternalForm());
+        primaryStage.getIcons().add(logoPath);
+
+        String url = Grafica.class.getResource("/grafica/index.html").toExternalForm();
+        if (url == null) {
+            throw new RuntimeException("Resource not found: grafica/index.html");
+        }
         engine.load(url);
 
         StackPane sp = new StackPane();
