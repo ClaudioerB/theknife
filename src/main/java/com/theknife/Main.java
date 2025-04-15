@@ -4,6 +4,7 @@ package com.theknife;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -20,7 +21,7 @@ public class Main {
 
     public static void main(String[] args) {
         GestoreDataset gestore = new GestoreDataset();
-        String[][] dataSet = gestore.getDataSet();
+        ArrayList dataSet = gestore.getDataSet();
         
         //System.out.println(System.getProperty("user.dir")+"/src/main/resources/Dataset/datafiles/dataset_sanificato_2.csv");
     }
