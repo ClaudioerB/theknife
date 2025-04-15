@@ -2,19 +2,28 @@ package com.theknife;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 public class Grafica extends Application {
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-        WebView webView = new WebView();
-        WebEngine webEngine = webView.getEngine();
-        webEngine.load( getClass().getResource("/helloWorld.html").toString() );
-        Scene scene = new Scene(webView,600,600);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("The Knife");
+
+        WebView browser = new WebView();
+        WebEngine engine = browser.getEngine();
+        String url = Grafica.class.getResource("index.html").toExternalForm();
+        engine.load(url);
+
+        StackPane sp = new StackPane();
+        sp.getChildren().add(browser);
+
+        Scene root = new Scene(sp);
+
+        primaryStage.setScene(root);
         primaryStage.show();
     }
 
