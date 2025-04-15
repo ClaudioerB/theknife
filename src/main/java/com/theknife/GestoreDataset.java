@@ -12,8 +12,6 @@ public class GestoreDataset {
         filePath = System.getProperty("user.dir")+"/src/main/resources/Dataset/datafiles/dataset_ristoranti.csv"; // o "data/file.txt" se il file si trova in una sottodirectory
         dataSet=new String[numeroRighe()][13];
         inserimentoDati();
-        System.out.println(dataSet[0][0]);
-        System.out.println(dataSet[0][1]);
 
     }
 
