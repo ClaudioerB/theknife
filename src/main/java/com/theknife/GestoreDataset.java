@@ -1,26 +1,44 @@
 package com.theknife;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GestoreDataset {
-    private String[][] dataSet;
+    
+    private ArrayList<String[]> dataSet;
     private String filePath;
     
     public GestoreDataset() {
         filePath = System.getProperty("user.dir")+"/src/main/resources/Dataset/datafiles/dataset_ristoranti.csv"; // o "data/file.txt" se il file si trova in una sottodirectory
-        dataSet=new String[numeroRighe()][13];
+        dataSet= new ArrayList<String[]>();
         inserimentoDati();
 
     }
 
-    public String[][] getDataSet() {
+    
+
+    public ArrayList<String[]> getDataSet() {
         return dataSet;
     }
 
-    public void setDataSet(String[][] dataSet) {
+
+
+    public void setDataSet(ArrayList<String[]> dataSet) {
         this.dataSet = dataSet;
+    }
+
+
+
+    public void setDataSetPosition(int iRow, int iCol, String value) {
+        this.dataSet.get(iRow)[iCol] = value;
+    }
+
+    public String getDataSetPosition(int iRow, int iCol) {
+        return this.dataSet.get(iRow)[iCol];
     }
 
     public String getFilePath() {
@@ -31,15 +49,52 @@ public class GestoreDataset {
         this.filePath = filePath;
     }
 
+    public String[] getRiga(int iRow) {
+        return dataSet.get(iRow);
+    }
+
+    public void setRiga(int iRow, String[] riga) {
+        this.dataSet.set(iRow, riga);
+    }
+
+    public void eliminaRiga(int iRow) {
+        this.dataSet.remove(iRow);
+
+    }
+
+    public void aggiungiRiga(String[] riga) {
+        this.dataSet.add(riga);
+    }
+    /*private void scriviFile() {
+        try {
+            FileWriter fileWriter = new FileWriter(filePath);
+            for (String[] riga : dataSet) {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < riga.length; i++) {
+                    sb.append(riga[i]);
+                    if (i < riga.length - 1) {
+                        sb.append(";"); // separatore tra i campi
+                    }
+                }
+                fileWriter.write(sb.toString() + "\n");
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }*/
     private void inserimentoDati() {
         String[] appoggio;
         int iRow = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
+            
             while ((line = reader.readLine()) != null) {
+                dataSet.add(new String[13]);
                 appoggio = line.split(";");
                 for(int i = 0; i<13;i++){
-                    dataSet[iRow][i] = appoggio[i];
+                    dataSet.get(iRow)[i] = appoggio[i];
                 }
                 iRow++;
             }
