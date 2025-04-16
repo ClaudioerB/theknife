@@ -94,6 +94,7 @@ public class GestoreDataset {
 
 for (String[] riga : dataSet) {
 writer.writeNext(riga);
+writer.close();
 }
 
 System.out.println("CSV scritto con successo!");
@@ -111,9 +112,9 @@ e.printStackTrace();
             String line;
             
             while ((line = reader.readLine()) != null) {
-                dataSet.add(new String[13]);
+                dataSet.add(new String[14]);
                 appoggio = line.split(";");
-                for(int i = 0; i<13;i++){
+                for(int i = 0; i<14;i++){
                     dataSet.get(iRow)[i] = appoggio[i];
                 }
                 iRow++;
