@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import com.opencsv.*;
 
 public class GestoreDataset {
     
@@ -69,22 +70,38 @@ public class GestoreDataset {
         scriviFile();
     }
     private void scriviFile() {
-        try {
-            FileWriter fileWriter = new FileWriter(filePath);
-            for (String[] riga : dataSet) {
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < riga.length; i++) {
-                    sb.append(riga[i]);
-                    if (i < riga.length - 1) {
-                        sb.append(";"); // separatore tra i campi
-                    }
-                }
-                fileWriter.write(sb.toString() + "\n");
-            }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        
+           /* String csv = filePath;
+            try {
+                
+              CSVWriter writer=new CSVWriter(new FileWriter(csv), ';', '§', '§'," /n" );
+              
+              for (String[] riga : dataSet) {
+                riga[riga.length-1]=riga[riga.length-1]+"/n";
+                  writer.writeNext(riga);
+              }
+              
+        
+              writer.close();
+            } catch (IOException e) {
+              e.printStackTrace();
+            }*/
+            try (CSVWriter writer = new CSVWriter(new FileWriter(filePath),
+            ';',       // separatore personalizzato
+            CSVWriter.NO_QUOTE_CHARACTER,
+            CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+            CSVWriter.DEFAULT_LINE_END)) {
+
+for (String[] riga : dataSet) {
+writer.writeNext(riga);
+}
+
+System.out.println("CSV scritto con successo!");
+
+} catch (IOException e) {
+e.printStackTrace();
+}
+          
 
     }
     private void inserimentoDati() {
@@ -106,7 +123,7 @@ public class GestoreDataset {
         }
     }
     
-    private int numeroRighe() {
+    public int numeroRighe() {
         
         
         int righe = 0;
@@ -122,6 +139,7 @@ public class GestoreDataset {
         }
         return righe;
     }
+
     public String[] ricercaGenerale(String input, String dati[][]) {
         String[] risultati = new String[20];
         for (int i = 0; i < dati.length; i++) {
@@ -132,5 +150,20 @@ public class GestoreDataset {
             }
         }
         return risultati;
+    }
+    public void printDataSet() {
+        for (String[] riga : dataSet) {
+            for (String campo : riga) {
+                System.out.print(campo + " ");
+            }
+            System.out.println();
+        }
+    }
+    public void printDataSet(int iRow) {
+        String[] riga = dataSet.get(iRow);
+        for (String campo : riga) {
+            System.out.print(campo + " ");
+        }
+        System.out.println();
     }
 }

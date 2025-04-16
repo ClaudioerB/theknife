@@ -17,6 +17,27 @@
 
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.10</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>io.sourceforge.github.components</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>io.sourceforge.github.components</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx</artifactId>
