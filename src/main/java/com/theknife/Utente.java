@@ -1,7 +1,7 @@
 package com.theknife;
 
 public class Utente {
-    private String nome, cognome, username, nick, passwordHash, città, indirizzo, numeroCivico;
+    private String nome, cognome, username, nick, passwordHash, città, indirizzo, numeroCivico, Latitudine,Longitudine;
 
     public Utente(String città, String cognome, String indirizzo, String nick, String nome, String numeroCivico, String passwordHash, String username) {
         this.città = città;
