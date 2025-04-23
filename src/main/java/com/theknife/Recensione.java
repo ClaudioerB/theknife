@@ -1,16 +1,19 @@
 package com.theknife;
 
 public class Recensione {
-    String username, idRistorante, recensione, voto, data, ora;
+    String username, idRistorante, recensione, voto, data, ora,id;
 
-    public Recensione(String username, String idRistorante, String recensione, String voto, String data,
-            String ora) {
+    
+
+    public Recensione(String username, String idRistorante, String recensione, String voto, String data, String ora,
+            String id) {
         this.username = username;
         this.idRistorante = idRistorante;
         this.recensione = recensione;
         this.voto = voto;
         this.data = data;
         this.ora = ora;
+        this.id = id;
     }
 
     public String getUsername() {
