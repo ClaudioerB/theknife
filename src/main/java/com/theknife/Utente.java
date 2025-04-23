@@ -23,6 +23,7 @@ public class Utente {
     public Utente() {
     }
 
+    
 
     public String getLatitudine() {
         return Latitudine;

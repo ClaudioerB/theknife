@@ -12,7 +12,7 @@ public class GestoreUtenti {
     ArrayList<Utente> utenti;
     private String filePath;
 
-    public GestoreUtenti(ArrayList<Utente> utenti) {
+    public GestoreUtenti() {
         filePath = System.getProperty("user.dir")+"/src/main/resources/Users/users.csv"; 
         this.utenti = new ArrayList<Utente>();
         inserimentoDati();
@@ -32,6 +32,20 @@ public class GestoreUtenti {
 
     public void setUtenteSingolo(Utente utente, int i) {
         this.utenti.set(i, utente);
+
+    }
+    public void aggiungiUtente(Utente utente) {
+        utenti.add(utente);
+        scriviFile();
+    }
+    public void rimuoviUtente(int i) {
+        utenti.remove(i);
+        scriviFile();
+    }
+    public void printUtenti() {
+        for (Utente utente : utenti) {
+            System.out.println(utente.getNome()+" "+utente.getCognome()+" "+utente.getUsername()+" "+utente.getNick()+" "+utente.getPasswordHash()+" "+utente.getCittà()+" "+utente.getIndirizzo()+" "+utente.getNumeroCivico()+" "+utente.getLatitudine()+" "+utente.getLongitudine());
+        }
     }
     private void scriviFile() {
         
@@ -90,5 +104,20 @@ public class GestoreUtenti {
             System.out.println("File non trovato.");
         }
     }
-    
+    public int numeroRighe() {
+        
+        
+        int righe = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            
+            
+            while ((reader.readLine()) != null) {
+                righe++;
+            }
+            
+        } catch (IOException e) {
+            System.out.println("File non trovato.");
+        }
+        return righe;
+    }
 }
