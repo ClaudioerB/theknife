@@ -71,38 +71,24 @@ public class GestoreDataset {
     }
     private void scriviFile() {
         
-           /* String csv = filePath;
-            try {
+           
+        try (CSVWriter writer = new CSVWriter(new FileWriter(filePath),
+        ';',       // separatore personalizzato
+        CSVWriter.NO_QUOTE_CHARACTER,
+        CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+        CSVWriter.DEFAULT_LINE_END)) {
+
+        for (String[] riga : dataSet) {
+            writer.writeNext(riga);
+            writer.close();
+        }
+
+        System.out.println("CSV scritto con successo!");
+
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
                 
-              CSVWriter writer=new CSVWriter(new FileWriter(csv), ';', '§', '§'," /n" );
-              
-              for (String[] riga : dataSet) {
-                riga[riga.length-1]=riga[riga.length-1]+"/n";
-                  writer.writeNext(riga);
-              }
-              
-        
-              writer.close();
-            } catch (IOException e) {
-              e.printStackTrace();
-            }*/
-            try (CSVWriter writer = new CSVWriter(new FileWriter(filePath),
-            ';',       // separatore personalizzato
-            CSVWriter.NO_QUOTE_CHARACTER,
-            CSVWriter.DEFAULT_ESCAPE_CHARACTER,
-            CSVWriter.DEFAULT_LINE_END)) {
-
-for (String[] riga : dataSet) {
-writer.writeNext(riga);
-writer.close();
-}
-
-System.out.println("CSV scritto con successo!");
-
-} catch (IOException e) {
-e.printStackTrace();
-}
-          
 
     }
     private void inserimentoDati() {

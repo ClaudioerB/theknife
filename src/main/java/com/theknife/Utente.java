@@ -3,16 +3,46 @@ package com.theknife;
 public class Utente {
     private String nome, cognome, username, nick, passwordHash, città, indirizzo, numeroCivico, Latitudine,Longitudine;
 
-    public Utente(String città, String cognome, String indirizzo, String nick, String nome, String numeroCivico, String passwordHash, String username) {
-        this.città = città;
-        this.cognome = cognome;
-        this.indirizzo = indirizzo;
-        this.nick = nick;
+    
+
+    public Utente(String nome, String cognome, String username, String nick, String passwordHash, String città,
+            String indirizzo, String numeroCivico, String latitudine, String longitudine) {
         this.nome = nome;
-        this.numeroCivico = numeroCivico;
-        this.passwordHash = passwordHash;
+        this.cognome = cognome;
         this.username = username;
+        this.nick = nick;
+        this.passwordHash = passwordHash;
+        this.città = città;
+        this.indirizzo = indirizzo;
+        this.numeroCivico = numeroCivico;
+        Latitudine = latitudine;
+        Longitudine = longitudine;
     }
+    
+    
+    public Utente() {
+    }
+
+
+    public String getLatitudine() {
+        return Latitudine;
+    }
+
+
+    public void setLatitudine(String latitudine) {
+        Latitudine = latitudine;
+    }
+
+
+    public String getLongitudine() {
+        return Longitudine;
+    }
+
+
+    public void setLongitudine(String longitudine) {
+        Longitudine = longitudine;
+    }
+
 
     public String getNome() {
         return nome;
