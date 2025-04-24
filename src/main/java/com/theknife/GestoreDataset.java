@@ -80,8 +80,8 @@ public class GestoreDataset {
 
         for (String[] riga : dataSet) {
             writer.writeNext(riga);
-            writer.close();
         }
+        writer.flush();
 
         System.out.println("CSV scritto con successo!");
 

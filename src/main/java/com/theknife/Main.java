@@ -18,6 +18,7 @@ public class Main {
 
     public static void main(String[] args) {
         Gestore gestore =new Gestore();
+
         
         //test(gestore);
         //System.out.println(System.getProperty("user.dir")+"/src/main/resources/Dataset/datafiles/dataset_sanificato_2.csv");

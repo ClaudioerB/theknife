@@ -68,9 +68,9 @@ public class GestoreUtenti {
             riga[8] = utenti.get(i).getLatitudine();
             riga[9] = utenti.get(i).getLongitudine();
             writer.writeNext(riga);
-            writer.close();
         
         }
+        writer.flush();
 
         System.out.println("CSV scritto con successo!");
 

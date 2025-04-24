@@ -1,12 +1,15 @@
 package com.theknife;
 
 public class Recensione {
-    String username, idRistorante, recensione, voto, data, ora,id;
+    //String username, idRistorante, recensione, voto, data, ora, id;
+    String utenteRecensione, testoRecensione, data, ora;
+    int id, stelle;
 
-    
 
-    public Recensione(String username, String idRistorante, String recensione, String voto, String data, String ora,
-            String id) {
+    /*
+        public Recensione(String username, String idRistorante, String recensione,
+        String voto, String data, String ora,
+        String id) {
         this.username = username;
         this.idRistorante = idRistorante;
         this.recensione = recensione;
@@ -14,38 +17,52 @@ public class Recensione {
         this.data = data;
         this.ora = ora;
         this.id = id;
+        }
+     */
+
+    //io non farei mettere la data e l'ora all'utente quindi le vorrei togliere
+    public Recensione(int id, String utenteRecensione, String testoRecensione, int stelle, String data, String ora) {
+        this.utenteRecensione = utenteRecensione;
+        this.id = id;
+        this.testoRecensione = testoRecensione;
+        this.stelle = stelle;
+        this.data = data;
+        this.ora = ora;
     }
 
-    public String getUsername() {
-        return username;
+    public Recensione() {
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getUtenteRecensione() {
+        return utenteRecensione;
     }
 
-    public String getIdRistorante() {
-        return idRistorante;
+    public void setUtenteRecensione(String utenteRecensione) {
+        this.utenteRecensione = utenteRecensione;
     }
 
-    public void setIdRistorante(String idRistorante) {
-        this.idRistorante = idRistorante;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getRecensione() {
-        return recensione;
+        return testoRecensione;
     }
 
-    public void setRecensione(String recensione) {
-        this.recensione = recensione;
+    public void setRecensione(String testoRecensione) {
+        this.testoRecensione = testoRecensione;
     }
 
-    public String getVoto() {
-        return voto;
+    public int getStelle() {
+        return stelle;
     }
 
-    public void setVoto(String voto) {
-        this.voto = voto;
+    public void setStelle(int stelle) {
+        this.stelle = stelle;
     }
 
     public String getData() {
@@ -63,5 +80,22 @@ public class Recensione {
     public void setOra(String ora) {
         this.ora = ora;
     }
-    
+
+    /*public String addData() {
+        LocalDateTime myDateObj = LocalDateTime.now();   
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-mm-yyyy"); //giorno-mese-anno -> non so se lasciarlo così per i diversi paesi
+
+        String formattedDate = myDateObj.format(myFormatObj);
+
+        return formattedDate;
+    }
+    public String addTime() {
+        LocalDateTime myDateObj = LocalDateTime.now();   
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("HH:mm");  //ore e minuti
+
+        String formattedTime = myDateObj.format(myFormatObj);
+
+        return formattedTime;
+    }*/
+
 }
