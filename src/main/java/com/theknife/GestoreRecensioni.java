@@ -39,16 +39,28 @@ public class GestoreRecensioni {
     }
 
     public void rimuoviRecensione(int i) {
-        recensioni.remove(i);
-        scriviFile();
+        if (recensioni.isEmpty()) {
+            System.out.println("Non è presente nessun commento.");
+        }
+        else {
+            recensioni.remove(i);
+            scriviFile();
+        }
     }
 
-    public void modificaRecensione(int i) {
-        System.out.println("Inserire il testo da modificare");
-        //String txt = input.nextLine();
-        String txt = "Testo moficiato";
-        recensioni.get(i).setRecensione(txt);
-        scriviFile();
+    public void modificaRecensione(int i, String date, String time) {
+        if (recensioni.isEmpty()) {
+            System.out.println("Non è presente nessun commento.");
+        }
+        else {
+            System.out.println("Inserire il testo da modificare");
+            //String txt = input.nextLine();
+            String txt = "Testo moficiato";
+            recensioni.get(i).setRecensione(txt);
+            recensioni.get(i).setData(date);
+            recensioni.get(i).setOra(time);
+            scriviFile();
+        }
     }
 
     public void printRecensioni() {
@@ -85,7 +97,7 @@ public class GestoreRecensioni {
         System.out.println("CSV scritto con successo!");
 
         } catch (IOException e) {
-        e.printStackTrace();
+            e.printStackTrace();
         }
     }  
 
@@ -94,7 +106,7 @@ public class GestoreRecensioni {
         int iRow = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
-
+            
             while ((line = reader.readLine()) != null) {
                 recensioni.add(new Recensione());
                 appoggio = line.split(";");
@@ -104,7 +116,7 @@ public class GestoreRecensioni {
                 recensioni.get(iRow).setRecensione(appoggio[3]);
                 recensioni.get(iRow).setData(appoggio[4]);
                 recensioni.get(iRow).setOra(appoggio[5]);
-
+                
                 iRow++;
             }
         } catch (IOException e) {
