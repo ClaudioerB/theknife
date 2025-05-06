@@ -48,7 +48,7 @@ public class GestoreRecensioni {
         }
     }
 
-    public void modificaRecensione(int i) {
+    public void modificaRecensione(int i, String date, String time) {
         if (recensioni.isEmpty()) {
             System.out.println("Non è presente nessun commento.");
         }
@@ -57,6 +57,8 @@ public class GestoreRecensioni {
             //String txt = input.nextLine();
             String txt = "Testo moficiato";
             recensioni.get(i).setRecensione(txt);
+            recensioni.get(i).setData(date);
+            recensioni.get(i).setOra(time);
             scriviFile();
         }
     }

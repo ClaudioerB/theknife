@@ -21,6 +21,10 @@ public class Grafica extends Application {
         Image logoPath = new Image(Grafica.class.getResource("/grafica/logo.png").toExternalForm());
         primaryStage.getIcons().add(logoPath);
 
+        primaryStage.setFullScreen(true);
+        primaryStage.setMinHeight(400);
+        primaryStage.setMinWidth(600);
+
         String url = Grafica.class.getResource("/grafica/index.html").toExternalForm();
         if (url == null) {
             throw new RuntimeException("Resource not found: grafica/index.html");

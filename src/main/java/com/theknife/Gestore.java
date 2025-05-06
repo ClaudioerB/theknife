@@ -47,7 +47,7 @@ public class Gestore {
                     System.out.println("inserire la riga da modificare");
                     int id = input.nextInt();
 
-                    gestoreRecensioni.modificaRecensione(id);
+                    gestoreRecensioni.modificaRecensione(id, addData(), addTime());
                     break;
                 default:
                     gestoreRecensioni.printRecensioni();
