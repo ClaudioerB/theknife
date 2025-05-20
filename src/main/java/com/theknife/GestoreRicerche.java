@@ -3,8 +3,9 @@ package com.theknife;
 import java.util.ArrayList;
 
 public class GestoreRicerche {
-    public GestoreRicerche(){
-
+    GestoreDataset gestoreDataset;
+    public GestoreRicerche(GestoreDataset gestoreDataset) {
+        this.gestoreDataset = gestoreDataset;
     }
 
     public ArrayList<String[]> trovaRistorantiVicini(double latitudine, double longitudine, double raggioKm, GestoreDataset dataset) {
@@ -32,5 +33,26 @@ public class GestoreRicerche {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c;
     }
+    /*
+    public ArrayList<String[]> trovaRistorantiDelivery() {
+        ArrayList<String[]> ristorantiTrovati = new ArrayList<>();
 
+        for (String[] ristorante : gestoreDataset.getDataSet()) {
+            if (ristorante[0].toLowerCase().contains(nome.toLowerCase())) {
+                ristorantiTrovati.add(ristorante);
+            }
+        }
+
+        return ristorantiTrovati;
+    }*/
+    public ArrayList<String[]> trovaRistorantiCosto(String costo) {
+        ArrayList<String[]> ristorantiTrovati = new ArrayList<>();
+
+        for (String[] ristorante : gestoreDataset.getDataSet()) {
+            if (ristorante[4].length()==costo.length()) {
+                ristorantiTrovati.add(ristorante);
+            }
+        }
+        return ristorantiTrovati;
+    }
 }
