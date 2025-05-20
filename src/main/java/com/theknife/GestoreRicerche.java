@@ -45,6 +45,7 @@ public class GestoreRicerche {
 
         return ristorantiTrovati;
     }*/
+    // Trova ristoranti per costo
     public ArrayList<String[]> trovaRistorantiCosto(String costo) {
         ArrayList<String[]> ristorantiTrovati = new ArrayList<>();
 

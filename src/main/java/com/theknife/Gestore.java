@@ -11,12 +11,13 @@ public class Gestore {
     }
 
     private void start() {
-        // estoreDataset gestore = new GestoreDataset();
+        GestoreDataset gestore = new GestoreDataset();
         // ArrayList dataSet = gestore.getDataSet();
         //GestoreUtenti gestoreUtenti = new GestoreUtenti();
         //testUtenti();
-        GestoreRecensioni gestore = new GestoreRecensioni();
-        testRecensioni();
+        //GestoreRecensioni gestore = new GestoreRecensioni();
+        //testRecensioni();
+        testDataset(gestore);
     }
 
     private void testRecensioni() {
@@ -101,37 +102,38 @@ public class Gestore {
         return formattedTime;
     }
 
-    /*
-     * public static void testDataset(GestoreDataset gestore) {
-     * int n;
-     * do {
-     * 
-     * 
-     * System.out.println("premere 1 per aggiungere una riga");
-     * System.out.println("premere 2 per eliminare una riga");
-     * System.out.println("premere qualsiasi numero printare il dataset");
-     * n=Integer.parseInt(InputStr());
-     * String[] rigaSplit=new String[13];
-     * switch (n){
-     * case 1:
-     * for (int i = 0; i < 13; i++) {
-     * rigaSplit[i]="a";
-     * }
-     * 
-     * 
-     * gestore.aggiungiRiga(rigaSplit);
-     * System.out.println(gestore.numeroRighe()+"");
-     * break;
-     * case 2:
-     * System.out.println("inserire la riga da togliere");
-     * Scanner input = new Scanner(System.in);
-     * 
-     * gestore.eliminaRiga(input.nextInt());
-     * break;
-     * default:
-     * gestore.printDataSet();
-     * }
-     * } while (n!=0);
-     * }
-     */
+    
+     public static void testDataset(GestoreDataset gestore) {
+        Scanner input = new Scanner(System.in);
+     int n;
+     do {
+         
+         
+         System.out.println("premere 1 per aggiungere una riga");
+      System.out.println("premere 2 per eliminare una riga");
+      System.out.println("premere qualsiasi numero printare il dataset");
+      n=Integer.parseInt(input.nextLine());
+      String[] rigaSplit=new String[13];
+      switch (n){
+      case 1:
+      for (int i = 0; i < 13; i++) {
+      rigaSplit[i]="a";
+      }
+      
+      
+      gestore.aggiungiRiga(rigaSplit);
+      System.out.println(gestore.numeroRighe()+"");
+      break;
+      case 2:
+      System.out.println("inserire la riga da togliere");
+      
+      
+      gestore.eliminaRiga(input.nextInt());
+      break;
+      default:
+      gestore.printDataSet();
+      }
+      } while (n!=0);
+      }
+     
 }
