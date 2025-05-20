@@ -56,4 +56,38 @@ public class GestoreRicerche {
         }
         return ristorantiTrovati;
     }
+
+    public void trovaRistorantiCitta(String citta) {
+
+        ArrayList<String[]> ristoranti = new ArrayList<>();
+        citta = citta.toLowerCase();
+
+        for (String[] ristorante : gestoreDataset.getDataSet()) {
+            System.out.println(ristorante[0].toLowerCase());
+
+            if (ristorante[3].toLowerCase().equals(citta)) {
+                ristoranti.add(ristorante);
+                // System.out.println(ristorante[3]);
+            }
+        }
+
+        // return ristoranti; ArrayList<String[]>
+    }
+
+    public ArrayList<String[]> trovaRistorantiNome(String nome) {
+
+        ArrayList<String[]> ristoranti = new ArrayList<>();
+        nome = nome.toLowerCase();
+
+        for (String[] ristorante : gestoreDataset.getDataSet()) {
+            // System.out.println(ristorante[0].toLowerCase());
+
+            if (ristorante[0].toLowerCase().equals(nome)) {
+                ristoranti.add(ristorante);
+                // System.out.println(ristorante[0]);
+            }
+        }
+
+        return ristoranti;
+    }
 }
