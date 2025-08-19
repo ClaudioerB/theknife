@@ -16,7 +16,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Gestore gestore =new Gestore();
+        //Gestore gestore =new Gestore();
         Grafica.main(args);
 
         //test(gestore);
