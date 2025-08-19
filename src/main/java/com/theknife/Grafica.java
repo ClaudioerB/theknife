@@ -1,5 +1,7 @@
 package com.theknife;
 
+import java.util.Scanner;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -10,6 +12,14 @@ import javafx.stage.Stage;
 
 public class Grafica extends Application {
     static String HOME = System.getProperty("user.dir");
+    static Scanner input = new Scanner(System.in);
+    public static void SOP(String s) {
+        System.out.println(s);
+    }
+
+    static String InputStr() {
+        return input.nextLine();
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
