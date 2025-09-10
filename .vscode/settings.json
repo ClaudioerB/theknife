@@ -8,4 +8,5 @@
         "scrollbar.shadow": "#00000000"
     },
     "java.debug.settings.onBuildFailureProceed": true,
+    "maven.view": "flat",
 }

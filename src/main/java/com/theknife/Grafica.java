@@ -25,7 +25,7 @@ public class Grafica extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("The Knife");
 
-        getUserAgentStylesheet();
+        
         WebView browser = new WebView();
         WebEngine engine = browser.getEngine();
 
