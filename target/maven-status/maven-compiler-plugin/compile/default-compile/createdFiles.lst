@@ -1,3 +1,11 @@
-com/theknife/Grafica.class
-com/theknife/mangiadati.class
-com/theknife/Main.class
+com\mycompany\theknife\App.class
+com\mycompany\theknife\GestoreDataset.class
+com\mycompany\theknife\Gestore.class
+com\mycompany\theknife\GestoreRicerche.class
+com\mycompany\theknife\SecondaryController.class
+module-info.class
+com\mycompany\theknife\Utente.class
+com\mycompany\theknife\GestoreUtenti.class
+com\mycompany\theknife\Recensione.class
+com\mycompany\theknife\PrimaryController.class
+com\mycompany\theknife\GestoreRecensioni.class
