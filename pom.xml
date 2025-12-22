@@ -26,6 +26,11 @@
             <version>5.10</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>11.2.1</version>  <!-- o l’ultima 11.x -->
+        </dependency>
     </dependencies>
     <build>
         <plugins>
