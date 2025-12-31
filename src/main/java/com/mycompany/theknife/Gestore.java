@@ -12,13 +12,13 @@ public class Gestore {
     }
 
     private void start() {
-        GestoreDataset gestoreDataset = GestoreDataset.getGestoreDataset();
+        GestoreDataset gestoreDataset = new GestoreDataset();
         ArrayList dataSet = gestoreDataset.getDataSet();
         GestoreUtenti gestoreUtenti = new GestoreUtenti();
         //testUtenti();
         GestoreRecensioni gestoreRecensioni = new GestoreRecensioni();
         GestoreRicerche gestoreRicerche = new GestoreRicerche();
-
+        
         //testRecensioni();
         //testDataset(gestore);
     }

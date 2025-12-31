@@ -14,10 +14,11 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     private static Scene scene;
+    private static Gestore gestore;
 
     @Override
     public void start(Stage stage) throws IOException {
-        
+        gestore = new Gestore();
         scene = new Scene(loadFXML("HomeNotLogged"), 1920, 1080);
         stage.setScene(scene);
         stage.show();

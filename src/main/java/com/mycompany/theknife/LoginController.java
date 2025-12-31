@@ -1,8 +1,6 @@
-package com.mycompany.theknife.controllers;
+package com.mycompany.theknife;
 
 import java.io.IOException;
-
-import com.mycompany.theknife.App;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

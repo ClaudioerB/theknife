@@ -1,9 +1,6 @@
-package com.mycompany.theknife.controllers;
+package com.mycompany.theknife;
 
 import java.io.IOException;
-
-import com.mycompany.theknife.App;
-import com.mycompany.theknife.GestoreDataset;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -27,12 +24,11 @@ public class HomeNotLoggedController {
 
     public HomeNotLoggedController() {
         gestoreDataset = new GestoreDataset();
-        //ListView<String> listViewRestaurants = new ListView<>();
+        
     }
 
     @FXML
     private void initialize() {
-        
         String path = System.getProperty("user.dir")
                 + "\\theknife\\src\\main\\java\\com\\mycompany\\theknife\\data\\user.png";
         System.out.println("Path: " + path);
@@ -52,7 +48,7 @@ public class HomeNotLoggedController {
                     new javafx.scene.image.Image(knifeFile.toURI().toString())
             );
         }
-        //fillListView();
+        fillListView();
     }
 
     @FXML
@@ -69,12 +65,14 @@ public class HomeNotLoggedController {
     
     private void fillListView() {
         listViewRestaurants.getItems().clear();
+        boolean checkfirst = true;
         for (String[] row : gestoreDataset.getDataSet()) {
-            String name = row[0]; // assuming the restaurant name is in the first column
-            String rating = row[3]; // assuming the rating is in the fourth column
-            listViewRestaurants.getItems().add(name + " - Rating: " + rating);
-        }
-        
+            if (checkfirst) {
+                checkfirst = false;
+            }else {
+                listViewRestaurants.getItems().add("Nome: "+row[0] + " - Stato: " + row[2] + " -Città: " + row[3]+ " -Prezzo:" + row[4] + " -Tipo: " + row[5] );
+            }
+        }       
     }
     @FXML
     private void switchToLogin() throws IOException {
