@@ -41,7 +41,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button layoutX="878.0" layoutY="855.0" mnemonicParsing="false" text="Modifica">
+            <Button layoutX="897.0" layoutY="809.0" mnemonicParsing="false" text="Salva" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
@@ -63,13 +63,25 @@
                </font>
             </Label>
             <DatePicker layoutX="1594.0" layoutY="364.0" />
-            <Label layoutX="1630.0" layoutY="523.0" text="Domicilio" textAlignment="CENTER">
+            <Label layoutX="1665.0" layoutY="526.0" text="Via" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
             <TextField fx:id="usernameTextField2" layoutX="1607.0" layoutY="571.0" />
             <TextField fx:id="usernameTextField11" layoutX="85.0" layoutY="576.0" />
+            <Label layoutX="135.0" layoutY="690.0" text="Città">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="1666.0" layoutY="690.0" text="Stato" textAlignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="usernameTextField21" layoutX="1619.0" layoutY="735.0" />
+            <TextField fx:id="usernameTextField111" layoutX="97.0" layoutY="740.0" />
          </children>
       </AnchorPane>
    </children>

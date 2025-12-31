@@ -10,7 +10,7 @@ import com.opencsv.*;
 
 public class GestoreDataset {
     
-    private ArrayList<String[]> dataSet;
+    private static ArrayList<String[]> dataSet;
     private String filePath;
     
     public GestoreDataset() {

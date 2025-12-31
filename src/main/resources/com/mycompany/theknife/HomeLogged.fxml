@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -16,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.Rating?>
 
-<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1920.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.HomeNotLoggedController">
+<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1920.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.controllers.LoginController">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" onDragEntered="#changeLoginImage" onDragExited="#initialize" onMouseEntered="#changeLoginImage" onMouseExited="#initialize" prefHeight="1263.0" prefWidth="1880.0">
          <children>
@@ -26,19 +25,17 @@
                <image>
                   <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png" />
                </image></ImageView>
-            <ScrollBar layoutX="1608.0" layoutY="506.0" orientation="VERTICAL" prefHeight="516.0" prefWidth="24.0" />
+            <ScrollBar layoutX="1602.0" layoutY="501.0" orientation="VERTICAL" prefHeight="516.0" prefWidth="24.0" />
             <MenuButton layoutX="258.0" layoutY="340.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="186.0" text="tipo di cucina">
               <items>
                   <CheckMenuItem mnemonicParsing="false" text="Unspecified Action" />
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
               </items>
                <font>
                   <Font size="19.0" />
                </font>
             </MenuButton>
             <TextField layoutX="778.0" layoutY="183.0" prefHeight="42.0" prefWidth="200.0" />
-            <ImageView fx:id="loginImageView" fitHeight="62.0" fitWidth="68.0" layoutX="1774.0" layoutY="40.0" onMouseClicked="#switchToLogin" onMouseEntered="#changeLoginImage" onMouseExited="#initialize" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="loginImageView" fitHeight="62.0" fitWidth="68.0" layoutX="1774.0" layoutY="40.0" onMouseClicked="#switchToLogin" onMouseExited="#initialize" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../java/com/mycompany/theknife/data/user.png" />
                </image>
@@ -54,9 +51,10 @@
             </Label>
             <MenuButton layoutX="631.0" layoutY="336.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="186.0" text="fascia prezzo">
                <items>
-                  <CheckMenuItem mnemonicParsing="false" text="Unspecified Action" />
-                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                  <MenuItem mnemonicParsing="false" text="Action 2" />
+                  <CheckMenuItem mnemonicParsing="false" text="€" />
+                  <CheckMenuItem mnemonicParsing="false" text="€€" />
+                  <CheckMenuItem mnemonicParsing="false" text="€€€" />
+                  <CheckMenuItem mnemonicParsing="false" text="€€€€" />
                </items>
                <font>
                   <Font size="19.0" />
@@ -64,9 +62,8 @@
             </MenuButton>
             <MenuButton layoutX="969.0" layoutY="340.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="186.0" text="delivery">
                <items>
-                  <CheckMenuItem mnemonicParsing="false" text="Unspecified Action" />
-                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                  <MenuItem mnemonicParsing="false" text="Action 2" />
+                  <CheckMenuItem mnemonicParsing="false" text="Yes" />
+                  <CheckMenuItem mnemonicParsing="false" text="No" />
                </items>
                <font>
                   <Font size="19.0" />
@@ -74,9 +71,8 @@
             </MenuButton>
             <MenuButton layoutX="1254.0" layoutY="340.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="186.0" text="prenotazione">
                <items>
-                  <CheckMenuItem mnemonicParsing="false" text="Unspecified Action" />
-                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                  <MenuItem mnemonicParsing="false" text="Action 2" />
+                  <CheckMenuItem mnemonicParsing="false" text="Yes" />
+                  <CheckMenuItem mnemonicParsing="false" text="No" />
                </items>
                <font>
                   <Font size="19.0" />

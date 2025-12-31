@@ -24,17 +24,22 @@
                   <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png" />
                </image>
             </ImageView>
-            <Label layoutX="229.0" layoutY="309.0" text="Risposta" textAlignment="CENTER">
+            <Label layoutX="247.0" layoutY="308.0" text="Servizi" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button layoutX="212.0" layoutY="637.0" mnemonicParsing="false" text="Pubblica">
+            <Button layoutX="237.0" layoutY="640.0" mnemonicParsing="false" text="Salva">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
             <TextArea layoutX="63.0" layoutY="372.0" prefHeight="230.0" prefWidth="435.0" />
+            <Label layoutX="171.0" layoutY="343.0" text="i servizi devono essere divisi da invii" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

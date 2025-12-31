@@ -1,46 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.BreadCrumbBar?>
+<?import org.controlsfx.control.RangeSlider?>
+<?import org.controlsfx.control.SegmentedBar?>
 
 <VBox alignment="CENTER" prefHeight="1080.0" prefWidth="1920.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.LoginController">
-    <children>
-      <AnchorPane prefHeight="1003.0" prefWidth="1880.0">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <children>
+      <AnchorPane prefHeight="1090.0" prefWidth="1880.0">
          <children>
-              <Label layoutX="933.0" layoutY="168.0" text="Home">
+            <Label layoutX="43.0" layoutY="115.0" text="Home">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <ImageView fx:id="knifeImageView" fitHeight="198.0" fitWidth="224.0" layoutX="851.0" layoutY="189.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="knifeImageView" fitHeight="142.0" fitWidth="134.0" layoutX="8.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png" />
                </image>
             </ImageView>
-            <Label layoutX="901.0" layoutY="463.0" text="Username" textAlignment="CENTER">
+            <Label layoutX="915.0" layoutY="247.0" text="Stato" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <PasswordField fx:id="passwordField" layoutX="880.0" layoutY="618.0" />
-            <TextField fx:id="usernameTextField" layoutX="878.0" layoutY="511.0" />
-            <Label layoutX="908.0" layoutY="566.0" text="Password">
+            <PasswordField fx:id="passwordField" layoutX="869.0" layoutY="495.0" />
+            <TextField fx:id="usernameTextField" layoutX="869.0" layoutY="289.0" />
+            <Label layoutX="865.0" layoutY="446.0" text="Phone Number">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button layoutX="891.0" layoutY="713.0" mnemonicParsing="false" text="Accedi">
+            <Button layoutX="902.0" layoutY="935.0" mnemonicParsing="false" text="Crea">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
+            <Label layoutX="131.0" layoutY="247.0" text="Nome" textAlignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="usernameTextField1" layoutX="89.0" layoutY="289.0" />
+            <Label layoutX="118.0" layoutY="446.0" text="Indirizzo">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="1619.0" layoutY="247.0" text="Web Site Url">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="1651.0" layoutY="444.0" text="Award" textAlignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="usernameTextField2" layoutX="1610.0" layoutY="489.0" />
+            <TextField fx:id="usernameTextField11" layoutX="88.0" layoutY="494.0" />
+            <CheckBox layoutX="501.0" layoutY="730.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="133.0" text="Delivery">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <CheckBox layoutX="1289.0" layoutY="730.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="186.0" text="Prenotazione">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </CheckBox>
+            <TextField fx:id="usernameTextField21" layoutX="1610.0" layoutY="289.0" />
+            <Button layoutX="821.0" layoutY="852.0" mnemonicParsing="false" text="Aggiungi un servizio">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <ListView layoutX="789.0" layoutY="603.0" prefHeight="200.0" prefWidth="312.0" />
+            <Label layoutX="138.0" layoutY="628.0" text="Città">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="1649.0" layoutY="628.0" text="Cucina" textAlignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="usernameTextField22" layoutX="1611.0" layoutY="673.0" />
+            <TextField fx:id="usernameTextField111" layoutX="89.0" layoutY="678.0" />
+            <Label layoutX="905.0" layoutY="123.0" text="Prezzo" textAlignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="910.0" layoutY="190.0" prefHeight="25.0" prefWidth="71.0" text="Prezzo" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <BreadCrumbBar layoutX="284.0" layoutY="177.0" prefWidth="97.0" />
+            <SegmentedBar layoutX="434.0" layoutY="217.0" prefWidth="56.0" />
+            <RangeSlider layoutX="844.0" layoutY="152.0" prefHeight="51.0" prefWidth="192.0" />
          </children>
       </AnchorPane>
-    </children>
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
+   </children>
 </VBox>

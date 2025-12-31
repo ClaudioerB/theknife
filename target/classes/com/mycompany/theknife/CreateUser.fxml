@@ -61,7 +61,7 @@
                </font>
             </Label>
             <DatePicker layoutX="1594.0" layoutY="364.0" />
-            <Label layoutX="1630.0" layoutY="523.0" text="Domicilio" textAlignment="CENTER">
+            <Label layoutX="1665.0" layoutY="526.0" text="Via" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
@@ -83,6 +83,18 @@
                   <Font size="14.0" />
                </font>
             </CheckBox>
+            <Label layoutX="131.0" layoutY="691.0" text="Stato">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="1656.0" layoutY="691.0" text="Città" textAlignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="usernameTextField21" layoutX="1607.0" layoutY="739.0" />
+            <TextField fx:id="usernameTextField111" layoutX="85.0" layoutY="744.0" />
          </children>
       </AnchorPane>
     </children>
