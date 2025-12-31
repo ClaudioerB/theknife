@@ -3,9 +3,16 @@ package com.mycompany.theknife;
 import java.util.ArrayList;
 
 public class GestoreRicerche {
-    GestoreDataset gestoreDataset;
-    public GestoreRicerche(GestoreDataset gestoreDataset) {
-        this.gestoreDataset = gestoreDataset;
+    private GestoreDataset gestoreDataset;
+    private static GestoreRicerche gestoreRicerche;
+
+    public GestoreRicerche() {
+        this.gestoreDataset = new GestoreDataset();
+        this.gestoreRicerche = this;
+    }
+
+    public static GestoreRicerche getGestoreRicerche() {
+        return gestoreRicerche;
     }
 
     public ArrayList<String[]> trovaRistorantiVicini(double latitudine, double longitudine, double raggioKm, GestoreDataset dataset) {

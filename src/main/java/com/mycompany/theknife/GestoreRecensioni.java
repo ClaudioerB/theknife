@@ -14,13 +14,20 @@ import com.opencsv.CSVWriter;
 public class GestoreRecensioni {
     ArrayList<Recensione> recensioni;
     private String filePath;
+    private static GestoreRecensioni gestoreRecensioni = new GestoreRecensioni();
 
     public GestoreRecensioni() {
+        gestoreRecensioni = this;
         filePath = System.getProperty("user.dir") + "/src/main/resources/Review/reviews.csv";
         this.recensioni = new ArrayList<Recensione>();
         inserimentoDati();
     }
 
+    public static GestoreRecensioni getGestoreRecensioni() {
+        return gestoreRecensioni;
+    }
+
+    
     public GestoreRecensioni(ArrayList<Recensione> recensioni) {
         this.recensioni = recensioni;
     }

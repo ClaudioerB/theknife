@@ -2,6 +2,7 @@ package com.mycompany.theknife;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Gestore {
@@ -11,13 +12,15 @@ public class Gestore {
     }
 
     private void start() {
-        GestoreDataset gestore = new GestoreDataset();
-        // ArrayList dataSet = gestore.getDataSet();
-        //GestoreUtenti gestoreUtenti = new GestoreUtenti();
+        GestoreDataset gestoreDataset = GestoreDataset.getGestoreDataset();
+        ArrayList dataSet = gestoreDataset.getDataSet();
+        GestoreUtenti gestoreUtenti = new GestoreUtenti();
         //testUtenti();
-        //GestoreRecensioni gestore = new GestoreRecensioni();
+        GestoreRecensioni gestoreRecensioni = new GestoreRecensioni();
+        GestoreRicerche gestoreRicerche = new GestoreRicerche();
+
         //testRecensioni();
-        testDataset(gestore);
+        //testDataset(gestore);
     }
 
     private void testRecensioni() {

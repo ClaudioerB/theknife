@@ -1,28 +1,31 @@
 package com.mycompany.theknife;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import com.opencsv.*;
+
+import com.opencsv.CSVWriter;
 
 public class GestoreDataset {
     
     private static ArrayList<String[]> dataSet;
     private String filePath;
-    
+    private static GestoreDataset gestoreDataset;
+
     public GestoreDataset() {
-        filePath = System.getProperty("user.dir")+"/src/main/resources/Dataset/datafiles/dataset_ristoranti.csv"; // o "data/file.txt" se il file si trova in una sottodirectory
+        filePath = System.getProperty("user.dir") + "\\theknife\\src\\main\\java\\com\\mycompany\\theknife\\data\\datasetRistoranti.csv"; // o "data/file.txt" se il file si trova in una sottodirectory
         dataSet= new ArrayList<String[]>();
         inserimentoDati();
-
+        gestoreDataset = this;
     }
 
-    
+    public static GestoreDataset getGestoreDataset() {
+        return gestoreDataset;
+    }    
 
-    public ArrayList<String[]> getDataSet() {
+    public static ArrayList<String[]> getDataSet() {
         return dataSet;
     }
 
@@ -106,7 +109,7 @@ public class GestoreDataset {
                 iRow++;
             }
         } catch (IOException e) {
-            System.out.println("File non trovato.");
+            System.out.println("File non trovato."+ e);
         }
     }
     
@@ -122,7 +125,7 @@ public class GestoreDataset {
             }
             
         } catch (IOException e) {
-            System.out.println("File non trovato.");
+            System.out.println("File non trovato."+e);
         }
         return righe;
     }

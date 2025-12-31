@@ -17,9 +17,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        
         scene = new Scene(loadFXML("HomeNotLogged"), 1920, 1080);
         stage.setScene(scene);
         stage.show();
+        
     }
 
     static public void setRoot(String fxml) throws IOException {

@@ -27,14 +27,14 @@ public class HomeNotLoggedController {
 
     public HomeNotLoggedController() {
         gestoreDataset = new GestoreDataset();
-        ListView<String> listViewRestaurants = new ListView<>();
+        //ListView<String> listViewRestaurants = new ListView<>();
     }
 
     @FXML
     private void initialize() {
         
         String path = System.getProperty("user.dir")
-                + "/src/main/java/com/mycompany/theknife/data/user.png";
+                + "\\theknife\\src\\main\\java\\com\\mycompany\\theknife\\data\\user.png";
         System.out.println("Path: " + path);
         java.io.File f = new java.io.File(path);
         System.out.println("Esiste? " + f.exists());
@@ -45,20 +45,20 @@ public class HomeNotLoggedController {
             );
         }
         String knifePath = System.getProperty("user.dir")
-                + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
+                + "\\theknife\\src\\main\\java\\com\\mycompany\\theknife\\data\\theknife_icon.png";  
         java.io.File knifeFile = new java.io.File(knifePath);
         if (knifeFile.exists()) {       
             knifeImageView.setImage(
                     new javafx.scene.image.Image(knifeFile.toURI().toString())
             );
         }
-        fillListView();
+        //fillListView();
     }
 
     @FXML
     private void changeLoginImage() {
         String newPath = System.getProperty("user.dir")
-                + "/src/main/java/com/mycompany/theknife/data/user_1.png"; 
+                + "\\theknife\\src\\main\\java\\com\\mycompany\\theknife\\data\\user_1.png"; 
         java.io.File newFile = new java.io.File(newPath);
         if (newFile.exists()) {
             loginImageView.setImage(
