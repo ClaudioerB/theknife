@@ -6,6 +6,7 @@ public class GestoreRicerche {
     private GestoreDataset gestoreDataset;
     private static GestoreRicerche gestoreRicerche;
 
+
     public GestoreRicerche() {
         this.gestoreDataset = new GestoreDataset();
         this.gestoreRicerche = this;
@@ -95,6 +96,83 @@ public class GestoreRicerche {
             }
         }
 
+
         return ristoranti;
+    }
+    public ArrayList<String[]> trovaRistorantiDelivery(boolean deliveryY,boolean deliveryN, ArrayList<String[]> ristorantiTrovati) {
+        
+
+        for (String[] ristorante : gestoreDataset.getDataSet()) {
+            if (ristorante[11].toLowerCase().equals("yes") && deliveryY) {
+
+                ristorantiTrovati.add(ristorante);
+            }
+            else{
+                if(ristorante[11].toLowerCase().equals("yes") && !deliveryY){
+                    ristorantiTrovati.remove(ristorante);
+                }
+            }
+            
+            if (ristorante[11].toLowerCase().equals("no") && deliveryN) {
+
+                ristorantiTrovati.add(ristorante);
+            }
+            else{
+                if(ristorante[11].toLowerCase().equals("no") && !deliveryN){
+                    ristorantiTrovati.remove(ristorante);
+                }
+
+            }
+
+        }
+
+        return ristorantiTrovati;
+    }
+
+    public ArrayList<String[]> trovaRistorantiPrenotation(boolean deliveryY,boolean deliveryN, ArrayList<String[]> ristorantiTrovati) {
+        
+
+        for (String[] ristorante : gestoreDataset.getDataSet()) {
+            if (ristorante[12].toLowerCase().equals("yes") && deliveryY) {
+
+                ristorantiTrovati.add(ristorante);
+            }
+            else{
+                if(ristorante[12].toLowerCase().equals("yes") && !deliveryY){
+                    ristorantiTrovati.remove(ristorante);
+                }
+            }
+            
+            if (ristorante[12].toLowerCase().equals("no") && deliveryN) {
+
+                ristorantiTrovati.add(ristorante);
+            }
+            else{
+                if(ristorante[12].toLowerCase().equals("no") && !deliveryN){
+                    ristorantiTrovati.remove(ristorante);
+                }
+
+            }
+
+        }
+
+        return ristorantiTrovati;
+    }
+
+    public ArrayList<String[]> trovaRistorantiRating(double rating, ArrayList<String[]> ristorantiTrovati) {
+        
+
+        for (String[] ristorante : gestoreDataset.getDataSet()) {
+            if (Double.parseDouble(ristorante[10])>=rating) {
+
+                ristorantiTrovati.add(ristorante);
+            }
+            else{
+                ristorantiTrovati.remove(ristorante);
+            }
+
+        }
+
+        return ristorantiTrovati;
     }
 }
