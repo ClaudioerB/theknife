@@ -43,6 +43,10 @@ public class CreateUserController {
 
     @FXML
     private CheckBox clienteCheckBox;
+
+    @FXML
+    private CheckBox ristoratoreCheckBox;
+    
     @FXML 
     private javafx.scene.control.Label loginErrorMessageLabel;
 
