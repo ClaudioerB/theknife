@@ -120,4 +120,20 @@ public class GestoreUtenti {
         }
         return righe;
     }
+    public boolean verificaCredenziali(String username, String password) {
+        for (Utente utente : utenti) {
+            if (utente.getUsername().equals(username) && utente.getPasswordHash().equals(password)) {
+                return true; // Credenziali valide
+            }
+        }
+        return false; // Credenziali non valide
+    }
+    public Utente getUtenteByUsername(String username) {
+        for (Utente utente : utenti) {
+            if (utente.getUsername().equals(username)) {
+                return utente; // Restituisce l'utente trovato
+            }
+        }
+        return null; // Utente non trovato
+    }
 }

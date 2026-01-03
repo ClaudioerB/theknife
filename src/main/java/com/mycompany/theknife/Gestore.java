@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Gestore {
+    private Utente utenteLoggato;
 
     public Gestore() {
         start();
@@ -21,6 +22,13 @@ public class Gestore {
         
         //testRecensioni();
         //testDataset(gestore);
+    }
+    public Utente getUtenteLoggato() {
+        return utenteLoggato;
+    }
+
+    public void setUtenteLoggato(Utente utenteLoggato) {
+        this.utenteLoggato = utenteLoggato;
     }
 
     private void testRecensioni() {

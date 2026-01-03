@@ -4,11 +4,12 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
-public class LoginController {
+public class CreateUserController {
 
     @FXML
     private ImageView knifeImageView;
@@ -18,7 +19,30 @@ public class LoginController {
 
     @FXML
     private PasswordField passwordField;
+
+    @FXML
+    private TextField emailTextField;
+
+    @FXML
+    private TextField nomeTextField;
+
+    @FXML
+    private TextField cognomeTextField;
+
+    @FXML
+    private Button createUserButton;
+
+    @FXML
+    private TextField statoTextField;
     
+    @FXML
+    private TextField cittaTextField;
+
+    @FXML
+    private TextField indirizzoTextField;
+
+    @FXML
+    private CheckBox clienteCheckBox;
     @FXML 
     private javafx.scene.control.Label loginErrorMessageLabel;
 
