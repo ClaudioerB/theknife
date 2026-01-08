@@ -46,7 +46,7 @@ public class CreateUserController {
 
     @FXML
     private CheckBox ristoratoreCheckBox;
-    
+
     @FXML 
     private javafx.scene.control.Label loginErrorMessageLabel;
 
@@ -68,7 +68,25 @@ public class CreateUserController {
             );
         }
     }
-    
+    @FXML
+    private void createUser() throws IOException {
+        String username = usernameTextField.getText();
+        String password = passwordField.getText();
+        String email = emailTextField.getText();
+        String nome = nomeTextField.getText();
+        String cognome = cognomeTextField.getText();
+        String stato = statoTextField.getText();
+        String citta = cittaTextField.getText();
+        String indirizzo = indirizzoTextField.getText();
+        boolean isCliente = clienteCheckBox.isSelected();
+        boolean isRistoratore = ristoratoreCheckBox.isSelected();
+        GestoreUtenti gestoreUtenti = new GestoreUtenti();
+        if (gestoreUtenti.creaUtente(username, password, email, nome, cognome, stato, citta, indirizzo, isRistoratore)) {
+            App.setRoot("Login");
+        } else {
+            loginErrorMessageLabel.setVisible(true);
+        }
+    }
     @FXML
     private void switchToRegister() throws IOException {
         App.setRoot("Register");

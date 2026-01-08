@@ -101,9 +101,9 @@ public class GestoreDataset {
             String line;
             
             while ((line = reader.readLine()) != null) {
-                dataSet.add(new String[13]);
+                dataSet.add(new String[17]);
                 appoggio = line.split(";");
-                for(int i = 0; i<13;i++){
+                for(int i = 0; i<17;i++){
                     dataSet.get(iRow)[i] = appoggio[i];
                 }
                 iRow++;

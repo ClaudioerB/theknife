@@ -42,7 +42,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <MenuButton fx:id="priceFilterComboBox" alignment="CENTER" layoutX="592.0" layoutY="340.0" mnemonicParsing="false" onAction="#deliveryFilterComboBoxAction" prefHeight="41.0" prefWidth="186.0" text="fascia prezzo" AnchorPane.bottomAnchor="658.4" AnchorPane.topAnchor="340.0">
+            <MenuButton fx:id="priceFilterComboBox" alignment="CENTER" layoutX="592.0" layoutY="340.0" mnemonicParsing="false" onAction="#priceFilterComboBoxAction" prefHeight="41.0" prefWidth="186.0" text="fascia prezzo" AnchorPane.bottomAnchor="658.4" AnchorPane.topAnchor="340.0">
                <items>
                   <CheckMenuItem fx:id="price1CheckMenuItem" mnemonicParsing="false" onAction="#priceFilterComboBoxAction" text="€" />
                   <CheckMenuItem fx:id="price2CheckMenuItem" mnemonicParsing="false" text="€€" />
@@ -62,7 +62,7 @@
                   <Font size="19.0" />
                </font>
             </MenuButton>
-            <MenuButton fx:id="prenotationFilterComboBox" alignment="CENTER" layoutX="1254.0" layoutY="340.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="186.0" text="prenotazione" AnchorPane.bottomAnchor="658.4" AnchorPane.leftAnchor="1254.0" AnchorPane.rightAnchor="439.19999999999993" AnchorPane.topAnchor="340.0">
+            <MenuButton fx:id="prenotationFilterComboBox" alignment="CENTER" layoutX="1254.0" layoutY="340.0" mnemonicParsing="false" onAction="#prenotationTrueCheckMenuItemAction" prefHeight="41.0" prefWidth="186.0" text="prenotazione" AnchorPane.bottomAnchor="658.4" AnchorPane.leftAnchor="1254.0" AnchorPane.rightAnchor="439.19999999999993" AnchorPane.topAnchor="340.0">
                <items>
                   <CheckMenuItem fx:id="prenotationTrueCheckMenuItem" mnemonicParsing="false" text="Yes" />
                   <CheckMenuItem fx:id="prenotationFalseCheckMenuItem" mnemonicParsing="false" text="No" />

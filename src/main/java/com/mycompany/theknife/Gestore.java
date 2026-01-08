@@ -120,15 +120,15 @@ public class Gestore {
      do {
          
          
-         System.out.println("premere 1 per aggiungere una riga");
-      System.out.println("premere 2 per eliminare una riga");
-      System.out.println("premere qualsiasi numero printare il dataset");
-      n=Integer.parseInt(input.nextLine());
-      String[] rigaSplit=new String[13];
-      switch (n){
-      case 1:
-      for (int i = 0; i < 13; i++) {
-      rigaSplit[i]="a";
+        System.out.println("premere 1 per aggiungere una riga");
+        System.out.println("premere 2 per eliminare una riga");
+        System.out.println("premere qualsiasi numero printare il dataset");
+        n=Integer.parseInt(input.nextLine());
+        String[] rigaSplit=new String[17];
+        switch (n){
+        case 1:
+        for (int i = 0; i < 17; i++) {
+        rigaSplit[i]="a";
       }
       
       

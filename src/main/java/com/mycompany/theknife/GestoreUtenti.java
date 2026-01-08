@@ -136,4 +136,10 @@ public class GestoreUtenti {
         }
         return null; // Utente non trovato
     }
+
+    public boolean creaUtente(String username, String password, String email, String nome, String cognome, String stato,
+            String citta, String indirizzo, boolean isRistoratore) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'creaUtente'");
+    }
 }
