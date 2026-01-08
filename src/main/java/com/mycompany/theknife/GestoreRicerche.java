@@ -133,22 +133,22 @@ public class GestoreRicerche {
         
 
         for (String[] ristorante : gestoreDataset.getDataSet()) {
-            if (ristorante[12].toLowerCase().equals("yes") && deliveryY) {
+            if (ristorante[15].toLowerCase().equals("1") && deliveryY) {
 
-                ristorantiTrovati.add(ristorante);
+                
             }
             else{
-                if(ristorante[12].toLowerCase().equals("yes") && !deliveryY){
+                if(ristorante[15].toLowerCase().equals("1") && !deliveryY){
                     ristorantiTrovati.remove(ristorante);
                 }
             }
             
-            if (ristorante[12].toLowerCase().equals("no") && deliveryN) {
+            if (ristorante[15].toLowerCase().equals("0") && deliveryN) {
 
-                ristorantiTrovati.add(ristorante);
+                
             }
             else{
-                if(ristorante[12].toLowerCase().equals("no") && !deliveryN){
+                if(ristorante[15].toLowerCase().equals("0") && !deliveryN){
                     ristorantiTrovati.remove(ristorante);
                 }
 
@@ -162,14 +162,14 @@ public class GestoreRicerche {
     public ArrayList<String[]> trovaRistorantiRating(double rating, ArrayList<String[]> ristorantiTrovati) {
         
 
-        for (String[] ristorante : gestoreDataset.getDataSet()) {
-            if (Double.parseDouble(ristorante[10])>=rating) {
+        for (String[] ristorante : ristorantiTrovati) {
+            if(!ristorante[13].equals("Rating"))
+                if (Double.parseDouble(ristorante[13])>=rating) {
 
-                ristorantiTrovati.add(ristorante);
-            }
-            else{
-                ristorantiTrovati.remove(ristorante);
-            }
+                }
+                else{
+                    ristorantiTrovati.remove(ristorante);
+                }
 
         }
 

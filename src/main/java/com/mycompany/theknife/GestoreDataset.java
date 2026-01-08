@@ -15,7 +15,7 @@ public class GestoreDataset {
     private static GestoreDataset gestoreDataset;
 
     public GestoreDataset() {
-        filePath = System.getProperty("user.dir") + "\\theknife\\src\\main\\java\\com\\mycompany\\theknife\\data\\datasetRistoranti.csv"; // o "data/file.txt" se il file si trova in una sottodirectory
+        filePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\datasetRistoranti.csv"; // o "data/file.txt" se il file si trova in una sottodirectory
         dataSet= new ArrayList<String[]>();
         inserimentoDati();
         gestoreDataset = this;
