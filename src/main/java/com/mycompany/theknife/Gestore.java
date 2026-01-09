@@ -7,18 +7,24 @@ import java.util.Scanner;
 
 public class Gestore {
     private Utente utenteLoggato;
-
-    public Gestore() {
+    private static Gestore gestore;
+    private Gestore() {
         start();
+    }
+    public static Gestore getGestore() {
+        if(gestore == null) {
+            gestore = new Gestore();
+        }
+        return gestore;
     }
 
     private void start() {
-        GestoreDataset gestoreDataset = new GestoreDataset();
+        GestoreDataset gestoreDataset = GestoreDataset.getGestoreDataset();
         ArrayList dataSet = gestoreDataset.getDataSet();
-        GestoreUtenti gestoreUtenti = new GestoreUtenti();
+        GestoreUtenti gestoreUtenti = GestoreUtenti.getGestoreUtenti();
         //testUtenti();
-        GestoreRecensioni gestoreRecensioni = new GestoreRecensioni();
-        GestoreRicerche gestoreRicerche = new GestoreRicerche();
+        GestoreRecensioni gestoreRecensioni = GestoreRecensioni.getGestoreRecensioni();
+        GestoreRicerche gestoreRicerche = GestoreRicerche.getGestoreRicerche();
         
         //testRecensioni();
         //testDataset(gestore);
@@ -32,7 +38,7 @@ public class Gestore {
     }
 
     private void testRecensioni() {
-        GestoreRecensioni gestoreRecensioni = new GestoreRecensioni();
+        GestoreRecensioni gestoreRecensioni = GestoreRecensioni.getGestoreRecensioni();
         int n;
         do {
 
@@ -68,7 +74,7 @@ public class Gestore {
     }
     
     private void testUtenti(){
-        GestoreUtenti gestoreUtenti= new GestoreUtenti();
+        GestoreUtenti gestoreUtenti= GestoreUtenti.getGestoreUtenti();
         int n;
         do {
             

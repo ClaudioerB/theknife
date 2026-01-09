@@ -50,8 +50,8 @@ public class LoginController {
     private void switchToHomeLogged() throws IOException {
         String username = usernameTextField.getText();
         String password = passwordField.getText();
-        GestoreUtenti gestoreUtenti = new GestoreUtenti();
-        Gestore gestore = new Gestore();
+        GestoreUtenti gestoreUtenti = GestoreUtenti.getGestoreUtenti();
+        Gestore gestore = Gestore.getGestore();
         if (gestoreUtenti.verificaCredenziali(username, password)) {
             gestore.setUtenteLoggato(gestoreUtenti.getUtenteByUsername(username));
             App.setRoot("HomeLogged");

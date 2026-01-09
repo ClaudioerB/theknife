@@ -11,11 +11,19 @@ import com.opencsv.CSVWriter;
 public class GestoreUtenti {
     ArrayList<Utente> utenti;
     private String filePath;
+    private static GestoreUtenti gestoreUtenti;
 
-    public GestoreUtenti() {
+    private GestoreUtenti() {
         filePath = System.getProperty("user.dir")+"/src/main/resources/Users/users.csv"; 
         this.utenti = new ArrayList<Utente>();
+        gestoreUtenti = this;
         inserimentoDati();
+    }
+    public static GestoreUtenti getGestoreUtenti() {
+        if(gestoreUtenti == null) {
+            gestoreUtenti = new GestoreUtenti();
+        }
+        return gestoreUtenti;
     }
 
     public ArrayList<Utente> getUtenti() {

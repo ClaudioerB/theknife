@@ -16,7 +16,7 @@ public class GestoreRecensioni {
     private String filePath;
     private static GestoreRecensioni gestoreRecensioni = new GestoreRecensioni();
 
-    public GestoreRecensioni() {
+    private GestoreRecensioni() {
         gestoreRecensioni = this;
         filePath = System.getProperty("user.dir") + "/src/main/resources/Review/reviews.csv";
         this.recensioni = new ArrayList<Recensione>();
@@ -24,6 +24,9 @@ public class GestoreRecensioni {
     }
 
     public static GestoreRecensioni getGestoreRecensioni() {
+        if(gestoreRecensioni == null) {
+            gestoreRecensioni = new GestoreRecensioni();
+        }
         return gestoreRecensioni;
     }
 

@@ -1,5 +1,6 @@
 package com.mycompany.theknife;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GestoreRicerche {
@@ -7,12 +8,15 @@ public class GestoreRicerche {
     private static GestoreRicerche gestoreRicerche;
 
 
-    public GestoreRicerche() {
-        this.gestoreDataset = new GestoreDataset();
-        this.gestoreRicerche = this;
+    private GestoreRicerche() {
+        this.gestoreDataset = gestoreDataset.getGestoreDataset();
+        this.gestoreRicerche = this; 
     }
 
     public static GestoreRicerche getGestoreRicerche() {
+        if(gestoreRicerche == null) {
+            gestoreRicerche = new GestoreRicerche();
+        }
         return gestoreRicerche;
     }
 
@@ -54,15 +58,15 @@ public class GestoreRicerche {
         return ristorantiTrovati;
     }*/
     // Trova ristoranti per costo
-    public ArrayList<String[]> trovaRistorantiCosto(String costo) {
-        ArrayList<String[]> ristorantiTrovati = new ArrayList<>();
-
-        for (String[] ristorante : gestoreDataset.getDataSet()) {
+    public ArrayList<String[]> trovaRistorantiCosto(String costo,ArrayList<String[]> listaDaFiltrare) {
+        int index = 0;
+        for (String[] ristorante : listaDaFiltrare) {
             if (ristorante[4].length()==costo.length()) {
-                ristorantiTrovati.add(ristorante);
+                listaDaFiltrare.remove(index);
             }
+            index++;
         }
-        return ristorantiTrovati;
+        return listaDaFiltrare;
     }
 
     public void trovaRistorantiCitta(String citta) {

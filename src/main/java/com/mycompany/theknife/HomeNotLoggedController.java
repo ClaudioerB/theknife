@@ -67,10 +67,12 @@ public class HomeNotLoggedController {
 
     private ArrayList<String[]> filteredList;
 
+    private GestoreRicerche gestoreRicerche;
+
     public HomeNotLoggedController() {
-        gestoreDataset = new GestoreDataset();
+        gestoreDataset = GestoreDataset.getGestoreDataset();
         filteredList = gestoreDataset.getDataSet();
-        
+        gestoreRicerche = GestoreRicerche.getGestoreRicerche();
     }
 
     @FXML
@@ -135,42 +137,38 @@ public class HomeNotLoggedController {
         }       
     }
 
-  
+    private void printFilteredList() {
+        for (String[] row : filteredList) {
+            System.out.println("Nome: "+row[0] + " - Stato: " + row[2] + " -Città: " + row[3]+ " -Prezzo:" + row[4] + " -Tipo: " + row[5] );
+        }       
+    }
     private void priceFilterComboBoxAction() {
-        GestoreRicerche gestoreRicerche = new GestoreRicerche();
-        if (price1CheckMenuItem.isSelected()) {
-            
+        GestoreRicerche gestoreRicerche = GestoreRicerche.getGestoreRicerche();
+        if (!price1CheckMenuItem.isSelected()) {
+            filteredList=gestoreRicerche.trovaRistorantiCosto("€",filteredList);
         }
-        else
-        {
-            filteredList.removeAll(gestoreRicerche.trovaRistorantiCosto("€"));
+        if (!price2CheckMenuItem.isSelected()) {
+            filteredList=gestoreRicerche.trovaRistorantiCosto("€€",filteredList);
         }
-        if (price2CheckMenuItem.isSelected()) {
-            
+        
+        if (!price3CheckMenuItem.isSelected()) {
+            filteredList=gestoreRicerche.trovaRistorantiCosto("€€€",filteredList);
         }
-        else
-        {
-            filteredList.removeAll(gestoreRicerche.trovaRistorantiCosto("€€"));
-        }
-        if (price3CheckMenuItem.isSelected()) {
-            
-        }
-        else
-        {
-            filteredList.removeAll(gestoreRicerche.trovaRistorantiCosto("€€€"));
-        }
-        if (price4CheckMenuItem.isSelected()) {
-            
-        }
-        else
-        {
-            filteredList.removeAll(gestoreRicerche.trovaRistorantiCosto("€€€€"));
+        
+        if (!price4CheckMenuItem.isSelected()) {
+            filteredList=gestoreRicerche.trovaRistorantiCosto("€€€€",filteredList);
+            printFilteredList();
         }
         
 
     }
 
-    
+    private void removeFromFilteredList(ArrayList<Integer> rowsToRemove) {
+        for (Integer rowIndex : rowsToRemove) {
+            filteredList.remove(rowIndex.intValue());
+        }
+    }
+
     private void searchButtonAction() {
         String searchText = searchTextField.getText().toLowerCase();
         listViewRestaurants.getItems().clear();
@@ -214,14 +212,14 @@ public class HomeNotLoggedController {
         } else {
                 noSelected=false;
         }
-        GestoreRicerche gestoreRicerche = new GestoreRicerche();
+        
         fillListView(gestoreRicerche.trovaRistorantiDelivery(yesSelected,noSelected,filteredList));
     }
 
    
     private void ratingsAction() throws IOException {
         double rating = ratingFilter.getRating();
-        GestoreRicerche gestoreRicerche = new GestoreRicerche();
+        
         filteredList=gestoreRicerche.trovaRistorantiRating(rating, filteredList);
     }
     
@@ -242,7 +240,7 @@ public class HomeNotLoggedController {
         } else {
                 noSelected=false;
         }
-        GestoreRicerche gestoreRicerche = new GestoreRicerche();
+    
         filteredList=gestoreRicerche.trovaRistorantiPrenotation(yesSelected,noSelected,filteredList);
     }
 
@@ -260,6 +258,7 @@ public class HomeNotLoggedController {
         ratingsAction();
         cucineFilterComboBoxAction();
         searchButtonAction();
+        //printFilteredList();
         fillListView(filteredList);
     }
 
