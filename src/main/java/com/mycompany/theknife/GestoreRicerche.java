@@ -1,6 +1,5 @@
 package com.mycompany.theknife;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GestoreRicerche {
@@ -178,5 +177,22 @@ public class GestoreRicerche {
         }
 
         return ristorantiTrovati;
+    }
+    public ArrayList<String[]> searchingDelivery(boolean deliveryY,boolean deliveryN, ArrayList<String[]> ristorantiDaFiltrare) {
+        ArrayList<String[]> ristorantiFiltrati = new ArrayList<>(ristorantiDaFiltrare);
+        GestoreDataset gestoreDataset = new GestoreDataset();
+
+        for (String[] ristorante : gestoreDataset.getDataSet()) {
+            if (ristorante[14].toLowerCase().equals("yes") && !deliveryY) {
+                ristorantiFiltrati.remove(ristorante);
+                System.out.println("Ristorante rimosso: " + ristorante[14].toLowerCase());
+            }
+            
+            if (ristorante[14].toLowerCase().equals("no") && !deliveryN) {
+                ristorantiFiltrati.remove(ristorante);
+            }
+        }
+
+        return ristorantiFiltrati;
     }
 }

@@ -18,7 +18,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        gestore = new Gestore();
+        gestore = Gestore.getGestore();
         scene = new Scene(loadFXML("HomeNotLogged"), 1920, 1080);
         stage.setScene(scene);
         stage.show();

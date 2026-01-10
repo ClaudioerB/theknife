@@ -1,6 +1,7 @@
 package com.mycompany.theknife;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,12 +14,86 @@ public class GestoreDataset {
     private static ArrayList<String[]> dataSet;
     private String filePath;
     private static GestoreDataset gestoreDataset;
+    private static String cucinePath;
+    private static ArrayList<String> dataSetCucina;
 
-    private GestoreDataset() {
+    public GestoreDataset() {
         filePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\datasetRistoranti.csv"; // o "data/file.txt" se il file si trova in una sottodirectory
+        cucinePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\tipiCucine.csv";
+
         dataSet= new ArrayList<String[]>();
+        dataSetCucina= new ArrayList<String>();
         inserimentoDati();
+        inserimentoDatiCucina();
+        //aggiungiRigheCucina();
         gestoreDataset = this;
+    }
+
+    private void aggiungiRigheCucina() {
+
+        boolean checkfirst = true;
+        for (String[] row : this.dataSet) {
+            if (checkfirst) {
+                checkfirst = false;
+                continue;
+            }
+            String tipoCucina = row[5];
+            if (!dataSetCucina.contains(tipoCucina)) {
+                dataSetCucina.add(tipoCucina);
+            }
+        }
+        System.out.println("Cucine caricate nel dataset cucina");
+        //this.dataSetCucina.add(riga);
+        scriviFileCucina();
+        System.out.println();
+    }
+
+    public static void createCucineDataSet() {
+        try {
+            File myObj = new File(cucinePath);
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    public void aggiungiRigaCucina(String riga) {
+        this.dataSetCucina.add(riga);
+        scriviFileCucina();
+    }
+    private void scriviFileCucina() {
+        try (CSVWriter writer = new CSVWriter(new FileWriter(cucinePath),
+        ';',       // separatore personalizzato
+        CSVWriter.NO_QUOTE_CHARACTER,
+        CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+        CSVWriter.DEFAULT_LINE_END)) {
+
+        for (String riga : dataSetCucina) {
+            String[] rigaArray = {riga};
+            writer.writeNext(rigaArray);
+        }
+        writer.flush();
+        System.out.println("CSV scritto con successo!");
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
+    }
+    private void inserimentoDatiCucina() {
+        String[] appoggio;
+        int iRow = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(cucinePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                dataSetCucina.add(line);
+            }
+        } catch (IOException e) {
+            System.out.println("File non trovato."+ e);
+        }
     }
 
     public static GestoreDataset getGestoreDataset() {
@@ -30,6 +105,13 @@ public class GestoreDataset {
 
     public static ArrayList<String[]> getDataSet() {
         return dataSet;
+    }
+    public static ArrayList<String> getDataSetCucina() {
+        return dataSetCucina;
+    }
+    public void printDataSetCucina(int iRow) {
+        String riga = dataSetCucina.get(iRow);
+        System.out.println(riga);
     }
 
 

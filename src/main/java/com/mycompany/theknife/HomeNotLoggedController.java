@@ -65,14 +65,18 @@ public class HomeNotLoggedController {
     @FXML
     private ListView<String> listViewRestaurants;
 
+    @FXML 
+    private javafx.scene.control.Button resetButton;
+
     private ArrayList<String[]> filteredList;
 
-    private GestoreRicerche gestoreRicerche;
+    @FXML 
+    private javafx.scene.control.RadioMenuItem tutteItem;
 
     public HomeNotLoggedController() {
-        gestoreDataset = GestoreDataset.getGestoreDataset();
+        gestoreDataset = new GestoreDataset();
         filteredList = gestoreDataset.getDataSet();
-        gestoreRicerche = GestoreRicerche.getGestoreRicerche();
+        
     }
 
     @FXML
@@ -81,24 +85,135 @@ public class HomeNotLoggedController {
                 + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\user.png";
         System.out.println("Path: " + path);
         java.io.File f = new java.io.File(path);
+
         System.out.println("Esiste? " + f.exists());
 
         if (f.exists()) {
             loginImageView.setImage(
                     new javafx.scene.image.Image(f.toURI().toString())
             );
+            loginImageView.setVisible(true);
+        }
+        else {
+            System.out.println("File immagine non trovato: " + path);
         }
         String knifePath = System.getProperty("user.dir")
-                + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\theknife_icon.png";  
+                + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
         java.io.File knifeFile = new java.io.File(knifePath);
         if (knifeFile.exists()) {       
             knifeImageView.setImage(
                     new javafx.scene.image.Image(knifeFile.toURI().toString())
             );
+            knifeImageView.setVisible(true);
         }
+        //gestoreDataset.createCucineDataSet();
+        //gestoreDataset.aggiungiRigaCucina(path);
+        //gestoreDataset.printDataSetCucina(2);
+
+        ratingFilter.setRating(0);
+        filteredList = gestoreDataset.getDataSet();
+        popolaMenuCucineConRadio();
+
         setFiltersTrue();
-        fillListView(gestoreDataset.getDataSet());
+        fillListView(filteredList);
+    }
+
+    private void popolaMenuCucineConRadio() {
+        ArrayList<String> tipiCucina = new ArrayList<>();
+        boolean checkfirst = true;
+        //for (String row : gestoreDataset.getDataSetCucina()) {
+        for (String row : GestoreDataset.getDataSetCucina()) {
+            if (checkfirst) {
+                checkfirst = false;
+                //tipiCucina.add("Tutte le cucine");
+                continue;
+            }
+            String tipoCucina = row;
+            if (!tipiCucina.contains(tipoCucina)) {
+                tipiCucina.add(tipoCucina);
+            }
+        }
+
+        cucineFilterComboBox.getItems().clear();
+        javafx.scene.control.ToggleGroup toggleGroup = new javafx.scene.control.ToggleGroup();
+
+        tutteItem = new javafx.scene.control.RadioMenuItem("Tutte le cucine");
+        tutteItem.setToggleGroup(toggleGroup);
+        tutteItem.setSelected(true);
+        tutteItem.setId("tutteCucine");
+        tutteItem.setOnAction(e -> {
+            try {
+                checkFilteredList();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        //System.out.println(tutteItem.getId());
+        cucineFilterComboBox.getItems().add(tutteItem);
+
+        cucineFilterComboBox.getItems().add(new javafx.scene.control.SeparatorMenuItem());
+        //cucineFilterComboBox.getItems().clear();
+        for (String tipo : tipiCucina) {
+            javafx.scene.control.RadioMenuItem radioItem = new javafx.scene.control.RadioMenuItem(tipo);
+            radioItem.setToggleGroup(toggleGroup);
+            radioItem.setOnAction(e -> {
+                try {
+                    checkFilteredList();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
+            cucineFilterComboBox.getItems().add(radioItem);
+        }
+        //System.out.println(cucineFilterComboBox.getItems().get(0).getText());
+    }
+
+    private void removeCucina(String selectedCucina) {
+        ArrayList<String[]> tempList = new ArrayList<>(filteredList);
+        for (String[] row : filteredList) {
+            String tipoCucina = row[5].toLowerCase();
+            if (!tipoCucina.equals(selectedCucina)) {
+                tempList.remove(row);
+            }
+        }
+        filteredList = tempList;
+        /*
+        filteredList.removeIf(row -> 
+            row.length > 5 && !row[5].toLowerCase().equals(selectedCucina)
+        ); */
+    }
+
+    private void searchingButtonActionTipiCucine() {
+        //cucineFilterComboBox.getItems();
+        String selectedCucina = "Tutte le cucine";
         
+        for (javafx.scene.control.MenuItem item : cucineFilterComboBox.getItems()) {
+            if (item instanceof javafx.scene.control.SeparatorMenuItem) {
+                continue;  // Salta i separatori
+            }
+        
+            if (item instanceof javafx.scene.control.RadioMenuItem) {
+                javafx.scene.control.RadioMenuItem radioItem = (javafx.scene.control.RadioMenuItem) item;
+                if (radioItem.isSelected()) {
+                    //if (item.isSelected()) {
+                selectedCucina = radioItem.getText();
+                break;
+                //System.out.println(selectedCucina);
+                /*if (selectedCucina.equals("Tutte le cucine")) {
+                    return;
+                } else {
+                    removeCucina(selectedCucina);
+                }*/
+                //removeCucina(selectedCucina);
+            }
+        }
+        }
+
+        if (selectedCucina.equals("Tutte le cucine")) {
+            return;
+        } else {
+            removeCucina(selectedCucina.toLowerCase());
+        }
     }
 
     private void setFiltersTrue() {
@@ -110,12 +225,16 @@ public class HomeNotLoggedController {
         deliveryFalseCheckMenuItem.setSelected(true);
         prenotationTrueCheckMenuItem.setSelected(true);
         prenotationFalseCheckMenuItem.setSelected(true);
+        //tutteItem.setSelected(true);
+        if (tutteItem != null) {
+            tutteItem.setSelected(true);
+        }
+        //tutteCucine.setSelected(true);
     }
 
     @FXML
     private void changeLoginImage() {
-        String newPath = System.getProperty("user.dir")
-                + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\user_1.png"; 
+        String newPath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\user_1.png"; 
         java.io.File newFile = new java.io.File(newPath);
         if (newFile.exists()) {
             loginImageView.setImage(
@@ -127,53 +246,78 @@ public class HomeNotLoggedController {
     private void fillListView(ArrayList<String[]> list) {
         listViewRestaurants.getItems().clear();
         boolean checkfirst = true;
+        String deliveryValue, prenotationValue;
         for (String[] row : list) {
             if (checkfirst) {
                 checkfirst = false;
             }else {
-                listViewRestaurants.getItems().add("Nome: "+row[0] + " - Stato: " + row[2] + " -Città: " + row[3]+ " -Prezzo:" + row[4] + " -Tipo: " + row[5] );
+                deliveryValue = setDeliveryOrPrenotationValue(row[14]);
+                prenotationValue = setDeliveryOrPrenotationValue(row[15]);
+
+                listViewRestaurants.getItems().add("Nome: "+row[0] + " - Stato: " + row[2] + " - Città: " + row[3]+ " - Prezzo:" + row[4] + " - Tipo: " + row[5] + " - Consegna: " + deliveryValue + " - Prenotazione: " + prenotationValue + " - Valutazione: " + row[13]);
                 listViewRestaurants.refresh();
             }
-        }       
+        }
+        if (list.isEmpty() || (list.size() == 1 && checkfirst == false)) {
+            listViewRestaurants.getItems().add("Nessun ristorante trovato con i filtri selezionati.");
+            listViewRestaurants.refresh();
+        }
     }
 
-    private void printFilteredList() {
-        for (String[] row : filteredList) {
-            System.out.println("Nome: "+row[0] + " - Stato: " + row[2] + " -Città: " + row[3]+ " -Prezzo:" + row[4] + " -Tipo: " + row[5] );
-        }       
+    private String setDeliveryOrPrenotationValue(String value) {
+        if (value.equals("1")) {
+            return "Sì";
+        } else if (value.equals("0")) {
+            return "No";
+        }
+        return "N/A";
     }
-    private void priceFilterComboBoxAction() {
-        GestoreRicerche gestoreRicerche = GestoreRicerche.getGestoreRicerche();
+
+    private void pricingFilterComboBoxAction() {
         if (!price1CheckMenuItem.isSelected()) {
-            filteredList=gestoreRicerche.trovaRistorantiCosto("€",filteredList);
+            removePrice(1);
         }
         if (!price2CheckMenuItem.isSelected()) {
-            filteredList=gestoreRicerche.trovaRistorantiCosto("€€",filteredList);
+            removePrice(2);
         }
-        
         if (!price3CheckMenuItem.isSelected()) {
-            filteredList=gestoreRicerche.trovaRistorantiCosto("€€€",filteredList);
+            removePrice(3);
         }
-        
         if (!price4CheckMenuItem.isSelected()) {
-            filteredList=gestoreRicerche.trovaRistorantiCosto("€€€€",filteredList);
-            printFilteredList();
-        }
-        
-
-    }
-
-    private void removeFromFilteredList(ArrayList<Integer> rowsToRemove) {
-        for (Integer rowIndex : rowsToRemove) {
-            filteredList.remove(rowIndex.intValue());
+            removePrice(4);
         }
     }
 
-    private void searchButtonAction() {
+    private void removePrice(int num) {
+        ArrayList<String[]> tempList = new ArrayList<>(filteredList);
+        for (String[] row : filteredList) {
+            String prezzo = row[4];
+            if (prezzo.length() == num) {
+                tempList.remove(row);
+            }
+        }
+        filteredList = tempList;
+    }
+
+    private void removeTag(String value, int id) {
+        ArrayList<String[]> tempList = new ArrayList<>(filteredList);
+        for (String[] row : filteredList) {
+            String code = row[id];
+            if (code.contains(value)) {
+                tempList.remove(row);
+            }
+        }
+        filteredList = tempList;
+    }
+
+    @FXML 
+    private void searchingButtonAction() {
         String searchText = searchTextField.getText().toLowerCase();
         listViewRestaurants.getItems().clear();
         boolean checkfirst = true;
-        for (String[] row : gestoreDataset.getDataSet()) {
+        ArrayList<String[]> tempList = new ArrayList<>();
+        ArrayList<String[]> tempList2 = new ArrayList<>(filteredList);
+        for (String[] row : filteredList) {
             if (checkfirst) {
                 checkfirst = false;
             } else {
@@ -183,82 +327,89 @@ public class HomeNotLoggedController {
                 String prezzo = row[4].toLowerCase();
                 String tipo = row[5].toLowerCase();
 
-                if (nome.contains(searchText) || stato.contains(searchText) ||
+                if (!(nome.contains(searchText) || stato.contains(searchText) ||
                     citta.contains(searchText) || prezzo.contains(searchText) ||
-                    tipo.contains(searchText)) {
-                    
-                    //listViewRestaurants.getItems().add("Nome: " + row[0] + " - Stato: " + row[2] + " -Città: " + row[3] + " -Prezzo:" + row[4] + " -Tipo: " + row[5]);
-                }
-                else {
-                    filteredList.remove(row);
+                    tipo.contains(searchText))) {
+                        //tempList.add(row);
+                        tempList2.remove(row);
+                        //listViewRestaurants.getItems().add("Nome: " + row[0] + " - Stato: " + row[2] + " -Città: " + row[3] + " -Prezzo:" + row[4] + " -Tipo: " + row[5]);
                 }
             }
         }
-    }
-    
-   
-    private void deliveryFilterComboBoxAction() throws IOException {
-        boolean yesSelected;
-        boolean noSelected;
-        if (deliveryTrueCheckMenuItem.isSelected()) {
-            // Aggiungi filtro consegna disponibile
-            yesSelected=true;
-        } else {
-            // Rimuovi filtro consegna disponibile
-            yesSelected=false;
-        }
-        if(deliveryFalseCheckMenuItem.isSelected()){
-                noSelected=true;
-        } else {
-                noSelected=false;
-        }
-        
-        fillListView(gestoreRicerche.trovaRistorantiDelivery(yesSelected,noSelected,filteredList));
+        filteredList = tempList2;
     }
 
-   
-    private void ratingsAction() throws IOException {
+    private void deliveringFilterComboBoxAction2() throws IOException {
+        int tag = 14;
+        if (!deliveryTrueCheckMenuItem.isSelected()) {
+            removeTag("1", tag);
+        }
+        if(!deliveryFalseCheckMenuItem.isSelected()){
+            removeTag("0", tag);
+        }
+    }
+
+    private void bookingFilterComboBoxAction2() throws IOException {
+        int tag = 15;
+        if (!prenotationTrueCheckMenuItem.isSelected()) {
+            removeTag("1", tag);
+        }
+        if(!prenotationFalseCheckMenuItem.isSelected()){
+            removeTag("0", tag);
+        }
+    }
+
+    private void starAction() {
+        int tag = 13;
         double rating = ratingFilter.getRating();
-        
-        filteredList=gestoreRicerche.trovaRistorantiRating(rating, filteredList);
-    }
-    
- 
-    private void prenotationFilterComboBoxAction() throws IOException {
-        boolean yesSelected;
-        boolean noSelected;
-        if (prenotationTrueCheckMenuItem.isSelected()) {
-            // Aggiungi filtro prenotazione disponibile
-            yesSelected=true;
-            
-        } else {
-            // Rimuovi filtro prenotazione disponibile
-            yesSelected=false;
-        }
-        if(prenotationFalseCheckMenuItem.isSelected()){
-                noSelected=true;
-        } else {
-                noSelected=false;
-        }
-    
-        filteredList=gestoreRicerche.trovaRistorantiPrenotation(yesSelected,noSelected,filteredList);
-    }
+        System.out.println(rating);
 
-    private void cucineFilterComboBoxAction() {
-        // Implementa il filtro per tipo di cucina
-        
-    }
+        if (rating  == 0) {
+            // Non applicare alcun filtro
+            return;
+        }
+        else {
+            ArrayList<String[]> tempList = new ArrayList<>(filteredList);
+            for (String[] row : filteredList) {
+                double restaurantRating;
+                try {
+                    restaurantRating = Double.parseDouble(row[tag]);
+                } catch (NumberFormatException e) {
+                    // Se il valore non è un numero valido, rimuovi il ristorante
+                    tempList.remove(row);
+                    continue;
+                }
+                if (restaurantRating != rating) {
+                    tempList.remove(row);
+                }
+                /*if (restaurantRating < rating) {
+                    tempList.remove(row);
+                } */
+            }
+            filteredList = tempList;
+        }
+    }    
 
     @FXML
     private void checkFilteredList() throws IOException {
         filteredList = gestoreDataset.getDataSet();
-        prenotationFilterComboBoxAction();
-        deliveryFilterComboBoxAction();
-        priceFilterComboBoxAction();
-        ratingsAction();
-        cucineFilterComboBoxAction();
-        searchButtonAction();
-        //printFilteredList();
+        //prenotationFilterComboBoxAction();
+        starAction();
+        searchingButtonActionTipiCucine();
+        deliveringFilterComboBoxAction2();
+        bookingFilterComboBoxAction2();
+        pricingFilterComboBoxAction();
+        searchingButtonAction();
+        fillListView(filteredList);
+    }
+
+
+    @FXML 
+    private void resetButtonAction() {
+        setFiltersTrue();
+        ratingFilter.setRating(0);
+        searchTextField.clear();
+        filteredList = gestoreDataset.getDataSet();
         fillListView(filteredList);
     }
 

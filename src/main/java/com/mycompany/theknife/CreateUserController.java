@@ -80,7 +80,7 @@ public class CreateUserController {
         String indirizzo = indirizzoTextField.getText();
         boolean isCliente = clienteCheckBox.isSelected();
         boolean isRistoratore = ristoratoreCheckBox.isSelected();
-        GestoreUtenti gestoreUtenti = new GestoreUtenti();
+        GestoreUtenti gestoreUtenti = GestoreUtenti.getGestoreUtenti();
         if (gestoreUtenti.creaUtente(username, password, email, nome, cognome, stato, citta, indirizzo, isRistoratore)) {
             App.setRoot("Login");
         } else {
