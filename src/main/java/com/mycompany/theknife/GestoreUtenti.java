@@ -136,6 +136,17 @@ public class GestoreUtenti {
         }
         return false; // Credenziali non valide
     }
+
+public boolean controlloPassword(String password) {
+        // Implementa qui la logica per controllare la validità della password
+        // Ad esempio, puoi verificare la lunghezza minima, la presenza di caratteri speciali, ecc.
+        if (password.length() >= 8 && password.matches(".*[A-Z].*") && password.matches(".*[a-z].*") && password.matches(".*\\d.*")) {
+            return true; // Password valida
+        } else {
+            return false; // Password non valida
+        }
+    }
+
     public Utente getUtenteByUsername(String username) {
         for (Utente utente : utenti) {
             if (utente.getUsername().equals(username)) {
@@ -153,6 +164,9 @@ public class GestoreUtenti {
             }
             if(utente.getEmail().equals(nuovoUtente.getEmail())) {
                 return 2; // Email già esistente
+            }
+            if(!controlloPassword(nuovoUtente.getPasswordHash())) {
+                return 3; // Password non valida
             }
         }
         // Aggiungi il nuovo utente alla lista

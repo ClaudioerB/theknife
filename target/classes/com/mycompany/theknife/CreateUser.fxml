@@ -96,12 +96,15 @@
             <TextField fx:id="cittaTextField" layoutX="1614.0" layoutY="663.0" />
             <TextField fx:id="statoTextField" layoutX="92.0" layoutY="668.0" />
             <PasswordField fx:id="emailTextField" layoutX="873.0" layoutY="676.0" />
-            <Label layoutX="919.0" layoutY="628.0" text="email">
+            <Label layoutX="919.0" layoutY="628.0" text="Email">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label fx:id="creationErrorMessageLabel" alignment="CENTER" layoutX="873.0" layoutY="330.0" prefHeight="25.0" prefWidth="134.0" text="Username già esistente" textFill="#f80808" />
+            <Label fx:id="creationUsernameErrorMessageLabel" alignment="CENTER" layoutX="881.0" layoutY="331.0" prefHeight="25.0" prefWidth="134.0" text="Username già esistente" textFill="#f80808" />
+            <Label fx:id="creationEmailErrorMessageLabel" alignment="CENTER" layoutX="881.0" layoutY="711.0" prefHeight="25.0" prefWidth="134.0" text="Email già usata" textFill="#f80808" />
+            <Label fx:id="creationPassword1ErrorMessageLabel" alignment="CENTER" layoutX="565.0" layoutY="538.0" prefHeight="25.0" prefWidth="766.0" text="La password deve essere di almeno 8 caratteri e deve contenere almeno:" textFill="#f80808" />
+            <Label fx:id="creationPassword2ErrorMessageLabel" alignment="CENTER" layoutX="565.0" layoutY="563.0" prefHeight="25.0" prefWidth="766.0" text=" 1 carattere maiuscolo, 1 minuscolo, 1 numero e 1 carattere speciale" textFill="#f80808" />
          </children>
       </AnchorPane>
     </children>

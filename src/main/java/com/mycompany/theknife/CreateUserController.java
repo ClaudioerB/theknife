@@ -53,7 +53,10 @@ public class CreateUserController {
 
     @FXML 
     private javafx.scene.control.Label creationEmailErrorMessageLabel;
-
+    @FXML 
+    private javafx.scene.control.Label creationPassword1ErrorMessageLabel;
+    @FXML 
+    private javafx.scene.control.Label creationPassword2ErrorMessageLabel;
     @FXML
     private DatePicker dataDiNascitaDatePicker;
 
@@ -61,6 +64,9 @@ public class CreateUserController {
     @FXML
     private void initialize() {
         creationUsernameErrorMessageLabel.setVisible(false);
+        creationEmailErrorMessageLabel.setVisible(false);
+        creationPassword1ErrorMessageLabel.setVisible(false);
+        creationPassword2ErrorMessageLabel.setVisible(false);
         String knifePath = System.getProperty("user.dir")
                 + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
         java.io.File knifeFile = new java.io.File(knifePath);
@@ -90,8 +96,14 @@ public class CreateUserController {
         } else {
             if(gestoreUtenti.creaUtente(utente)==2)
                 creationEmailErrorMessageLabel.setVisible(true);
-            else
+            if(gestoreUtenti.creaUtente(utente)==1)
                 creationUsernameErrorMessageLabel.setVisible(true);
+            if(gestoreUtenti.creaUtente(utente)==3){
+                creationPassword1ErrorMessageLabel.setVisible(true);
+                creationPassword2ErrorMessageLabel.setVisible(true);
+            }
+                
+
         }
     }
     
