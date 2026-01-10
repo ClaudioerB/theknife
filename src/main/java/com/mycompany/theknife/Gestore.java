@@ -73,7 +73,7 @@ public class Gestore {
         } while (n != 0);
     }
     
-    private void testUtenti(){
+    /*private void testUtenti(){
         GestoreUtenti gestoreUtenti= GestoreUtenti.getGestoreUtenti();
         int n;
         do {
@@ -100,7 +100,7 @@ public class Gestore {
                     gestoreUtenti.printUtenti();
             }
         } while (n!=0);
-    }
+    }*/
     
     public String addData() {
         LocalDateTime myDateObj = LocalDateTime.now();   

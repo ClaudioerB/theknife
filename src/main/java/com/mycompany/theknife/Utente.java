@@ -1,22 +1,23 @@
 package com.mycompany.theknife;
 
 public class Utente {
-    private String nome, cognome, username, nick, passwordHash, città, indirizzo, numeroCivico, Latitudine,Longitudine;
+    private String nome, cognome, username, email, passwordHash, città, indirizzo, stato;
+    private boolean isRistoratore;
 
     
 
-    public Utente(String nome, String cognome, String username, String nick, String passwordHash, String città,
-            String indirizzo, String numeroCivico, String latitudine, String longitudine) {
+    public Utente(String username, String passwordHash,String email,String nome, String cognome, String stato, String città,
+            String indirizzo, boolean isRistoratore) {
         this.nome = nome;
         this.cognome = cognome;
         this.username = username;
-        this.nick = nick;
+        this.email = email;
         this.passwordHash = passwordHash;
         this.città = città;
         this.indirizzo = indirizzo;
-        this.numeroCivico = numeroCivico;
-        Latitudine = latitudine;
-        Longitudine = longitudine;
+        this.stato = stato;
+        this.isRistoratore = isRistoratore;
+
     }
     
     
@@ -24,25 +25,6 @@ public class Utente {
     }
 
     
-
-    public String getLatitudine() {
-        return Latitudine;
-    }
-
-
-    public void setLatitudine(String latitudine) {
-        Latitudine = latitudine;
-    }
-
-
-    public String getLongitudine() {
-        return Longitudine;
-    }
-
-
-    public void setLongitudine(String longitudine) {
-        Longitudine = longitudine;
-    }
 
 
     public String getNome() {
@@ -69,12 +51,12 @@ public class Utente {
         this.username = username;
     }
 
-    public String getNick() {
-        return nick;
+    public String getEmail() {
+        return email;
     }
 
-    public void setNick(String nick) {
-        this.nick = nick;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPasswordHash() {
@@ -101,12 +83,18 @@ public class Utente {
         this.indirizzo = indirizzo;
     }
 
-    public String getNumeroCivico() {
-        return numeroCivico;
+    public String getStato() {
+        return stato;
+    }
+    public void setStato(String stato) {
+        this.stato = stato;
+    }
+    public boolean isRistoratore() {
+        return isRistoratore;
+    }
+    public void setRistoratore(boolean isRistoratore) {
+        this.isRistoratore = isRistoratore;
     }
 
-    public void setNumeroCivico(String numeroCivico) {
-        this.numeroCivico = numeroCivico;
-    }
     
 }

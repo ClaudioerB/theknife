@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="1080.0" prefWidth="1920.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.LoginController">
+<VBox alignment="CENTER" prefHeight="1080.0" prefWidth="1920.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.CreateUserController">
     <children>
       <AnchorPane prefHeight="1090.0" prefWidth="1880.0">
          <children>
@@ -27,74 +27,81 @@
                   <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png" />
                </image>
             </ImageView>
-            <Label layoutX="887.0" layoutY="322.0" text="Username" textAlignment="CENTER">
+            <Label layoutX="894.0" layoutY="246.0" text="Username" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <PasswordField fx:id="passwordField" layoutX="866.0" layoutY="577.0" />
-            <TextField fx:id="usernameTextField" layoutX="866.0" layoutY="371.0" />
-            <Label layoutX="888.0" layoutY="526.0" text="Password">
+            <PasswordField fx:id="passwordField" layoutX="873.0" layoutY="501.0" />
+            <TextField fx:id="usernameTextField" layoutX="873.0" layoutY="295.0" />
+            <Label layoutX="895.0" layoutY="450.0" text="Password">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button layoutX="898.0" layoutY="854.0" mnemonicParsing="false" text="Crea">
+            <Button fx:id="createUserButton" layoutX="893.0" layoutY="963.0" mnemonicParsing="false" text="Crea">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Label layoutX="126.0" layoutY="322.0" text="Nome" textAlignment="CENTER">
+            <Label layoutX="133.0" layoutY="246.0" text="Nome" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameTextField1" layoutX="85.0" layoutY="370.0" />
-            <Label layoutX="107.0" layoutY="528.0" text="Cognome">
+            <TextField fx:id="nomeTextField" layoutX="92.0" layoutY="294.0" />
+            <Label layoutX="114.0" layoutY="452.0" text="Cognome">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="1603.0" layoutY="322.0" text="Data di nascita">
+            <Label layoutX="1610.0" layoutY="246.0" text="Data di nascita">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <DatePicker layoutX="1594.0" layoutY="364.0" />
-            <Label layoutX="1665.0" layoutY="526.0" text="Via" textAlignment="CENTER">
+            <DatePicker fx:id="dataDiNascitaDatePicker" layoutX="1601.0" layoutY="288.0" />
+            <Label layoutX="1672.0" layoutY="450.0" text="Via" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameTextField2" layoutX="1607.0" layoutY="571.0" />
-            <TextField fx:id="usernameTextField11" layoutX="85.0" layoutY="576.0" />
-            <Label layoutX="891.0" layoutY="660.0" text="Cosa sei?">
+            <TextField fx:id="indirizzoTextField" layoutX="1614.0" layoutY="495.0" />
+            <TextField fx:id="cognomeTextField" layoutX="92.0" layoutY="500.0" />
+            <Label layoutX="886.0" layoutY="769.0" text="Cosa sei?">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <CheckBox layoutX="806.0" layoutY="730.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="85.0" text="Cliente">
+            <CheckBox fx:id="clienteCheckBox" layoutX="801.0" layoutY="839.0" mnemonicParsing="false" onAction="#CheckBoxes1Checker" prefHeight="43.0" prefWidth="85.0" text="Cliente">
                <font>
                   <Font size="14.0" />
                </font>
             </CheckBox>
-            <CheckBox layoutX="988.0" layoutY="730.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="98.0" text="Ristoratore">
+            <CheckBox fx:id="ristoratoreCheckBox" layoutX="983.0" layoutY="839.0" mnemonicParsing="false" onAction="#CheckBoxes2Checker" prefHeight="43.0" prefWidth="98.0" text="Ristoratore">
                <font>
                   <Font size="14.0" />
                </font>
             </CheckBox>
-            <Label layoutX="131.0" layoutY="691.0" text="Stato">
+            <Label layoutX="138.0" layoutY="615.0" text="Stato">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="1656.0" layoutY="691.0" text="Città" textAlignment="CENTER">
+            <Label layoutX="1663.0" layoutY="615.0" text="Città" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameTextField21" layoutX="1607.0" layoutY="739.0" />
-            <TextField fx:id="usernameTextField111" layoutX="85.0" layoutY="744.0" />
+            <TextField fx:id="cittaTextField" layoutX="1614.0" layoutY="663.0" />
+            <TextField fx:id="statoTextField" layoutX="92.0" layoutY="668.0" />
+            <PasswordField fx:id="emailTextField" layoutX="873.0" layoutY="676.0" />
+            <Label layoutX="919.0" layoutY="628.0" text="email">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="creationErrorMessageLabel" alignment="CENTER" layoutX="873.0" layoutY="330.0" prefHeight="25.0" prefWidth="134.0" text="Username già esistente" textFill="#f80808" />
          </children>
       </AnchorPane>
     </children>

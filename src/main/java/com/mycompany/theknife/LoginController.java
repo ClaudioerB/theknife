@@ -43,8 +43,8 @@ public class LoginController {
     
     @FXML
     private void switchToRegister() throws IOException {
-        App.setRoot("Register");
-        //App.setRoot("CreateUser");
+       
+        App.setRoot("CreateUser");
     }
 
     @FXML

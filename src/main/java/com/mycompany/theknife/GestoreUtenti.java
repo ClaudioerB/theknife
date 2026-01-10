@@ -145,9 +145,18 @@ public class GestoreUtenti {
         return null; // Utente non trovato
     }
 
-    public boolean creaUtente(String username, String password, String email, String nome, String cognome, String stato,
-            String citta, String indirizzo, boolean isRistoratore) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'creaUtente'");
+    public int creaUtente(Utente nuovoUtente) {
+        // Verifica se l'username esiste già
+        for (Utente utente : utenti) {
+            if (utente.getUsername().equals(nuovoUtente.getUsername())) {
+                return 1; // Username già esistente
+            }
+            if(utente.getEmail().equals(nuovoUtente.getEmail())) {
+                return 2; // Email già esistente
+            }
+        }
+        // Aggiungi il nuovo utente alla lista
+        utenti.add(nuovoUtente);
+        return 0; // Utente creato con successo
     }
 }

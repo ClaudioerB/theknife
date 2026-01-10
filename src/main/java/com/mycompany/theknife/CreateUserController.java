@@ -5,6 +5,7 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -48,17 +49,18 @@ public class CreateUserController {
     private CheckBox ristoratoreCheckBox;
 
     @FXML 
-    private javafx.scene.control.Label loginErrorMessageLabel;
+    private javafx.scene.control.Label creationUsernameErrorMessageLabel;
+
+    @FXML 
+    private javafx.scene.control.Label creationEmailErrorMessageLabel;
 
     @FXML
-    private Button registerButton;
+    private DatePicker dataDiNascitaDatePicker;
 
-    @FXML
-    private Button accediButton;
 
     @FXML
     private void initialize() {
-        loginErrorMessageLabel.setVisible(false);
+        creationUsernameErrorMessageLabel.setVisible(false);
         String knifePath = System.getProperty("user.dir")
                 + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
         java.io.File knifeFile = new java.io.File(knifePath);
@@ -81,28 +83,31 @@ public class CreateUserController {
         boolean isCliente = clienteCheckBox.isSelected();
         boolean isRistoratore = ristoratoreCheckBox.isSelected();
         GestoreUtenti gestoreUtenti = GestoreUtenti.getGestoreUtenti();
-        if (gestoreUtenti.creaUtente(username, password, email, nome, cognome, stato, citta, indirizzo, isRistoratore)) {
-            App.setRoot("Login");
+        Utente utente= new Utente(username, password, email, nome, cognome, stato, citta, indirizzo, isRistoratore);
+        if (gestoreUtenti.creaUtente(utente)==0) {
+            
+            App.setRoot("HomeLogged");
         } else {
-            loginErrorMessageLabel.setVisible(true);
+            if(gestoreUtenti.creaUtente(utente)==2)
+                creationEmailErrorMessageLabel.setVisible(true);
+            else
+                creationUsernameErrorMessageLabel.setVisible(true);
         }
     }
+    
     @FXML
-    private void switchToRegister() throws IOException {
-        App.setRoot("Register");
+    private void CheckBoxes1Checker() {
+        if (clienteCheckBox.isSelected()) {
+            ristoratoreCheckBox.setSelected(false);
+        }
+        
     }
 
     @FXML
-    private void switchToHomeLogged() throws IOException {
-        String username = usernameTextField.getText();
-        String password = passwordField.getText();
-        GestoreUtenti gestoreUtenti = GestoreUtenti.getGestoreUtenti();
-        Gestore gestore = Gestore.getGestore();
-        if (gestoreUtenti.verificaCredenziali(username, password)) {
-            gestore.setUtenteLoggato(gestoreUtenti.getUtenteByUsername(username));
-            App.setRoot("HomeLogged");
-        } else {
-            loginErrorMessageLabel.setVisible(true);
+    private void CheckBoxes2Checker() {
+        
+        if (ristoratoreCheckBox.isSelected()) {
+            clienteCheckBox.setSelected(false);
         }
     }
     
