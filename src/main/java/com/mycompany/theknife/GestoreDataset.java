@@ -159,7 +159,6 @@ public class GestoreDataset {
     }
     private void scriviFile() {
         
-           
         try (CSVWriter writer = new CSVWriter(new FileWriter(filePath),
         ';',       // separatore personalizzato
         CSVWriter.NO_QUOTE_CHARACTER,
@@ -176,8 +175,6 @@ public class GestoreDataset {
         } catch (IOException e) {
         e.printStackTrace();
         }
-                
-
     }
     private void inserimentoDati() {
         String[] appoggio;
