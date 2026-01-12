@@ -10,14 +10,19 @@ import com.opencsv.CSVWriter;
 
 public class GestoreUtenti {
     ArrayList<Utente> utenti;
+    ArrayList<String[]> users;
     private String filePath;
+    private String fileUserPath;
     private static GestoreUtenti gestoreUtenti;
 
     private GestoreUtenti() {
         filePath = System.getProperty("user.dir")+"/src/main/resources/Users/users.csv"; 
+        fileUserPath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\datasetUtenti.csv";
         this.utenti = new ArrayList<Utente>();
+        this.users = new ArrayList<String[]>();
         gestoreUtenti = this;
-        inserimentoDati();
+        //inserimentoDati();
+        inserimentoNewDati();
     }
     public static GestoreUtenti getGestoreUtenti() {
         if(gestoreUtenti == null) {
@@ -44,18 +49,18 @@ public class GestoreUtenti {
     }
     public void aggiungiUtente(Utente utente) {
         utenti.add(utente);
-        scriviFile();
+        scriviNewFile();
     }
     public void rimuoviUtente(int i) {
         utenti.remove(i);
-        scriviFile();
+        scriviNewFile();
     }
     public void printUtenti() {
         for (Utente utente : utenti) {
-            System.out.println(utente.getNome()+" "+utente.getCognome()+" "+utente.getUsername()+" "+utente.getNick()+" "+utente.getPasswordHash()+" "+utente.getCittà()+" "+utente.getIndirizzo()+" "+utente.getNumeroCivico()+" "+utente.getLatitudine()+" "+utente.getLongitudine());
+            System.out.println(utente.getNome()+" "+utente.getCognome()+" "+utente.getUsername()+" "+utente.getPasswordHash()+" "+utente.getCittà()+" "+utente.getIndirizzo());
         }
     }
-    private void scriviFile() {
+    /*private void scriviFile() {
         
            
         try (CSVWriter writer = new CSVWriter(new FileWriter(filePath),
@@ -85,8 +90,87 @@ public class GestoreUtenti {
         } catch (IOException e) {
         e.printStackTrace();
         }
-    }  
-    private void inserimentoDati() {
+    }  */
+
+    private void scriviNewFile() {
+        
+    
+        try (CSVWriter writer = new CSVWriter(new FileWriter(fileUserPath),
+        ';',       // separatore personalizzato
+        CSVWriter.NO_QUOTE_CHARACTER,
+        CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+        CSVWriter.DEFAULT_LINE_END)) {
+        String[] riga = new String[10];
+        for (int i=0; i<utenti.size(); i++){
+            riga[0] = utenti.get(i).getId();
+            riga[1] = utenti.get(i).getUsername();
+            riga[2] = utenti.get(i).getPasswordHash();
+            riga[3] = utenti.get(i).getEmail();
+            riga[4] = utenti.get(i).getNome();
+            riga[5] = utenti.get(i).getCognome();
+            riga[6] = utenti.get(i).getStato();
+            riga[7] = utenti.get(i).getCittà();
+            riga[8] = utenti.get(i).getIndirizzo();
+            if (utenti.get(i).isRistoratore()) {
+                riga[9] = "1";
+            } else {
+                riga[9] = "0";
+            }
+            writer.writeNext(riga);
+        
+        }
+        writer.flush();
+
+        System.out.println("CSV scritto con successo!");
+
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
+    }
+
+    private void inserimentoNewDati() {
+        String[] appoggio;
+        int iRow = 0;
+        String idAppoggio;
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileUserPath))) {
+            String line;
+            
+            while ((line = reader.readLine()) != null) {
+                /*users.add(new String[10]);
+                appoggio = line.split(";");
+                for(int i = 0; i<10;i++){
+                    users.get(iRow)[i] = appoggio[i];
+                }*/
+                //users.add();
+                utenti.add(new Utente());
+                appoggio = line.split(";");
+                /*if (utenti.get(iRow-1) != null) {
+                    utenti.get(iRow).getId
+                }*/
+                utenti.get(iRow).setId(appoggio[0]);
+                utenti.get(iRow).setUsername(appoggio[1]);
+                utenti.get(iRow).setPasswordHash(appoggio[2]);
+                utenti.get(iRow).setEmail(appoggio[3]);
+                utenti.get(iRow).setNome(appoggio[4]);
+                utenti.get(iRow).setCognome(appoggio[5]);
+                utenti.get(iRow).setStato(appoggio[6]);
+                utenti.get(iRow).setCittà(appoggio[7]);
+                utenti.get(iRow).setIndirizzo(appoggio[8]);
+                if (appoggio[9].equals("1")) {
+                    utenti.get(iRow).setRistoratore(true);
+                } else {
+                    utenti.get(iRow).setRistoratore(false);
+                }
+                //utenti.get(iRow).setRistoratore(appoggio[9]);
+
+                iRow++;
+            }
+        } catch (IOException e) {
+            System.out.println("File non trovato.");
+        }
+    }
+
+    /*private void inserimentoDati() {
         String[] appoggio;
         int iRow = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -111,7 +195,7 @@ public class GestoreUtenti {
         } catch (IOException e) {
             System.out.println("File non trovato.");
         }
-    }
+    }*/
     public int numeroRighe() {
         
         
@@ -133,7 +217,16 @@ public class GestoreUtenti {
             if (utente.getUsername().equals(username) && utente.getPasswordHash().equals(password)) {
                 return true; // Credenziali valide
             }
+            if (utente.getUsername() != null) {
+                System.out.println("Username scorretto");
+            }
         }
+        /*for (String[] user : users) {
+            //System.out.println(user[2]);
+            if (user[1].equals(username) && user[2].equals(password)) {
+                return true; // Credenziali valide
+            }
+        }*/
         return false; // Credenziali non valide
     }
 
