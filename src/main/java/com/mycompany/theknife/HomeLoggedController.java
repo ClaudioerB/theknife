@@ -73,6 +73,11 @@ public class HomeLoggedController {
     @FXML 
     private javafx.scene.control.RadioMenuItem tutteItem;
 
+    @FXML 
+    private javafx.scene.control.
+
+    private Utente utenteLoggato;
+
    public HomeLoggedController() {
         gestoreDataset = new GestoreDataset();
         filteredList = gestoreDataset.getDataSet();
@@ -106,6 +111,8 @@ public class HomeLoggedController {
             );
             knifeImageView.setVisible(true);
         }
+
+        utenteLoggato = Gestore.getGestore().getUtenteLoggato();
         //gestoreDataset.createCucineDataSet();
         //gestoreDataset.aggiungiRigaCucina(path);
         //gestoreDataset.printDataSetCucina(2);
@@ -116,6 +123,10 @@ public class HomeLoggedController {
 
         setFiltersTrue();
         fillListView(filteredList);
+    }
+
+    private void setUsername() {
+        
     }
 
     private void popolaMenuCucineConRadio() {
@@ -416,6 +427,11 @@ public class HomeLoggedController {
     @FXML
     private void switchToLogin() throws IOException {
         App.setRoot("ModUser");
+    }
+
+    @FXML 
+    private void switchToHome() throws IOException {
+        App.setRoot("HomeNotLogged");
     }
 }
 

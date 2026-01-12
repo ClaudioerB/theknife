@@ -217,9 +217,9 @@ public class GestoreUtenti {
             if (utente.getUsername().equals(username) && utente.getPasswordHash().equals(password)) {
                 return true; // Credenziali valide
             }
-            if (utente.getUsername() != null) {
+            /*if (utente.getUsername() != null) {
                 System.out.println("Username scorretto");
-            }
+            }*/
         }
         /*for (String[] user : users) {
             //System.out.println(user[2]);
