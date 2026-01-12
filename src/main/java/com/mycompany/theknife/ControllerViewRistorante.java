@@ -62,12 +62,21 @@ public class ControllerViewRistorante {
     private String[] servizi;
     private String[] tipiCucina;
     private GestoreRecensioni gestoreRecensioni;
-    private boolean Modifica;
+    private static boolean Modifica;
+    private static ControllerViewRistorante instance = null;
 
-    public ControllerViewRistorante(String[] ristoranteInfo, boolean modifica) {
+    private ControllerViewRistorante(String[] ristoranteInfo, boolean modifica) {
         gestoreRecensioni= GestoreRecensioni.getGestoreRecensioni();
         ristorante = ristoranteInfo;
         this.Modifica = modifica;
+    }
+    public static void getInstance(String[] ristoranteInfo, boolean modifica) {
+        if(instance == null)
+            instance =new ControllerViewRistorante(ristoranteInfo, modifica);
+        else {
+            ristorante = ristoranteInfo;
+            Modifica = modifica;
+        }
     }
     public void initialize() {
         recensioni = gestoreRecensioni.getRecensioniRistorante(ristorante[16]);

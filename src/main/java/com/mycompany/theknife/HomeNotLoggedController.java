@@ -3,6 +3,8 @@ package com.mycompany.theknife;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
@@ -67,8 +69,12 @@ public class HomeNotLoggedController {
 
     @FXML 
     private javafx.scene.control.Button resetButton;
+    
+    @FXML
+    private javafx.scene.control.Button viewButton;
 
     private ArrayList<String[]> filteredList;
+    
 
     @FXML 
     private javafx.scene.control.RadioMenuItem tutteItem;
@@ -116,6 +122,17 @@ public class HomeNotLoggedController {
 
         setFiltersTrue();
         fillListView(filteredList);
+    }
+    @FXML
+    private void visulizzaRistoranteButtonAction() throws IOException {
+        String selectedItem = listViewRestaurants.getSelectionModel().getSelectedItem();
+        if (selectedItem == null || selectedItem.startsWith("Nessun ristorante trovato")) {
+            // Nessun elemento selezionato o messaggio di nessun ristorante trovato
+            return;
+        }
+        String idRistorante = selectedItem.split(" - ")[0].replace("Ristorante N: ", "").trim();
+        //ControllerViewRistorante viewRistoranteController = ControllerViewRistorante.getInstance(GestoreRicerche.getGestoreRicerche().trovaRistorantiID(idRistorante), false);
+        App.setRoot("ViewRistorante");
     }
 
     private void popolaMenuCucineConRadio() {
@@ -254,7 +271,7 @@ public class HomeNotLoggedController {
                 deliveryValue = setDeliveryOrPrenotationValue(row[14]);
                 prenotationValue = setDeliveryOrPrenotationValue(row[15]);
 
-                listViewRestaurants.getItems().add("Nome: "+row[0] + " - Stato: " + row[2] + " - Città: " + row[3]+ " - Prezzo:" + row[4] + " - Tipo: " + row[5] + " - Consegna: " + deliveryValue + " - Prenotazione: " + prenotationValue + " - Valutazione: " + row[13]);
+                listViewRestaurants.getItems().add("Ristorante N: "+row[16]+" - Nome: "+row[0] + " - Stato: " + row[2] + " - Città: " + row[3]+ " - Prezzo:" + row[4] + " - Tipo: " + row[5] + " - Consegna: " + deliveryValue + " - Prenotazione: " + prenotationValue + " - Valutazione: " + row[13]);
                 listViewRestaurants.refresh();
             }
         }
