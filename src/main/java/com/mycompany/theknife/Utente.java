@@ -1,7 +1,7 @@
 package com.mycompany.theknife;
 
 public class Utente {
-    private String nome, cognome, username, email, passwordHash, città, indirizzo, stato;
+    private String nome, cognome, username, email, passwordHash, città, indirizzo, stato, id;
     private boolean isRistoratore;
 
     
@@ -26,6 +26,14 @@ public class Utente {
 
     
 
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;

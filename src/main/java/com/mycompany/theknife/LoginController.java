@@ -28,6 +28,8 @@ public class LoginController {
     @FXML
     private Button accediButton;
 
+    private GestoreUtenti gestoreUtenti;
+
     @FXML
     private void initialize() {
         loginErrorMessageLabel.setVisible(false);
@@ -51,8 +53,12 @@ public class LoginController {
     private void switchToHomeLogged() throws IOException {
         String username = usernameTextField.getText();
         String password = passwordField.getText();
-        GestoreUtenti gestoreUtenti = GestoreUtenti.getGestoreUtenti();
+        
+        gestoreUtenti = GestoreUtenti.getGestoreUtenti();
         Gestore gestore = Gestore.getGestore();
+        
+        //caldarolacagilio Mo8!Cq97
+        //System.out.println(gestoreUtenti.verificaCredenziali(username, password));
         if (gestoreUtenti.verificaCredenziali(username, password)) {
             gestore.setUtenteLoggato(gestoreUtenti.getUtenteByUsername(username));
             App.setRoot("HomeLogged");
