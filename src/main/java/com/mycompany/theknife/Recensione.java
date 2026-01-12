@@ -81,6 +81,11 @@ public class Recensione {
         this.ora = ora;
     }
 
+    public String getIdRistorante() {
+        return Integer.toString(id);
+        
+    }
+
     /*public String addData() {
         LocalDateTime myDateObj = LocalDateTime.now();   
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-mm-yyyy"); //giorno-mese-anno -> non so se lasciarlo così per i diversi paesi

@@ -150,4 +150,14 @@ public class GestoreRecensioni {
         }
         return righe;
     }
+
+    public ArrayList<Recensione> getRecensioniRistorante(String string) {
+        ArrayList<Recensione> recensioniRistorante = new ArrayList<Recensione>();
+        for (Recensione recensione : recensioni) {
+            if (recensione.getIdRistorante().equals(string)) {
+                recensioniRistorante.add(recensione);
+            }
+        }
+        return recensioniRistorante;
+    }
 }
