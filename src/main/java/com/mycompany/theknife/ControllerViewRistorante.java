@@ -21,11 +21,7 @@ public class ControllerViewRistorante {
     @FXML
     private TextField telefonoRistoranteField;
     @FXML
-    private TextField emailRistoranteField;
-    @FXML
     private ListView tipoCucinaRistoranteField;
-    @FXML
-    private TextField NumeroTelefonoRistoranteField;
     @FXML
     private TextField sitoWebRistoranteField;
     @FXML
@@ -64,16 +60,81 @@ public class ControllerViewRistorante {
     private static String[] ristorante;
     private ArrayList<Recensione> recensioni;
     private String[] servizi;
-    private ArrayList<String> tipiCucina;
+    private String[] tipiCucina;
     private GestoreRecensioni gestoreRecensioni;
+    private boolean Modifica;
 
-    public ControllerViewRistorante(String[] ristoranteInfo) {
+    public ControllerViewRistorante(String[] ristoranteInfo, boolean modifica) {
         gestoreRecensioni= GestoreRecensioni.getGestoreRecensioni();
         ristorante = ristoranteInfo;
+        this.Modifica = modifica;
     }
     public void initialize() {
         recensioni = gestoreRecensioni.getRecensioniRistorante(ristorante[16]);
         setServizi(); 
+        setTipiCucina();
+        nomeRistoranteField.setText(ristorante[0]);
+        indirizzoRistoranteField.setText(ristorante[1]);
+        telefonoRistoranteField.setText(ristorante[8]); 
+        statoRistoranteField.setText(ristorante[2]);
+        tipoCucinaRistoranteField.getItems().addAll(tipiCucina);
+        sitoWebRistoranteField.setText(ristorante[9]);
+        cittaRistoranteField.setText(ristorante[3]);
+        awardField.setText(ristorante[10]);
+        serviziRistoranteField.getItems().addAll(servizi);
+        descrizioneRistoranteTextArea.setText(ristorante[12]);
+        recensioniRistoranteListView.getItems().addAll(recensioni);
+        ratingRistorante.setRating(Double.parseDouble(ristorante[13]));
+        if(ristorante[15].equals("1")) {
+            prenotazioniCheckBox.setSelected(true);
+        } else {
+            prenotazioniCheckBox.setSelected(false);
+        }
+        if(ristorante[14].equals("1")) {
+            consegnaCheckBox.setSelected(true);
+        } else {
+            consegnaCheckBox.setSelected(false);
+        }
+        setPrezzo();
+        isEditable();
+    }
+    private void isEditable() {
+        if(!Modifica) {
+            nomeRistoranteField.setEditable(false);
+            indirizzoRistoranteField.setEditable(false);
+            telefonoRistoranteField.setEditable(false);
+            statoRistoranteField.setEditable(false);
+            tipoCucinaRistoranteField.setDisable(true);
+            sitoWebRistoranteField.setEditable(false);
+            cittaRistoranteField.setEditable(false);
+            awardField.setEditable(false);
+            serviziRistoranteField.setDisable(true);
+            descrizioneRistoranteTextArea.setEditable(false);
+            prenotazioniCheckBox.setDisable(true);
+            consegnaCheckBox.setDisable(true);
+            prezzoMenuButton.setDisable(true);
+        }
+    }
+    private void setPrezzo() {
+        switch(ristorante[7].length()) {
+            case 1:
+                prezzo1CheckMenuItem.setSelected(true);
+                break;
+            case 2:
+                prezzo2CheckMenuItem.setSelected(true);
+                break;
+            case 3:
+                prezzo3CheckMenuItem.setSelected(true);
+                break;
+            case 4:
+                prezzo4CheckMenuItem.setSelected(true);
+                break;
+            default:
+                break;
+        }
+    }
+    private void setTipiCucina() {
+        tipiCucina=ristorante[5].split(",");
     }
     public void setServizi() {
         servizi=ristorante[11].split(",");
