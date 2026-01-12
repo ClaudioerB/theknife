@@ -37,7 +37,7 @@ public class Gestore {
         this.utenteLoggato = utenteLoggato;
     }
 
-    private void testRecensioni() {
+    /*private void testRecensioni() {
         GestoreRecensioni gestoreRecensioni = GestoreRecensioni.getGestoreRecensioni();
         int n;
         do {
@@ -71,7 +71,7 @@ public class Gestore {
                     gestoreRecensioni.printRecensioni();
             }
         } while (n != 0);
-    }
+    }*/
     
     /*private void testUtenti(){
         GestoreUtenti gestoreUtenti= GestoreUtenti.getGestoreUtenti();

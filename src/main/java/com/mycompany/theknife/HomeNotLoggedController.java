@@ -131,7 +131,7 @@ public class HomeNotLoggedController {
             return;
         }
         String idRistorante = selectedItem.split(" - ")[0].replace("Ristorante N: ", "").trim();
-        //ControllerViewRistorante viewRistoranteController = ControllerViewRistorante.getInstance(GestoreRicerche.getGestoreRicerche().trovaRistorantiID(idRistorante), false);
+        ControllerViewRistorante.getInstance(GestoreRicerche.getGestoreRicerche().trovaRistorantiID(idRistorante), false);
         App.setRoot("ViewRistorante");
     }
 

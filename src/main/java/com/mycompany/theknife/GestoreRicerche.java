@@ -85,17 +85,18 @@ public class GestoreRicerche {
         // return ristoranti; ArrayList<String[]>
     }
     public String[] trovaRistorantiID(String id) {
-        ArrayList<String[]> ristoranti = new ArrayList<>();
+        
         id = id.toLowerCase();
 
         for (String[] ristorante : gestoreDataset.getDataSet()) {
             // System.out.println(ristorante[0].toLowerCase());
 
             if (ristorante[16].toLowerCase().equals(id)) {
-                ristoranti.add(ristorante);
+                return ristorante;
                 // System.out.println(ristorante[0]);
             }
         }
+        return null;
     }
     public ArrayList<String[]> trovaRistorantiNome(String nome) {
 

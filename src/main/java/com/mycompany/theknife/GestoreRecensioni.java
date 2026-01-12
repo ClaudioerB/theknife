@@ -96,10 +96,11 @@ public class GestoreRecensioni {
         for (int i=0; i<recensioni.size(); i++){
             riga[0] = String.valueOf(recensioni.get(i).getId());
             riga[1] = recensioni.get(i).getUtenteRecensione();
-            riga[2] = String.valueOf(recensioni.get(i).getStelle());
-            riga[3] = recensioni.get(i).getRecensione();
-            riga[4] = recensioni.get(i).getData();
-            riga[5] = recensioni.get(i).getOra();
+            riga[2] = recensioni.get(i).getTitolo();
+            riga[3] = String.valueOf(recensioni.get(i).getStelle());
+            riga[4] = recensioni.get(i).getRecensione();
+            riga[5] = recensioni.get(i).getData();
+            riga[6] = recensioni.get(i).getOra();
             writer.writeNext(riga);
         }
         writer.flush();
@@ -120,12 +121,13 @@ public class GestoreRecensioni {
             while ((line = reader.readLine()) != null) {
                 recensioni.add(new Recensione());
                 appoggio = line.split(";");
-                recensioni.get(iRow).setId(Integer.parseInt(appoggio[0])); //Poi bisogna creare il metodo dell'ID
+                recensioni.get(iRow).setId(appoggio[0]); //Poi bisogna creare il metodo dell'ID
                 recensioni.get(iRow).setUtenteRecensione(appoggio[1]);
-                recensioni.get(iRow).setStelle(Integer.parseInt(appoggio[2]));
-                recensioni.get(iRow).setRecensione(appoggio[3]);
-                recensioni.get(iRow).setData(appoggio[4]);
-                recensioni.get(iRow).setOra(appoggio[5]);
+                recensioni.get(iRow).setTitolo(appoggio[2]);
+                recensioni.get(iRow).setStelle(Integer.parseInt(appoggio[3]));
+                recensioni.get(iRow).setRecensione(appoggio[4]);
+                recensioni.get(iRow).setData(appoggio[5]);
+                recensioni.get(iRow).setOra(appoggio[6]);
                 
                 iRow++;
             }
@@ -154,7 +156,7 @@ public class GestoreRecensioni {
     public ArrayList<Recensione> getRecensioniRistorante(String string) {
         ArrayList<Recensione> recensioniRistorante = new ArrayList<Recensione>();
         for (Recensione recensione : recensioni) {
-            if (recensione.getIdRistorante().equals(string)) {
+            if (recensione.getId().equals(string)) {
                 recensioniRistorante.add(recensione);
             }
         }

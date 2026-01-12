@@ -2,9 +2,8 @@ package com.mycompany.theknife;
 
 public class Recensione {
     //String username, idRistorante, recensione, voto, data, ora, id;
-    String utenteRecensione, testoRecensione, data, ora;
-    int id, stelle;
-
+    String utenteRecensione, testoRecensione, data, ora,id,titolo;
+    double stelle;
 
     /*
         public Recensione(String username, String idRistorante, String recensione,
@@ -21,15 +20,21 @@ public class Recensione {
      */
 
     //io non farei mettere la data e l'ora all'utente quindi le vorrei togliere
-    public Recensione(int id, String utenteRecensione, String testoRecensione, int stelle, String data, String ora) {
+    public Recensione(String id, String utenteRecensione, String titolo, String testoRecensione,  Double stelle, String data, String ora) {
         this.utenteRecensione = utenteRecensione;
         this.id = id;
         this.testoRecensione = testoRecensione;
         this.stelle = stelle;
         this.data = data;
         this.ora = ora;
+        this.titolo=titolo;
     }
-
+    public String getTitolo() {
+        return titolo;
+    }
+    public void setTitolo(String titolo) {
+        this.titolo = titolo;
+    }
     public Recensione() {
     }
 
@@ -41,11 +46,11 @@ public class Recensione {
         this.utenteRecensione = utenteRecensione;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -57,11 +62,11 @@ public class Recensione {
         this.testoRecensione = testoRecensione;
     }
 
-    public int getStelle() {
+    public double getStelle() {
         return stelle;
     }
 
-    public void setStelle(int stelle) {
+    public void setStelle(double stelle) {
         this.stelle = stelle;
     }
 
@@ -81,10 +86,7 @@ public class Recensione {
         this.ora = ora;
     }
 
-    public String getIdRistorante() {
-        return Integer.toString(id);
-        
-    }
+
 
     /*public String addData() {
         LocalDateTime myDateObj = LocalDateTime.now();   

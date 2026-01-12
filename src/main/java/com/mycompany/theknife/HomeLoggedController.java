@@ -79,12 +79,26 @@ public class HomeLoggedController {
     @FXML
     private Text textUsername;
 
+    @FXML
+    private javafx.scene.control.Button viewButton;
+
     private Utente utenteLoggato;
 
    public HomeLoggedController() {
         gestoreDataset = new GestoreDataset();
         filteredList = gestoreDataset.getDataSet();
         
+    }
+
+    private void visulizzaRistoranteButtonAction() throws IOException {
+        String selectedItem = listViewRestaurants.getSelectionModel().getSelectedItem();
+        if (selectedItem == null || selectedItem.startsWith("Nessun ristorante trovato")) {
+            // Nessun elemento selezionato o messaggio di nessun ristorante trovato
+            return;
+        }
+        String idRistorante = selectedItem.split(" - ")[0].replace("Ristorante N: ", "").trim();
+        ControllerViewRistorante.getInstance(GestoreRicerche.getGestoreRicerche().trovaRistorantiID(idRistorante), false);
+        App.setRoot("ViewRistorante");
     }
 
     @FXML
