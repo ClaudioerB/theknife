@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 
 public class HomeLoggedController {
@@ -74,9 +76,8 @@ public class HomeLoggedController {
     @FXML 
     private javafx.scene.control.RadioMenuItem tutteItem;
 
-    //@FXML 
-    //private javafx.scene.control.
-    
+    @FXML
+    private Text textUsername;
 
     private Utente utenteLoggato;
 
@@ -125,10 +126,18 @@ public class HomeLoggedController {
 
         setFiltersTrue();
         fillListView(filteredList);
+        setUsername();
     }
 
     private void setUsername() {
-        
+        int len = 13;
+        if (utenteLoggato != null) {
+            textUsername.setText(utenteLoggato.getUsername());
+
+            if (utenteLoggato.getUsername().length() >= len) {
+                textUsername.fontProperty().set(Font.font(16));
+            }
+        }
     }
 
     private void popolaMenuCucineConRadio() {
@@ -432,7 +441,7 @@ public class HomeLoggedController {
     }
 
     @FXML 
-    private void switchToHome() throws IOException {
+    private void switchToHomeNotLogged() throws IOException {
         App.setRoot("HomeNotLogged");
     }
 }
