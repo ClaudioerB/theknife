@@ -14,11 +14,11 @@ import com.opencsv.CSVWriter;
 public class GestoreRecensioni {
     ArrayList<Recensione> recensioni;
     private String filePath;
-    private static GestoreRecensioni gestoreRecensioni = new GestoreRecensioni();
+    private static GestoreRecensioni gestoreRecensioni;
 
     private GestoreRecensioni() {
         gestoreRecensioni = this;
-        filePath = System.getProperty("user.dir") + "/src/main/resources/Review/reviews.csv";
+        filePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\recensioni.CSV";
         this.recensioni = new ArrayList<Recensione>();
         inserimentoDati();
     }
@@ -92,15 +92,18 @@ public class GestoreRecensioni {
         CSVWriter.NO_QUOTE_CHARACTER,
         CSVWriter.DEFAULT_ESCAPE_CHARACTER,
         CSVWriter.DEFAULT_LINE_END)) {
-        String[] riga = new String[6];
+        String[] riga = new String[8];
+        riga= new String[] {"Idristorante","IDpersona","Titolo","Stelle","Testo","Data","Ora","Risposta"};
+        writer.writeNext(riga);
         for (int i=0; i<recensioni.size(); i++){
-            riga[0] = String.valueOf(recensioni.get(i).getId());
+            riga[0] = recensioni.get(i).getId();
             riga[1] = recensioni.get(i).getUtenteRecensione();
             riga[2] = recensioni.get(i).getTitolo();
             riga[3] = String.valueOf(recensioni.get(i).getStelle());
             riga[4] = recensioni.get(i).getRecensione();
             riga[5] = recensioni.get(i).getData();
             riga[6] = recensioni.get(i).getOra();
+            riga[7] = recensioni.get(i).getRisposta();
             writer.writeNext(riga);
         }
         writer.flush();
@@ -117,14 +120,18 @@ public class GestoreRecensioni {
         int iRow = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
-            
-            while ((line = reader.readLine()) != null) {
+            boolean firstLine = true;
+            while ((line = reader.readLine()) != null ) {
+                if(firstLine) {
+                    firstLine = false;
+                    continue; // Salta l'intestazione
+                }
                 recensioni.add(new Recensione());
                 appoggio = line.split(";");
                 recensioni.get(iRow).setId(appoggio[0]); //Poi bisogna creare il metodo dell'ID
                 recensioni.get(iRow).setUtenteRecensione(appoggio[1]);
                 recensioni.get(iRow).setTitolo(appoggio[2]);
-                recensioni.get(iRow).setStelle(Integer.parseInt(appoggio[3]));
+                recensioni.get(iRow).setStelle(Double.parseDouble(appoggio[3]));
                 recensioni.get(iRow).setRecensione(appoggio[4]);
                 recensioni.get(iRow).setData(appoggio[5]);
                 recensioni.get(iRow).setOra(appoggio[6]);

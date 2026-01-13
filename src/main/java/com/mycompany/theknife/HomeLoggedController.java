@@ -89,7 +89,7 @@ public class HomeLoggedController {
         filteredList = gestoreDataset.getDataSet();
         
     }
-
+    @FXML
     private void visulizzaRistoranteButtonAction() throws IOException {
         String selectedItem = listViewRestaurants.getSelectionModel().getSelectedItem();
         if (selectedItem == null || selectedItem.startsWith("Nessun ristorante trovato")) {
@@ -290,7 +290,7 @@ public class HomeLoggedController {
                 deliveryValue = setDeliveryOrPrenotationValue(row[14]);
                 prenotationValue = setDeliveryOrPrenotationValue(row[15]);
 
-                listViewRestaurants.getItems().add("Nome: "+row[0] + " - Stato: " + row[2] + " - Città: " + row[3]+ " - Prezzo:" + row[4] + " - Tipo: " + row[5] + " - Consegna: " + deliveryValue + " - Prenotazione: " + prenotationValue + " - Valutazione: " + row[13]);
+                listViewRestaurants.getItems().add("Ristorante N: "+row[16]+" - Nome: "+row[0] + " - Stato: " + row[2] + " - Città: " + row[3]+ " - Prezzo:" + row[4] + " - Tipo: " + row[5] + " - Consegna: " + deliveryValue + " - Prenotazione: " + prenotationValue + " - Valutazione: " + row[13]);
                 listViewRestaurants.refresh();
             }
         }

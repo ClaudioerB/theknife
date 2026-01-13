@@ -10,6 +10,7 @@ import org.controlsfx.control.Rating;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 public class ControllerRecensisci {
     @FXML
     private javafx.scene.control.TextField TitoloField;
@@ -25,11 +26,14 @@ public class ControllerRecensisci {
     private Label erroreLabel;
 
     private GestoreRecensioni gestoreRecensioni;
-    
+    private ControllerViewRistorante controllerViewRistorante;
 
+    
     public ControllerRecensisci() {
         
-    }   
+    }
+        
+    
     public void initialize() {
         erroreLabel.setVisible(false);
         theKnifeImageViewSet();
@@ -46,7 +50,9 @@ public class ControllerRecensisci {
             theKnifeImageView.setVisible(true);
         }
     }
-
+    public void setControllerViewRistorante(ControllerViewRistorante controllerViewRistorante) {
+        this.controllerViewRistorante = controllerViewRistorante;
+    }
     @FXML
     private void inviaRecensione() throws IOException {
         String titolo = TitoloField.getText();
@@ -59,10 +65,12 @@ public class ControllerRecensisci {
         } else {
             Gestore gestore = Gestore.getGestore();
             Utente utenteLoggato = gestore.getUtenteLoggato();
-            //String id, String utenteRecensione, String testoRecensione, Double stelle, String data, String ora
-            Recensione nuovaRecensione = new Recensione(ControllerViewRistorante.getRistorante()[0],utenteLoggato.getUsername(),titolo,   testo, rating, addData(), addTime());
+            Recensione nuovaRecensione = new Recensione(ControllerViewRistorante.getRistorante()[16],utenteLoggato.getUsername(),titolo,   testo, rating, addData(), addTime());
             gestoreRecensioni.aggiungiRecensione(nuovaRecensione);
+            controllerViewRistorante.fillListView(gestoreRecensioni.getRecensioni());
+            ((Stage) TitoloField.getScene().getWindow()).close();
         }
+       
     }
     private String addData() {
         LocalDateTime myDateObj = LocalDateTime.now();   

@@ -2,7 +2,7 @@ package com.mycompany.theknife;
 
 public class Recensione {
     //String username, idRistorante, recensione, voto, data, ora, id;
-    String utenteRecensione, testoRecensione, data, ora,id,titolo;
+    String utenteRecensione, testoRecensione, data, ora,id,titolo,Risposta;
     double stelle;
 
     /*
@@ -28,6 +28,7 @@ public class Recensione {
         this.data = data;
         this.ora = ora;
         this.titolo=titolo;
+        Risposta=" ";
     }
     public String getTitolo() {
         return titolo;
@@ -84,6 +85,12 @@ public class Recensione {
 
     public void setOra(String ora) {
         this.ora = ora;
+    }
+    public String getRisposta() {
+        return Risposta;
+    }
+    public void setRisposta(String risposta) {
+        Risposta = risposta;
     }
 
 

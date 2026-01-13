@@ -110,7 +110,7 @@ public class ControllerViewRistorante {
         awardField.setText(ristorante[10]);
         serviziRistoranteListView.getItems().addAll(servizi);
         descrizioneRistoranteTextArea.setText(ristorante[12]);
-        recensioniRistoranteListView.getItems().addAll(recensioni);
+        fillListView(recensioni);
         ratingRistorante.setRating(Double.parseDouble(ristorante[13]));
         if(ristorante[15].equals("1")) {
             prenotazioniCheckBox.setSelected(true);
@@ -126,6 +126,72 @@ public class ControllerViewRistorante {
         isEditable();
         theKnifeImageViewSet();
         isLogged();
+    }
+
+    @FXML
+    private void visualizzaRecensione() throws IOException {
+        String selectedRecensione = (String) recensioniRistoranteListView.getSelectionModel().getSelectedItem();
+        if(selectedRecensione != null && !selectedRecensione.equals("non ci sono recensioni.")) {
+            String[] partiRecensione = selectedRecensione.split(" - ");
+            String titoloSelezionato = partiRecensione[0].replace("Titolo: ", "").trim();
+            String UtenteSelezionato = partiRecensione[1].replace("By: ", "").trim();
+            String DataSelezionata = partiRecensione[3].trim();
+            String OraSelezionata = partiRecensione[4].trim();
+
+            Recensione recensioneDaVisualizzare = null;
+            for(Recensione rec : recensioni) {
+                if(rec.utenteRecensione.equals(UtenteSelezionato)&& rec.getData().equals(DataSelezionata) && rec.getOra().equals(OraSelezionata)) {
+                    recensioneDaVisualizzare = rec;
+                    break;
+                }
+            }
+            if(recensioneDaVisualizzare != null && recensioneDaVisualizzare.getRisposta()!= null&& !recensioneDaVisualizzare.getRisposta().equals(" ")) {
+                FXMLLoader loader = new FXMLLoader(App.class.getResource("VisualizzaRecensione.fxml"));
+                Parent root = loader.load();
+
+                ControllerVisualizzaRecensione controller = loader.getController();
+                controller.setRecensione(recensioneDaVisualizzare);
+
+                Stage stage = new Stage();
+                stage.setTitle("Visualizza Recensione");
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL); 
+                stage.show(); 
+            }
+            else {
+                FXMLLoader loader = new FXMLLoader(App.class.getResource("VisualizzaRecensioneSenzaRisposta.fxml"));
+                Parent root = loader.load();
+
+                ControllerVisualizzaRecensioneSenzaRisposta controller = loader.getController();
+                controller.setRecensione(recensioneDaVisualizzare);
+
+                Stage stage = new Stage();
+                stage.setTitle("Visualizza Recensione");
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL); 
+                stage.show(); 
+            }   
+        }
+    }
+
+    public void fillListView(ArrayList<Recensione> list) {
+        recensioniRistoranteListView.getItems().clear();
+        
+        for (Recensione row : list) {
+            if (row != null) {
+                String appoggio ="Titolo: "+row.titolo+" - By: "+row.utenteRecensione + " - Voto: ";
+                for(int i=0; i<row.stelle; i++) {
+                    appoggio += "★";
+                }
+                appoggio += " - "+row.data+" - "+row.ora+"\n";
+                recensioniRistoranteListView.getItems().add(appoggio);
+                recensioniRistoranteListView.refresh();
+            }
+        }
+        if (list.isEmpty()){
+            recensioniRistoranteListView.getItems().add("non ci sono recensioni.");
+            recensioniRistoranteListView.refresh();
+        }
     }
     private void isLogged() {
         Gestore gestore = Gestore.getGestore();
@@ -150,7 +216,8 @@ public class ControllerViewRistorante {
     private void aggiungiRecensione() throws IOException {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("Recensisci.fxml"));
         Parent root = loader.load();
-
+        ControllerRecensisci controller = loader.getController();
+        controller.setControllerViewRistorante(this);
         Stage stage = new Stage();
         stage.setTitle("Recensisci ristorante");
         stage.setScene(new Scene(root));

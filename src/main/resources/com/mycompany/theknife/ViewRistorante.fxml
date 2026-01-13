@@ -112,7 +112,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="visualizzaRecensioneButton" layoutX="1107.0" layoutY="950.0" mnemonicParsing="false" text="Visualizza">
+            <Button fx:id="visualizzaRecensioneButton" layoutX="1107.0" layoutY="950.0" mnemonicParsing="false" onAction="#visualizzaRecensione" text="Visualizza">
                <font>
                   <Font size="18.0" />
                </font>
