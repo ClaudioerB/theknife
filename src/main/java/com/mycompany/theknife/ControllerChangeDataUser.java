@@ -35,7 +35,7 @@ public class ControllerChangeDataUser {
    public void setValue(String field) {
       textTitle.setText("Cambia " + field);
       textInserire.setText("Inserire " + field.toLowerCase());
-      textField.setText(field);
+      //textField.setText(field);
 
       myStage.setTitle(textTitle.getText());
    }
