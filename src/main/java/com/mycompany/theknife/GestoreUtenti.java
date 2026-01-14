@@ -230,6 +230,16 @@ public class GestoreUtenti {
         return false; // Credenziali non valide
     }
 
+    public void aggiornaUtente(Utente utente) {
+    for (int i = 0; i < utenti.size(); i++) {
+        if (utenti.get(i).getUsername().equals(utente.getUsername())) {
+            utenti.set(i, utente);
+            scriviNewFile(); // ✅ Salva su file
+            return;
+        }
+    }
+    }
+
 public boolean controlloPassword(String password) {
         // Implementa qui la logica per controllare la validità della password
         // Ad esempio, puoi verificare la lunghezza minima, la presenza di caratteri speciali, ecc.
