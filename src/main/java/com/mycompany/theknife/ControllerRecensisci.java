@@ -54,6 +54,11 @@ public class ControllerRecensisci {
         this.controllerViewRistorante = controllerViewRistorante;
     }
     @FXML
+    private void closeWindow() {
+        Stage stage = (Stage) TitoloField.getScene().getWindow();
+        stage.close();
+    }
+    @FXML
     private void inviaRecensione() throws IOException {
         String titolo = TitoloField.getText();
         String testo = TestoArea.getText();
