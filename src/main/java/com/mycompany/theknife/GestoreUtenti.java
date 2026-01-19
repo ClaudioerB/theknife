@@ -1,6 +1,7 @@
 package com.mycompany.theknife;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,14 +16,27 @@ public class GestoreUtenti {
     private String fileUserPath;
     private static GestoreUtenti gestoreUtenti;
 
+    private static String pathFavourite;
+    private static ArrayList<String[]> dataSetFavourite;
+
     private GestoreUtenti() {
         filePath = System.getProperty("user.dir")+"/src/main/resources/Users/users.csv"; 
         fileUserPath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\datasetUtenti.csv";
+        pathFavourite = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\favourite.csv";
+
         this.utenti = new ArrayList<Utente>();
         this.users = new ArrayList<String[]>();
+        this.dataSetFavourite= new ArrayList<String[]>();
         gestoreUtenti = this;
         //inserimentoDati();
         inserimentoNewDati();
+
+        //createFavouriteDataSet();
+        inserimentoFavouriteDati();
+        aggiungiRigheFavourite();
+        scriviFavouriteFile();
+        //inserimentoFavouriteDati();
+
     }
     public static GestoreUtenti getGestoreUtenti() {
         if(gestoreUtenti == null) {
@@ -37,6 +51,10 @@ public class GestoreUtenti {
 
     public void setUtenti(ArrayList<Utente> utenti) {
         this.utenti = utenti;
+    }
+
+    public ArrayList<String[]> getFavourite() {
+        return dataSetFavourite;
     }
 
     public Utente getUtenteSingolo(int i) {
@@ -60,26 +78,94 @@ public class GestoreUtenti {
             System.out.println(utente.getNome()+" "+utente.getCognome()+" "+utente.getUsername()+" "+utente.getPasswordHash()+" "+utente.getCittà()+" "+utente.getIndirizzo());
         }
     }
-    /*private void scriviFile() {
+
+    /*public boolean checkFavourite(String username) {
+        for (String[] fav : dataSetFavourite) {
+            if (fav[1] != null && !fav[1].isEmpty()) {
+                return true; // Esiste almeno un favorito
+            }
+        }
+        return false; // Nessun favorito trovato
+    }*/
+    public String getFavouriteByUsername(String username) {
+        for (String[] fav : dataSetFavourite) {
+            if (fav[0].equals(username)) {
+                return fav[1]; // Restituisce i preferiti dell'utente trovato
+            }
+        }
+        return null; // Utente non trovato
+    }
+
+    public void addNewFavourite(String username, String newFav) {
+        //addNewFavourite(utenteLoggato.getUsername(), ristoranteFav);
+        for (int i = 0; i < dataSetFavourite.size(); i++) {
+            if (dataSetFavourite.get(i)[0].equals(username)) {
+                String currentFavs = dataSetFavourite.get(i)[1];
+                if (currentFavs == null || currentFavs.isEmpty()) {
+                    dataSetFavourite.get(i)[1] = newFav;
+                } else {
+                    dataSetFavourite.get(i)[1] = currentFavs + "," + newFav;
+                }
+                scriviFavouriteFile();
+                return;
+            }
+        }
+    }
+
+    private void aggiungiRigheFavourite() {
+    boolean checkfirst = true;
+
+    for (Utente row : this.utenti) {
+        if (checkfirst) {
+            checkfirst = false;
+            continue;
+        }
+
+        String username = row.getUsername();
         
-           
-        try (CSVWriter writer = new CSVWriter(new FileWriter(filePath),
+        boolean esisteGià = false;
+        for (String[] entry : dataSetFavourite) {
+            if (entry.length > 0 && entry[0].equals(username)) {
+                esisteGià = true;
+                break;
+            }
+        }
+        
+        // Aggiungi solo se non esiste
+        if (!esisteGià) {
+            dataSetFavourite.add(new String[]{username, ""});
+        }
+    }
+    
+    //System.out.println("Favourite caricato");
+    scriviFavouriteFile();
+}
+
+    public static void createFavouriteDataSet() {
+        try {
+            File myObj = new File(pathFavourite);
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    private void scriviFavouriteFile() {
+        //createFavouriteDataSet();
+        try (CSVWriter writer = new CSVWriter(new FileWriter(pathFavourite),
         ';',       // separatore personalizzato
         CSVWriter.NO_QUOTE_CHARACTER,
         CSVWriter.DEFAULT_ESCAPE_CHARACTER,
         CSVWriter.DEFAULT_LINE_END)) {
-        String[] riga = new String[10];
-        for (int i=0; i<utenti.size(); i++){
-            riga[0] = utenti.get(i).getNome();
-            riga[1] = utenti.get(i).getCognome();
-            riga[2] = utenti.get(i).getUsername();
-            riga[3] = utenti.get(i).getNick();
-            riga[4] = utenti.get(i).getPasswordHash();
-            riga[5] = utenti.get(i).getCittà();
-            riga[6] = utenti.get(i).getIndirizzo();
-            riga[7] = utenti.get(i).getNumeroCivico();
-            riga[8] = utenti.get(i).getLatitudine();
-            riga[9] = utenti.get(i).getLongitudine();
+        String[] riga = new String[2];
+        for (int i=0; i<dataSetFavourite.size(); i++){
+            riga[0] = dataSetFavourite.get(i)[0];
+            riga[1] = dataSetFavourite.get(i)[1];
             writer.writeNext(riga);
         
         }
@@ -90,7 +176,7 @@ public class GestoreUtenti {
         } catch (IOException e) {
         e.printStackTrace();
         }
-    }  */
+    }
 
     private void scriviNewFile() {
         
@@ -136,17 +222,8 @@ public class GestoreUtenti {
             String line;
             
             while ((line = reader.readLine()) != null) {
-                /*users.add(new String[10]);
-                appoggio = line.split(";");
-                for(int i = 0; i<10;i++){
-                    users.get(iRow)[i] = appoggio[i];
-                }*/
-                //users.add();
                 utenti.add(new Utente());
                 appoggio = line.split(";");
-                /*if (utenti.get(iRow-1) != null) {
-                    utenti.get(iRow).getId
-                }*/
                 utenti.get(iRow).setId(appoggio[0]);
                 utenti.get(iRow).setUsername(appoggio[1]);
                 utenti.get(iRow).setPasswordHash(appoggio[2]);
@@ -170,32 +247,39 @@ public class GestoreUtenti {
         }
     }
 
-    /*private void inserimentoDati() {
-        String[] appoggio;
-        int iRow = 0;
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            
-            while ((line = reader.readLine()) != null) {
-                utenti.add(new Utente());
-                appoggio = line.split(";");
-                utenti.get(iRow).setNome(appoggio[0]);
-                utenti.get(iRow).setCognome(appoggio[1]);  
-                utenti.get(iRow).setUsername(appoggio[2]);
-                utenti.get(iRow).setNick(appoggio[3]);
-                utenti.get(iRow).setPasswordHash(appoggio[4]);
-                utenti.get(iRow).setCittà(appoggio[5]);
-                utenti.get(iRow).setIndirizzo(appoggio[6]);
-                utenti.get(iRow).setNumeroCivico(appoggio[7]);
-                utenti.get(iRow).setLatitudine(appoggio[8]);
-                utenti.get(iRow).setLongitudine(appoggio[9]);
-                
-                iRow++;
+    private void inserimentoFavouriteDati() {
+    int iRow = 0;
+    
+    try (BufferedReader reader = new BufferedReader(new FileReader(pathFavourite))) {
+        String line;
+        
+        while ((line = reader.readLine()) != null) {
+            // Salta righe vuote
+            if (line.trim().isEmpty()) {
+                continue;
             }
-        } catch (IOException e) {
-            System.out.println("File non trovato.");
+            
+            String[] appoggio = line.split(";", -1);
+            
+            // Verifica lunghezza e aggiungi
+            if (appoggio.length >= 2) {
+                // Caso normale: username;favourites
+                dataSetFavourite.add(new String[]{appoggio[0], appoggio[1]});
+            } else if (appoggio.length == 1) {
+                // Caso con solo username (nessun favourite)
+                dataSetFavourite.add(new String[]{appoggio[0], ""});
+            } else {
+                // Riga malformata, salta
+                System.out.println("Riga malformata ignorata: " + line);
+                continue;
+            }
+            iRow++;
         }
-    }*/
+        System.out.println("Caricati " + iRow + " favourites dal file");
+    } catch (IOException e) {
+        System.out.println("File favourite non trovato - verrà creato.");
+    }
+}
     public int numeroRighe() {
         
         
@@ -212,6 +296,7 @@ public class GestoreUtenti {
         }
         return righe;
     }
+
     public boolean verificaCredenziali(String username, String password) {
         for (Utente utente : utenti) {
             if (utente.getUsername().equals(username) && utente.getPasswordHash().equals(password)) {
@@ -234,7 +319,7 @@ public class GestoreUtenti {
     for (int i = 0; i < utenti.size(); i++) {
         if (utenti.get(i).getUsername().equals(utente.getUsername())) {
             utenti.set(i, utente);
-            scriviNewFile(); // ✅ Salva su file
+            scriviNewFile(); 
             return;
         }
     }
