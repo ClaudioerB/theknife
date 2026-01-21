@@ -113,7 +113,36 @@ public class GestoreDataset {
         String riga = dataSetCucina.get(iRow);
         System.out.println(riga);
     }
+    public void ordinaDataSet(Utente utenteLoggato) {
+        ArrayList<String[]> Appoggio = new ArrayList<>(dataSet);
+        ArrayList<String[]> cittàDataSet = new ArrayList<>();
+        ArrayList<String[]> statoDataSet = new ArrayList<>();
+        ArrayList<String[]> nuovoDataSet = new ArrayList<>();
 
+        for (String[] riga : Appoggio) {
+            if(riga[3].equals(utenteLoggato.getCittà())){
+                cittàDataSet.add(riga);
+                
+            }
+            else{
+                if(riga[2].equals(utenteLoggato.getStato())){
+                    statoDataSet.add(riga);
+                    
+                }
+            }
+        }
+        nuovoDataSet.addAll(cittàDataSet);
+        nuovoDataSet.addAll(statoDataSet);
+        ArrayList<String[]> preferitiUtente = utenteLoggato.getPreferiti();
+        if(preferitiUtente!=null){
+            preferitiUtente.removeAll(nuovoDataSet);
+            nuovoDataSet.addAll(preferitiUtente);
+        }
+        ArrayList<String[]> rimanenti = new ArrayList<>(dataSet);
+        rimanenti.removeAll(nuovoDataSet);
+        nuovoDataSet.addAll(rimanenti);
+        dataSet = nuovoDataSet;
+    }
 
 
     public void setDataSet(ArrayList<String[]> dataSet) {
@@ -238,4 +267,5 @@ public class GestoreDataset {
         }
         System.out.println();
     }
+    
 }

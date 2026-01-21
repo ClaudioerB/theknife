@@ -69,6 +69,10 @@ public class ControllerViewRistorante {
     private Button modificaServiziButton;
     @FXML
     private Button aggiungiRecensioneButton;
+    @FXML
+    private Button aggiungiPreferitiButton;
+    @FXML
+    private Button rimuoviPreferitiButton;
     
     private static String[] ristorante;
     private ArrayList<Recensione> recensioni;
@@ -125,9 +129,36 @@ public class ControllerViewRistorante {
         setPrezzo();
         isEditable();
         theKnifeImageViewSet();
-        isLogged();
+        if(isLogged())
+            isInPreferiti();
+        else {
+            aggiungiPreferitiButton.setDisable(true);
+            rimuoviPreferitiButton.setDisable(true);
+            aggiungiPreferitiButton.setVisible(false);
+            rimuoviPreferitiButton.setVisible(false);
+        }
     }
-
+    private void isInPreferiti() {
+        Gestore gestore = Gestore.getGestore();
+        Utente utenteLoggato = gestore.getUtenteLoggato();
+        if(utenteLoggato != null) {
+            ArrayList<String[]> preferitiUtente = utenteLoggato.getPreferiti();
+            if(preferitiUtente!=null && preferitiUtente.contains(ristorante)) {
+                aggiungiPreferitiButton.setDisable(true);
+                rimuoviPreferitiButton.setDisable(false);
+                aggiungiPreferitiButton.setText("Aggiunto ai preferiti");
+                rimuoviPreferitiButton.setText("Rimmuovi dai preferiti");
+                
+            }
+            else {
+                rimuoviPreferitiButton.setDisable(true);
+                aggiungiPreferitiButton.setDisable(false);
+                aggiungiPreferitiButton.setText("Aggiungi ai preferiti");
+                rimuoviPreferitiButton.setText("Rimuovi dai preferiti");
+                rimuoviPreferitiButton.setVisible(false);
+            }
+        }
+    }
     @FXML
     private void visualizzaRecensione() throws IOException {
         String selectedRecensione = (String) recensioniRistoranteListView.getSelectionModel().getSelectedItem();
@@ -174,6 +205,32 @@ public class ControllerViewRistorante {
         }
     }
 
+    @FXML
+    private void toPreferiti() throws IOException {
+        Gestore gestore = Gestore.getGestore();
+        Utente utenteLoggato = gestore.getUtenteLoggato();
+        if(utenteLoggato != null) {
+            utenteLoggato.addPreferito(ristorante);
+            aggiungiPreferitiButton.setDisable(true);
+            rimuoviPreferitiButton.setDisable(false);
+            rimuoviPreferitiButton.setVisible(true);
+            aggiungiPreferitiButton.setText("Aggiunto ai preferiti");
+            rimuoviPreferitiButton.setText("Rimuovi dai preferiti");
+        }
+    }
+    @FXML
+    private void removePreferiti() throws IOException {
+        Gestore gestore = Gestore.getGestore();
+        Utente utenteLoggato = gestore.getUtenteLoggato();
+        if(utenteLoggato != null) {
+            utenteLoggato.removePreferito(ristorante);
+            rimuoviPreferitiButton.setDisable(true);
+            aggiungiPreferitiButton.setDisable(false);
+            aggiungiPreferitiButton.setText("Aggiungi ai preferiti");
+            rimuoviPreferitiButton.setText("Rimosso dai preferiti");
+        }
+    }
+
     public void fillListView(ArrayList<Recensione> list) {
         recensioniRistoranteListView.getItems().clear();
         
@@ -193,11 +250,17 @@ public class ControllerViewRistorante {
             recensioniRistoranteListView.refresh();
         }
     }
-    private void isLogged() {
+    private boolean isLogged() {
         Gestore gestore = Gestore.getGestore();
         if(gestore.getUtenteLoggato()==null) {
             aggiungiRecensioneButton.setDisable(true);
             aggiungiRecensioneButton.setVisible(false);
+            return false;
+        }
+        else {
+            aggiungiRecensioneButton.setDisable(false);
+            aggiungiRecensioneButton.setVisible(true);
+            return true;
         }
     }
     public static String[] getRistorante() {

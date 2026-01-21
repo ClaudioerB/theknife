@@ -361,4 +361,35 @@ public boolean controlloPassword(String password) {
         utenti.add(nuovoUtente);
         return 0; // Utente creato con successo
     }
+    public ArrayList<String[]> getPreferitiUtente(String username) {
+        ArrayList<String[]> preferitiUtente = new ArrayList<>();
+        for (String[] fav : dataSetFavourite) {
+            if (fav[0].equals(username)) {
+                String[] preferitiArray = fav[1].split(",");
+                for (String preferito : preferitiArray) {
+                    if (!preferito.isEmpty()) {
+                        GestoreRicerche gestoreRicerche=GestoreRicerche.getGestoreRicerche();
+                        preferitiUtente.add(gestoreRicerche.trovaRistorantiID(preferito));
+                    }
+                }
+                break; // Esci dal ciclo una volta trovato l'utente
+            }
+        }
+        return preferitiUtente;
+    }
+    public void aggiungiPreferitoUtente(String username, String[] ristorante) {
+        for (String[] fav : dataSetFavourite) {
+            if (fav[0].equals(username)) {
+                String currentFavs = fav[1];
+                String ristoranteString = ristorante[16]; 
+                if (currentFavs == null || currentFavs.isEmpty()) {
+                    fav[1] = ristoranteString;
+                } else {
+                    fav[1] = currentFavs + "," + ristoranteString;
+                }
+                scriviFavouriteFile();
+                return;
+            }
+        }
+    }
 }

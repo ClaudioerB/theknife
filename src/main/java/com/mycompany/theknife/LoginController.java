@@ -60,6 +60,8 @@ public class LoginController {
         //System.out.println(gestoreUtenti.verificaCredenziali(username, password));
         if (gestoreUtenti.verificaCredenziali(username, password)) {
             gestore.setUtenteLoggato(gestoreUtenti.getUtenteByUsername(username));
+            GestoreDataset gestoreDataset = GestoreDataset.getGestoreDataset();
+            gestoreDataset.ordinaDataSet(gestore.getUtenteLoggato());
             App.setRoot("HomeLogged");
         } else {
             loginErrorMessageLabel.setVisible(true);

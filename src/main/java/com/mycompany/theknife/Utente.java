@@ -1,13 +1,14 @@
 package com.mycompany.theknife;
 
+import java.util.ArrayList;
+
 public class Utente {
     private String nome, cognome, username, email, passwordHash, città, indirizzo, stato, id;
     private boolean isRistoratore;
+    private ArrayList<String[]> preferiti;
+    private GestoreUtenti gestoreUtenti;
 
-    
-
-    public Utente(String username, String passwordHash,String email,String nome, String cognome, String stato, String città,
-            String indirizzo, boolean isRistoratore) {
+    public Utente(String username, String passwordHash,String email,String nome, String cognome, String stato, String città,String indirizzo, boolean isRistoratore) {
         this.nome = nome;
         this.cognome = cognome;
         this.username = username;
@@ -17,11 +18,40 @@ public class Utente {
         this.indirizzo = indirizzo;
         this.stato = stato;
         this.isRistoratore = isRistoratore;
-
+        gestoreUtenti = GestoreUtenti.getGestoreUtenti();
+        
+        this.preferiti = setPreferiti();
+        if(this.preferiti==null){
+            this.preferiti=new ArrayList<>();
+        }
     }
     
     
+    private ArrayList<String[]> setPreferiti() {
+        gestoreUtenti = GestoreUtenti.getGestoreUtenti();
+        return gestoreUtenti.getPreferitiUtente(this.username);
+    }
+    public ArrayList<String[]> getPreferiti() {
+        return this.preferiti;
+    }
+    public void setPreferiti(ArrayList<String[]> preferiti) {
+        this.preferiti = preferiti;
+    }
+    
+    public void addPreferito(String[] ristorante) {
+        this.preferiti.add(ristorante);
+        gestoreUtenti.aggiungiPreferitoUtente(this.username, ristorante);
+    }
+
+    public void removePreferito(String[] ristorante) {
+        this.preferiti.remove(ristorante);
+    }
+
     public Utente() {
+        this.preferiti = setPreferiti();
+        if(this.preferiti==null){
+            this.preferiti=new ArrayList<>();
+        }
     }
 
     

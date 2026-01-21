@@ -143,6 +143,16 @@
                   <Font size="18.0" />
                </font>
             </Button>
+            <Button fx:id="aggiungiPreferitiButton" layoutX="55.0" layoutY="922.0" mnemonicParsing="false" onAction="#toPreferiti" text="Aggiungi ai preferiti">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="rimuoviPreferitiButton" layoutX="406.0" layoutY="922.0" mnemonicParsing="false" onAction="#removePreferiti" text="Rimuovi dai preferiti">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
     </children>

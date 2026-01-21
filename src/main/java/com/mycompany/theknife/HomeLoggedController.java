@@ -84,6 +84,7 @@ public class HomeLoggedController {
 
     private Utente utenteLoggato;
 
+
    public HomeLoggedController() {
         gestoreDataset = new GestoreDataset();
         filteredList = gestoreDataset.getDataSet();
@@ -299,6 +300,7 @@ public class HomeLoggedController {
             listViewRestaurants.refresh();
         }
     }
+ 
 
     private String setDeliveryOrPrenotationValue(String value) {
         if (value.equals("1")) {
