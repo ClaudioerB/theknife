@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
@@ -417,7 +416,7 @@ public class HomeLoggedController {
                     tempList.remove(row);
                     continue;
                 }
-                if (restaurantRating != rating) {
+                if (restaurantRating < rating) {
                     tempList.remove(row);
                 }
                 /*if (restaurantRating < rating) {
