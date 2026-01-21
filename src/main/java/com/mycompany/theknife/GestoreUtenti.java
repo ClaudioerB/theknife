@@ -392,4 +392,32 @@ public boolean controlloPassword(String password) {
             }
         }
     }
+    public void rimuoviPreferitoUtente(String username, String[] ristorante) {
+        for (String[] fav : dataSetFavourite) {
+            if (fav[0].equals(username)) {
+                String currentFavs = fav[1];
+                String ristoranteString = ristorante[16]; 
+                
+                if (currentFavs == null || currentFavs.isEmpty()) {
+                    
+                } else {
+                    String[] preferiti=fav[1].split(",");
+                    String[] appoggio=preferiti.clone();
+                    String favorite="";
+                    for (String string : appoggio) {
+                        
+                        if(!string.equals(ristoranteString)){
+                            favorite=favorite+string;
+                        }
+                        
+                    }
+                    fav[1]=favorite;
+                }
+                
+                scriviFavouriteFile();
+                return;
+            }
+        }
+    }
+    
 }
