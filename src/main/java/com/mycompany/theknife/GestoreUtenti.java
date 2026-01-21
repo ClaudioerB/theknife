@@ -370,12 +370,22 @@ public boolean controlloPassword(String password) {
                     if (!preferito.isEmpty()) {
                         GestoreRicerche gestoreRicerche=GestoreRicerche.getGestoreRicerche();
                         preferitiUtente.add(gestoreRicerche.trovaRistorantiID(preferito));
+                        
                     }
                 }
+                printPreferitiUtente();
                 break; // Esci dal ciclo una volta trovato l'utente
             }
+           
         }
+
         return preferitiUtente;
+    }
+    public void printPreferitiUtente(){
+        Gestore gestore=Gestore.getGestore();
+        for (String[] string : gestore.getUtenteLoggato().getPreferiti()) {
+            System.out.println(string[1]);
+        }
     }
     public void aggiungiPreferitoUtente(String username, String[] ristorante) {
         for (String[] fav : dataSetFavourite) {

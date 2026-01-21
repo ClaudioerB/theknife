@@ -62,6 +62,8 @@ public class LoginController {
             gestore.setUtenteLoggato(gestoreUtenti.getUtenteByUsername(username));
             GestoreDataset gestoreDataset = GestoreDataset.getGestoreDataset();
             gestoreDataset.ordinaDataSet(gestore.getUtenteLoggato());
+            gestore.getUtenteLoggato().setPreferiti(gestoreUtenti.getPreferitiUtente(username));
+            gestoreUtenti.printPreferitiUtente();
             App.setRoot("HomeLogged");
         } else {
             loginErrorMessageLabel.setVisible(true);

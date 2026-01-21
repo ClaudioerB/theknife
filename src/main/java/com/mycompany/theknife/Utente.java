@@ -44,7 +44,14 @@ public class Utente {
     }
 
     public void removePreferito(String[] ristorante) {
-        this.preferiti.remove(ristorante);
+        int i=0;
+        for (String[] strings : this.preferiti) {
+            if(strings[16].equals(ristorante[16])){
+                preferiti.remove(i);
+                break;
+            }
+            i++;   
+        }
         gestoreUtenti.rimuoviPreferitoUtente(this.username,ristorante);
     }
 

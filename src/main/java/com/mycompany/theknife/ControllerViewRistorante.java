@@ -143,20 +143,27 @@ public class ControllerViewRistorante {
         Utente utenteLoggato = gestore.getUtenteLoggato();
         if(utenteLoggato != null) {
             ArrayList<String[]> preferitiUtente = utenteLoggato.getPreferiti();
-            if(preferitiUtente!=null && preferitiUtente.contains(ristorante)) {
-                aggiungiPreferitiButton.setDisable(true);
-                rimuoviPreferitiButton.setDisable(false);
-                aggiungiPreferitiButton.setText("Aggiunto ai preferiti");
-                rimuoviPreferitiButton.setText("Rimmuovi dai preferiti");
+            for (String[] strings : preferitiUtente) {
                 
+                 if(preferitiUtente!=null && strings[16].equals(ristorante[16])) {
+                    GestoreUtenti gestoreUtenti = GestoreUtenti.getGestoreUtenti();
+                    gestoreUtenti.printPreferitiUtente();
+                    aggiungiPreferitiButton.setDisable(true);
+                    rimuoviPreferitiButton.setDisable(false);
+                    aggiungiPreferitiButton.setText("Aggiunto ai preferiti");
+                    rimuoviPreferitiButton.setText("Rimuovi dai preferiti");
+                    rimuoviPreferitiButton.setVisible(true);
+                    break;
+                }
+                else {
+                    rimuoviPreferitiButton.setDisable(true);
+                    aggiungiPreferitiButton.setDisable(false);
+                    aggiungiPreferitiButton.setText("Aggiungi ai preferiti");
+                    rimuoviPreferitiButton.setText("Rimuovi dai preferiti");
+                    rimuoviPreferitiButton.setVisible(false);
+                }
             }
-            else {
-                rimuoviPreferitiButton.setDisable(true);
-                aggiungiPreferitiButton.setDisable(false);
-                aggiungiPreferitiButton.setText("Aggiungi ai preferiti");
-                rimuoviPreferitiButton.setText("Rimuovi dai preferiti");
-                rimuoviPreferitiButton.setVisible(false);
-            }
+           
         }
     }
     @FXML
