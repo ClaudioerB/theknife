@@ -17,6 +17,9 @@ public class ControllerChangePasswordUser {
    @FXML 
    private javafx.scene.control.Label labelError;
 
+   @FXML 
+   private javafx.scene.control.Label labelError1;
+
    private Gestore gestore;
    private Utente utenteLoggato;
    private Stage myStage;
@@ -27,6 +30,7 @@ public class ControllerChangePasswordUser {
       gestore = Gestore.getGestore();
       utenteLoggato = gestore.getUtenteLoggato();
       labelError.setVisible(false);
+      labelError1.setVisible(false);
       pswField.setText("");
       pswFieldNew.setText("");
    }
@@ -42,13 +46,25 @@ public class ControllerChangePasswordUser {
       String data = pswField.getText();
       String dataNew = pswFieldNew.getText();
       gestoreUtenti = GestoreUtenti.getGestoreUtenti();
+      labelError.setVisible(false);
+      labelError1.setVisible(false);
 
-      if (data.equals(utenteLoggato.getPasswordHash()) && !dataNew.isEmpty() && !dataNew.equals(data) && gestoreUtenti.controlloPassword(dataNew)) {
-         utenteLoggato.setPasswordHash(dataNew);
-         myStage.close();
-      } else {
-         labelError.setVisible(true);
+      if (data.isEmpty() || !data.equals(utenteLoggato.getPasswordHash())) {
+         labelError1.setVisible(true);
+         if (dataNew.isEmpty()) {
+            labelError.setVisible(true);
+         }
+         return;
       }
+      else {
+         if (!dataNew.isEmpty() && !dataNew.equals(data) && gestoreUtenti.controlloPassword(dataNew)) {
+            utenteLoggato.setPasswordHash(dataNew);
+            myStage.close();
+         } else {
+            labelError.setVisible(true);
+         }
+      }
+
    }
 
    @FXML 

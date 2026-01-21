@@ -112,6 +112,7 @@ public class ControllerModUser {
       filter();
 
       fillListView(filteredList);
+      
    }
 
    private void fillListView(ArrayList<String[]> list) {
@@ -156,7 +157,7 @@ public class ControllerModUser {
         }
     }
     
-    System.out.println("Totale ristoranti trovati: " + trovati);
+    //System.out.println("Totale ristoranti trovati: " + trovati);
 }
 
    @FXML 
@@ -244,7 +245,12 @@ public class ControllerModUser {
          indirizzoText.setText(utenteLoggato.getIndirizzo());
          cittaText.setText(utenteLoggato.getCittà());
          statoText.setText(utenteLoggato.getStato());
-         passwordText.setText(utenteLoggato.getPasswordHash());
+         int lenPsw = utenteLoggato.getPasswordHash().length();
+         String stringPsw = "";
+         for (int i = 0; i < lenPsw; i++) {
+            stringPsw += "*";
+         }
+         passwordText.setText(stringPsw);
       } else {
          System.out.println("ATTENZIONE: utenteLoggato è null!");
          return;

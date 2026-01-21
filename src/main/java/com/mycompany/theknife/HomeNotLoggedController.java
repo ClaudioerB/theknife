@@ -3,8 +3,6 @@ package com.mycompany.theknife;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
-
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
@@ -396,7 +394,7 @@ public class HomeNotLoggedController {
                     tempList.remove(row);
                     continue;
                 }
-                if (restaurantRating != rating) {
+                if (restaurantRating < rating) {
                     tempList.remove(row);
                 }
                 /*if (restaurantRating < rating) {
