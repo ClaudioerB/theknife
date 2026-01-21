@@ -1,6 +1,7 @@
 package com.mycompany.theknife;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,8 +60,16 @@ public class ControllerModUser {
    @FXML 
    private javafx.scene.control.Button salvaButton;
 
+   @FXML
+   private javafx.scene.control.ListView<String> listFavourite;
+
+   private ArrayList<String[]> filteredList;
+   private GestoreDataset gestoreDataset;
+   private GestoreUtenti gestoreUtenti;
+
    private Gestore gestore;
    private Utente utenteLoggato;
+   private String dataSetFavourite;
 
    @FXML
    private void initialize() {
@@ -91,11 +100,64 @@ public class ControllerModUser {
             changeIdStato.setVisible(true);
         }
 
+      //gestoreDataset = new GestoreDataset();
+      gestoreDataset = GestoreDataset.getGestoreDataset();
+      filteredList = new ArrayList<>();
       gestore = Gestore.getGestore();
+      gestoreUtenti = GestoreUtenti.getGestoreUtenti();
       utenteLoggato = gestore.getUtenteLoggato();
+      dataSetFavourite = gestoreUtenti.getFavouriteByUsername(utenteLoggato.getUsername());
       setText();
+
+      filter();
+
+      fillListView(filteredList);
    }
 
+   private void fillListView(ArrayList<String[]> list) {
+        listFavourite.getItems().clear();
+        boolean checkfirst = true;
+        for (String[] row : list) {
+            listFavourite.getItems().add("Ristorante N: "+row[16]+" - Nome: "+row[0] + " - Stato: " + row[2] + " - Città: " + row[3]+ " - Prezzo:" + row[4] + " - Tipo: " + row[5]);
+            listFavourite.refresh();
+        }
+        if (list.isEmpty() || (list.size() == 1 && checkfirst == false)) {
+            listFavourite.getItems().add("Nessun ristorante trovato nei preferiti.");
+            listFavourite.refresh();
+        }
+    }
+
+   private void filter() {
+    gestoreUtenti = GestoreUtenti.getGestoreUtenti();
+    
+
+    if (dataSetFavourite == null || dataSetFavourite.isEmpty()) {
+        filteredList.clear();
+        return;
+    }
+    
+    String[] favouriteIds = dataSetFavourite.split(",");
+    
+    ArrayList<String> favIdsList = new ArrayList<>();
+    for (String id : favouriteIds) {
+        String trimmedId = id.trim();
+        favIdsList.add(trimmedId);
+    }
+
+    filteredList.clear();
+    
+    
+    int trovati = 0;
+    for (String[] row : gestoreDataset.getDataSet()) {
+        String rowId = row[16].trim();  
+        if (favIdsList.contains(rowId)) {
+            filteredList.add(row);
+            trovati++;
+        }
+    }
+    
+    System.out.println("Totale ristoranti trovati: " + trovati);
+}
 
    @FXML 
    private void changeNomeData() throws IOException {
@@ -158,6 +220,18 @@ public class ControllerModUser {
       setText();
       setCredenziali();
    }
+
+   @FXML
+    private void visualizzaRistoranteButtonAction() throws IOException {
+        String selectedItem = listFavourite.getSelectionModel().getSelectedItem();
+        if (selectedItem == null || selectedItem.startsWith("Nessun ristorante trovato")) {
+            // Nessun elemento selezionato o messaggio di nessun ristorante trovato
+            return;
+        }
+        String idRistorante = selectedItem.split(" - ")[0].replace("Ristorante N: ", "").trim();
+        ControllerViewRistorante.getInstance(GestoreRicerche.getGestoreRicerche().trovaRistorantiID(idRistorante), false);
+        App.setRoot("ViewRistorante");
+    }
 
    public void setText() {
       gestore = Gestore.getGestore();

@@ -20,6 +20,7 @@ public class ControllerChangePasswordUser {
    private Gestore gestore;
    private Utente utenteLoggato;
    private Stage myStage;
+   private GestoreUtenti gestoreUtenti;
 
    @FXML 
    private void initialize() {
@@ -40,8 +41,9 @@ public class ControllerChangePasswordUser {
       
       String data = pswField.getText();
       String dataNew = pswFieldNew.getText();
+      gestoreUtenti = GestoreUtenti.getGestoreUtenti();
 
-      if (data.equals(utenteLoggato.getPasswordHash()) && !dataNew.isEmpty() && !dataNew.equals(data)) {
+      if (data.equals(utenteLoggato.getPasswordHash()) && !dataNew.isEmpty() && !dataNew.equals(data) && gestoreUtenti.controlloPassword(dataNew)) {
          utenteLoggato.setPasswordHash(dataNew);
          myStage.close();
       } else {
