@@ -1,121 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import org.controlsfx.control.BreadCrumbBar?>
-<?import org.controlsfx.control.RangeSlider?>
-<?import org.controlsfx.control.SegmentedBar?>
 
-<VBox alignment="CENTER" prefHeight="1080.0" prefWidth="1920.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.LoginController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
+<AnchorPane prefHeight="1003.0" prefWidth="1880.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane prefHeight="1090.0" prefWidth="1880.0">
-         <children>
-            <Label layoutX="43.0" layoutY="115.0" text="Home">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="knifeImageView" fitHeight="142.0" fitWidth="134.0" layoutX="8.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="915.0" layoutY="247.0" text="Stato" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <PasswordField fx:id="passwordField" layoutX="869.0" layoutY="495.0" />
-            <TextField fx:id="usernameTextField" layoutX="869.0" layoutY="289.0" />
-            <Label layoutX="865.0" layoutY="446.0" text="Phone Number">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Button layoutX="902.0" layoutY="935.0" mnemonicParsing="false" text="Crea">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Label layoutX="131.0" layoutY="247.0" text="Nome" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="usernameTextField1" layoutX="89.0" layoutY="289.0" />
-            <Label layoutX="118.0" layoutY="446.0" text="Indirizzo">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="1619.0" layoutY="247.0" text="Web Site Url">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="1651.0" layoutY="444.0" text="Award" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="usernameTextField2" layoutX="1610.0" layoutY="489.0" />
-            <TextField fx:id="usernameTextField11" layoutX="88.0" layoutY="494.0" />
-            <CheckBox layoutX="501.0" layoutY="730.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="133.0" text="Delivery">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </CheckBox>
-            <CheckBox layoutX="1289.0" layoutY="730.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="186.0" text="Prenotazione">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </CheckBox>
-            <TextField fx:id="usernameTextField21" layoutX="1610.0" layoutY="289.0" />
-            <Button layoutX="821.0" layoutY="852.0" mnemonicParsing="false" text="Aggiungi un servizio">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <ListView layoutX="789.0" layoutY="603.0" prefHeight="200.0" prefWidth="312.0" />
-            <Label layoutX="138.0" layoutY="628.0" text="Città">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="1649.0" layoutY="628.0" text="Cucina" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="usernameTextField22" layoutX="1611.0" layoutY="673.0" />
-            <TextField fx:id="usernameTextField111" layoutX="89.0" layoutY="678.0" />
-            <Label layoutX="905.0" layoutY="123.0" text="Prezzo" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="910.0" layoutY="190.0" prefHeight="25.0" prefWidth="71.0" text="Prezzo" textAlignment="CENTER">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <BreadCrumbBar layoutX="284.0" layoutY="177.0" prefWidth="97.0" />
-            <SegmentedBar layoutX="434.0" layoutY="217.0" prefWidth="56.0" />
-            <RangeSlider layoutX="844.0" layoutY="152.0" prefHeight="51.0" prefWidth="192.0" />
-         </children>
-      </AnchorPane>
+      <Label layoutX="30.0" layoutY="100.0" prefHeight="25.0" prefWidth="51.0" text="Home">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="theKnifeImageView" fitHeight="103.0" fitWidth="109.0" layoutX="1.0" onMouseClicked="#toHome" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" layoutX="106.0" layoutY="176.0" prefHeight="35.0" prefWidth="86.0" text="Nome" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="nomeRistoranteField" layoutX="75.0" layoutY="224.0" />
+      <Label alignment="CENTER" layoutX="634.0" layoutY="558.0" prefHeight="35.0" prefWidth="109.0" text="Indirizzo" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="indirizzoRistoranteField" layoutX="614.0" layoutY="604.0" />
+      <Label alignment="CENTER" layoutX="637.0" layoutY="176.0" prefHeight="35.0" prefWidth="109.0" text="Stato" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="statoRistoranteField" layoutX="617.0" layoutY="225.0" />
+      <Label alignment="CENTER" layoutX="639.0" layoutY="366.0" prefHeight="35.0" prefWidth="109.0" text="Città" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="cittaRistoranteField" layoutX="614.0" layoutY="413.0" />
+      <Label alignment="CENTER" layoutX="1242.0" layoutY="565.0" prefHeight="35.0" prefWidth="149.0" text="Tipi di cucina" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ListView fx:id="tipoCucinaRistoranteListView" layoutX="1216.0" layoutY="609.0" prefHeight="313.0" prefWidth="200.0" />
+      <CheckBox fx:id="prenotazioniCheckBox" layoutX="592.0" layoutY="890.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="224.0" text="Accetta prenotazioni">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="consegnaCheckBox" layoutX="106.0" layoutY="892.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="100.0" text="Delivery">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </CheckBox>
+      <Label alignment="CENTER" layoutX="571.0" layoutY="728.0" prefHeight="35.0" prefWidth="237.0" text="Numero di telefono" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="telefonoRistoranteField" layoutX="596.0" layoutY="772.0" prefHeight="25.0" prefWidth="193.0" />
+      <Label alignment="CENTER" layoutX="68.0" layoutY="730.0" prefHeight="35.0" prefWidth="165.0" text="Sito" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="sitoWebRistoranteField" layoutX="30.0" layoutY="774.0" prefHeight="25.0" prefWidth="237.0" />
+      <Label alignment="CENTER" layoutX="30.0" layoutY="560.0" prefHeight="35.0" prefWidth="237.0" text="Award" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="awardField" layoutX="74.0" layoutY="608.0" />
+      <Label alignment="CENTER" layoutX="1561.0" layoutY="565.0" prefHeight="35.0" prefWidth="109.0" text="Servizi" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ListView fx:id="serviziRistoranteListView" layoutX="1515.0" layoutY="609.0" prefHeight="313.0" prefWidth="200.0" />
+      <TextArea fx:id="descrizioneRistoranteTextArea" layoutX="1216.0" layoutY="196.0" prefHeight="313.0" prefWidth="498.0" wrapText="true" />
+      <Label alignment="CENTER" layoutX="1404.0" layoutY="150.0" prefHeight="35.0" prefWidth="122.0" text="Descrizione" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <MenuButton fx:id="prezzoMenuButton" alignment="CENTER" layoutX="62.0" layoutY="395.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="186.0" text="fascia prezzo">
+         <items>
+            <CheckMenuItem fx:id="prezzo1CheckMenuItem" mnemonicParsing="false" text="€" />
+            <CheckMenuItem fx:id="prezzo2CheckMenuItem" mnemonicParsing="false" text="€€" />
+            <CheckMenuItem fx:id="prezzo3CheckMenuItem" mnemonicParsing="false" text="€€€" />
+            <CheckMenuItem fx:id="prezzo4CheckMenuItem" mnemonicParsing="false" text="€€€€" />
+         </items>
+         <font>
+            <Font size="19.0" />
+         </font>
+      </MenuButton>
+      <Button fx:id="modificaServiziButton" layoutX="1766.0" layoutY="746.0" mnemonicParsing="false" text="Modifica">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="modificaTipiCucinaButton" layoutX="1086.0" layoutY="746.0" mnemonicParsing="false" text="Modifica">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="modificaServiziButton1" layoutX="1764.0" layoutY="662.0" mnemonicParsing="false" text="Aggiungi">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="modificaTipiCucinaButton1" layoutX="1085.0" layoutY="662.0" mnemonicParsing="false" text="Aggiungi">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="modificaServiziButton11" layoutX="1778.0" layoutY="837.0" mnemonicParsing="false" text="Elimina">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="modificaTipiCucinaButton11" layoutX="1092.0" layoutY="837.0" mnemonicParsing="false" text="Elimina">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
-</VBox>
+</AnchorPane>
