@@ -138,6 +138,9 @@ public class ControllerViewRistorante {
             rimuoviPreferitiButton.setVisible(false);
         }
     }
+    public void setRecensioni() {
+        recensioni = gestoreRecensioni.getRecensioniRistorante(ristorante[16]);
+    }
     private void isInPreferiti() {
         Gestore gestore = Gestore.getGestore();
         Utente utenteLoggato = gestore.getUtenteLoggato();
@@ -196,7 +199,7 @@ public class ControllerViewRistorante {
                 stage.initModality(Modality.APPLICATION_MODAL); 
                 stage.show(); 
             }
-            else {
+            else if (recensioneDaVisualizzare != null) {
                 FXMLLoader loader = new FXMLLoader(App.class.getResource("VisualizzaRecensioneSenzaRisposta.fxml"));
                 Parent root = loader.load();
 
@@ -208,7 +211,10 @@ public class ControllerViewRistorante {
                 stage.setScene(new Scene(root));
                 stage.initModality(Modality.APPLICATION_MODAL); 
                 stage.show(); 
-            }   
+            } 
+            else {
+                System.out.println("Recensione non trovata.");
+            } 
         }
     }
 

@@ -56,7 +56,7 @@ public class LoginController {
         gestoreUtenti = GestoreUtenti.getGestoreUtenti();
         Gestore gestore = Gestore.getGestore();
         
-        //caldarolacagilio Mo8!Cq9
+        //caldarolacagilio Mo8!Cq97
         //System.out.println(gestoreUtenti.verificaCredenziali(username, password));
         if (gestoreUtenti.verificaCredenziali(username, password)) {
             gestore.setUtenteLoggato(gestoreUtenti.getUtenteByUsername(username));

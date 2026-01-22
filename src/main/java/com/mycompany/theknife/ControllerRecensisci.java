@@ -1,7 +1,6 @@
 package com.mycompany.theknife;
 
 import java.io.IOException;
-import java.lang.ModuleLayer.Controller;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -72,10 +71,11 @@ public class ControllerRecensisci {
             Utente utenteLoggato = gestore.getUtenteLoggato();
             Recensione nuovaRecensione = new Recensione(ControllerViewRistorante.getRistorante()[16],utenteLoggato.getUsername(),titolo,   testo, rating, addData(), addTime());
             gestoreRecensioni.aggiungiRecensione(nuovaRecensione);
-            controllerViewRistorante.fillListView(gestoreRecensioni.getRecensioni());
+            controllerViewRistorante.fillListView(gestoreRecensioni.getRecensioniRistorante(ControllerViewRistorante.getRistorante()[16]));
+            controllerViewRistorante.setRecensioni();
             ((Stage) TitoloField.getScene().getWindow()).close();
         }
-       
+        
     }
     private String addData() {
         LocalDateTime myDateObj = LocalDateTime.now();   

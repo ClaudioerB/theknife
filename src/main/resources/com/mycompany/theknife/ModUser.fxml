@@ -135,9 +135,19 @@
             <Font size="23.0"/>
           </font>
         </Label>
-        <Button fx:id="viewRestaurant" onAction="#visualizzaRistoranteButtonAction" layoutX="1218.0" layoutY="564.0" mnemonicParsing="false" text="Visualizza">
+        <Button fx:id="viewRestaurant" layoutX="1218.0" layoutY="564.0" mnemonicParsing="false" onAction="#visualizzaRistoranteButtonAction" text="Visualizza">
           <font>
             <Font size="20.0"/>
+          </font>
+        </Button>
+        <Button fx:id="logoutButton2" layoutX="769.0" layoutY="887.0" mnemonicParsing="false" onAction="#switchHomeNotLogged" text="Log out" textAlignment="CENTER">
+          <font>
+            <Font size="24.0"/>
+          </font>
+        </Button>
+        <Button fx:id="propriRistoranti" layoutX="997.0" layoutY="887.0" mnemonicParsing="false" onAction="#switchRistoratore" text="Ristoranti" textAlignment="CENTER">
+          <font>
+            <Font size="24.0"/>
           </font>
         </Button>
       </children>

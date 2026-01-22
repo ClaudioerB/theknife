@@ -60,6 +60,15 @@ public class ControllerModUser {
    @FXML 
    private javafx.scene.control.Button salvaButton;
 
+   @FXML 
+   private javafx.scene.control.Button logoutButton2;
+
+   @FXML 
+   private javafx.scene.control.Button logoutButton;
+
+   @FXML 
+   private javafx.scene.control.Button propriRistoranti;
+
    @FXML
    private javafx.scene.control.ListView<String> listFavourite;
 
@@ -98,7 +107,7 @@ public class ControllerModUser {
             changeIdIndirizzo.setVisible(true);
             changeIdStato.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
             changeIdStato.setVisible(true);
-        }
+      }
 
       //gestoreDataset = new GestoreDataset();
       gestoreDataset = GestoreDataset.getGestoreDataset();
@@ -109,10 +118,25 @@ public class ControllerModUser {
       dataSetFavourite = gestoreUtenti.getFavouriteByUsername(utenteLoggato.getUsername());
       setText();
 
+      setRistoratore();
+
       filter();
 
       fillListView(filteredList);
       
+   }
+
+   private void setRistoratore() {
+      if(utenteLoggato.isRistoratore()) {
+         logoutButton2.setVisible(true);
+         propriRistoranti.setVisible(true);
+         logoutButton.setVisible(false);
+      }
+      else {
+         logoutButton2.setVisible(false);
+         propriRistoranti.setVisible(false);
+         logoutButton.setVisible(true);
+      }
    }
 
    private void fillListView(ArrayList<String[]> list) {
@@ -282,6 +306,11 @@ public class ControllerModUser {
          gestoreUtenti.aggiornaUtente(utenteLoggato);
       }
       
+   }
+
+   @FXML 
+   private void switchRistoratore() throws IOException { 
+      App.setRoot("ModRistoratore");
    }
 
    @FXML 
