@@ -85,13 +85,14 @@ public class HomeNotLoggedController {
 
     @FXML
     private void initialize() {
+        filteredList = gestoreDataset.getDataSet();
         String path = System.getProperty("user.dir")
                 + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\user.png";
         System.out.println("Path: " + path);
         java.io.File f = new java.io.File(path);
 
         System.out.println("Esiste? " + f.exists());
-
+        
         if (f.exists()) {
             loginImageView.setImage(
                     new javafx.scene.image.Image(f.toURI().toString())

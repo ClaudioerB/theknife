@@ -85,9 +85,8 @@ public class HomeLoggedController {
 
 
    public HomeLoggedController() {
-        gestoreDataset = new GestoreDataset();
-        filteredList = gestoreDataset.getDataSet();
-        
+        gestoreDataset = GestoreDataset.getGestoreDataset();
+
     }
     @FXML
     private void visulizzaRistoranteButtonAction() throws IOException {
@@ -103,6 +102,7 @@ public class HomeLoggedController {
 
     @FXML
     private void initialize() {
+        filteredList = GestoreDataset.getDataSet();
         String path = System.getProperty("user.dir")
                 + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\user.png";
         System.out.println("Path: " + path);
@@ -135,7 +135,7 @@ public class HomeLoggedController {
         //gestoreDataset.printDataSetCucina(2);
 
         ratingFilter.setRating(0);
-        filteredList = gestoreDataset.getDataSet();
+        
         popolaMenuCucineConRadio();
 
         setFiltersTrue();
@@ -281,12 +281,11 @@ public class HomeLoggedController {
 
     private void fillListView(ArrayList<String[]> list) {
         listViewRestaurants.getItems().clear();
-        boolean checkfirst = true;
+        
         String deliveryValue, prenotationValue;
         for (String[] row : list) {
-            if (checkfirst) {
-                checkfirst = false;
-            }else {
+            if (!row[0].equals("Name")&&!row[2].equals("State")) {
+                
                 deliveryValue = setDeliveryOrPrenotationValue(row[14]);
                 prenotationValue = setDeliveryOrPrenotationValue(row[15]);
 
@@ -294,7 +293,7 @@ public class HomeLoggedController {
                 listViewRestaurants.refresh();
             }
         }
-        if (list.isEmpty() || (list.size() == 1 && checkfirst == false)) {
+        if (list.isEmpty() || (list.size() == 1 )) {
             listViewRestaurants.getItems().add("Nessun ristorante trovato con i filtri selezionati.");
             listViewRestaurants.refresh();
         }

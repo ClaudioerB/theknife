@@ -125,13 +125,14 @@ public class GestoreDataset {
                 
             }
             else{
-                if(riga[2].equals(utenteLoggato.getStato())){
+                if(riga[2].contains(utenteLoggato.getStato())){
                     statoDataSet.add(riga);
                     
                 }
             }
         }
         nuovoDataSet.addAll(cittàDataSet);
+        
         nuovoDataSet.addAll(statoDataSet);
         ArrayList<String[]> preferitiUtente = utenteLoggato.getPreferiti();
         if(preferitiUtente!=null){
@@ -141,7 +142,16 @@ public class GestoreDataset {
         ArrayList<String[]> rimanenti = new ArrayList<>(dataSet);
         rimanenti.removeAll(nuovoDataSet);
         nuovoDataSet.addAll(rimanenti);
-        dataSet = nuovoDataSet;
+        setDataSet(nuovoDataSet); 
+        
+    }
+    private void printDatasetStatoCitta(){
+        for (int i = 1; i < 30; i++) { // Salta la prima riga (header)
+            String[] riga = dataSet.get(i);
+            if (riga.length > 3) {
+                System.out.println("Stato: " + riga[2] + " - Città: " + riga[3]);
+            }
+        }
     }
 
 
