@@ -19,7 +19,7 @@ public class Utente {
         this.stato = stato;
         this.isRistoratore = isRistoratore;
         gestoreUtenti = GestoreUtenti.getGestoreUtenti();
-        
+        this.id=gestoreUtenti.nRigheUtentiFile()+"";
         this.preferiti = setPreferiti();
         if(this.preferiti==null){
             this.preferiti=new ArrayList<>();

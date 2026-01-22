@@ -1,25 +1,11 @@
 package com.mycompany.theknife;
 
 public class Recensione {
-    //String username, idRistorante, recensione, voto, data, ora, id;
+ 
     String utenteRecensione, testoRecensione, data, ora,id,titolo,Risposta;
     double stelle;
 
-    /*
-        public Recensione(String username, String idRistorante, String recensione,
-        String voto, String data, String ora,
-        String id) {
-        this.username = username;
-        this.idRistorante = idRistorante;
-        this.recensione = recensione;
-        this.voto = voto;
-        this.data = data;
-        this.ora = ora;
-        this.id = id;
-        }
-     */
-
-    //io non farei mettere la data e l'ora all'utente quindi le vorrei togliere
+    
     public Recensione(String id, String utenteRecensione, String titolo, String testoRecensione,  Double stelle, String data, String ora) {
         this.utenteRecensione = utenteRecensione;
         this.id = id;
@@ -93,23 +79,5 @@ public class Recensione {
         Risposta = risposta;
     }
 
-
-
-    /*public String addData() {
-        LocalDateTime myDateObj = LocalDateTime.now();   
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-mm-yyyy"); //giorno-mese-anno -> non so se lasciarlo così per i diversi paesi
-
-        String formattedDate = myDateObj.format(myFormatObj);
-
-        return formattedDate;
-    }
-    public String addTime() {
-        LocalDateTime myDateObj = LocalDateTime.now();   
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("HH:mm");  //ore e minuti
-
-        String formattedTime = myDateObj.format(myFormatObj);
-
-        return formattedTime;
-    }*/
 
 }

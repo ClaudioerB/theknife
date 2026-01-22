@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import com.opencsv.CSVWriter;
 
 public class GestoreUtenti {
-    ArrayList<Utente> utenti;
-    ArrayList<String[]> users;
+   
+    private ArrayList<Utente> utenti;    
     private String filePath;
     private String fileUserPath;
     private static GestoreUtenti gestoreUtenti;
@@ -21,11 +21,10 @@ public class GestoreUtenti {
 
     private GestoreUtenti() {
         filePath = System.getProperty("user.dir")+"/src/main/resources/Users/users.csv"; 
-        fileUserPath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\datasetUtenti.csv";
+        fileUserPath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\datasetUtenti.CSV";
         pathFavourite = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\favourite.csv";
 
         this.utenti = new ArrayList<Utente>();
-        this.users = new ArrayList<String[]>();
         this.dataSetFavourite= new ArrayList<String[]>();
         gestoreUtenti = this;
         //inserimentoDati();
@@ -213,6 +212,17 @@ public class GestoreUtenti {
         e.printStackTrace();
         }
     }
+    public int nRigheUtentiFile(){
+        int righe = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileUserPath))) {
+            while ((reader.readLine()) != null) {
+                righe++;
+            }
+        } catch (IOException e) {
+            System.out.println("File non trovato.");
+        }
+        return righe;
+    }
 
     private void inserimentoNewDati() {
         String[] appoggio;
@@ -224,22 +234,24 @@ public class GestoreUtenti {
             while ((line = reader.readLine()) != null) {
                 utenti.add(new Utente());
                 appoggio = line.split(";");
-                utenti.get(iRow).setId(appoggio[0]);
-                utenti.get(iRow).setUsername(appoggio[1]);
-                utenti.get(iRow).setPasswordHash(appoggio[2]);
-                utenti.get(iRow).setEmail(appoggio[3]);
-                utenti.get(iRow).setNome(appoggio[4]);
-                utenti.get(iRow).setCognome(appoggio[5]);
-                utenti.get(iRow).setStato(appoggio[6]);
-                utenti.get(iRow).setCittà(appoggio[7]);
-                utenti.get(iRow).setIndirizzo(appoggio[8]);
-                if (appoggio[9].equals("1")) {
-                    utenti.get(iRow).setRistoratore(true);
-                } else {
-                    utenti.get(iRow).setRistoratore(false);
-                }
-                //utenti.get(iRow).setRistoratore(appoggio[9]);
+                if(appoggio.length!=1){
+                    utenti.get(iRow).setId(appoggio[0]);
+                    utenti.get(iRow).setUsername(appoggio[1]);
+                    utenti.get(iRow).setPasswordHash(appoggio[2]);
+                    utenti.get(iRow).setEmail(appoggio[3]);
+                    utenti.get(iRow).setNome(appoggio[4]);
+                    utenti.get(iRow).setCognome(appoggio[5]);
+                    utenti.get(iRow).setStato(appoggio[6]);
+                    utenti.get(iRow).setCittà(appoggio[7]);
+                    utenti.get(iRow).setIndirizzo(appoggio[8]);
+                    if (appoggio[9].equals("1")) {
+                        utenti.get(iRow).setRistoratore(true);
+                    } else {
+                        utenti.get(iRow).setRistoratore(false);
+                    }
 
+                }
+                
                 iRow++;
             }
         } catch (IOException e) {
@@ -356,9 +368,11 @@ public boolean controlloPassword(String password) {
             if(!controlloPassword(nuovoUtente.getPasswordHash())) {
                 return 3; // Password non valida
             }
+            if(!nuovoUtente.getEmail().contains("@"))
+                return 4; // Email senza @
         }
         // Aggiungi il nuovo utente alla lista
-        utenti.add(nuovoUtente);
+        aggiungiUtente(nuovoUtente);
         return 0; // Utente creato con successo
     }
     public ArrayList<String[]> getPreferitiUtente(String username) {
