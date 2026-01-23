@@ -14,18 +14,23 @@ public class GestoreUtenti {
     private ArrayList<Utente> utenti;    
     private String filePath;
     private String fileUserPath;
+    private String personeRistorantiPath;
     private static GestoreUtenti gestoreUtenti;
 
     private static String pathFavourite;
     private static ArrayList<String[]> dataSetFavourite;
 
+    private static ArrayList<String[]> personeRistoranti;
+
     private GestoreUtenti() {
         filePath = System.getProperty("user.dir")+"/src/main/resources/Users/users.csv"; 
         fileUserPath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\datasetUtenti.CSV";
         pathFavourite = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\favourite.csv";
+        personeRistorantiPath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\personeRistoranti.CSV";
 
         this.utenti = new ArrayList<Utente>();
         this.dataSetFavourite= new ArrayList<String[]>();
+        personeRistoranti= new ArrayList<String[]>();
         gestoreUtenti = this;
         //inserimentoDati();
         inserimentoNewDati();
@@ -36,6 +41,10 @@ public class GestoreUtenti {
         scriviFavouriteFile();
         //inserimentoFavouriteDati();
 
+        //createPersoneRistorantiDataSet();
+        inserimentoPersoneRistorantiDati();
+        aggiungiRighePersoneRistoranti();
+        scriviPersoneRistorantiFile();
     }
     public static GestoreUtenti getGestoreUtenti() {
         if(gestoreUtenti == null) {
@@ -54,6 +63,9 @@ public class GestoreUtenti {
 
     public ArrayList<String[]> getFavourite() {
         return dataSetFavourite;
+    }
+    public ArrayList<String[]> getPersoneRistoranti() {
+        return personeRistoranti;
     }
 
     public Utente getUtenteSingolo(int i) {
@@ -94,6 +106,40 @@ public class GestoreUtenti {
         }
         return null; // Utente non trovato
     }
+    public String getPersoneRistorantiByIdRistorante(String id) {
+        for (String[] row : personeRistoranti) {
+            if (row[0].equals(id)) {
+                return row[1]; 
+            }
+        }
+        return null; // Utente non trovato
+    }
+    public void removePersoneRistorantiByIdRistorante(String idR, String idU) {
+        String[] row;
+        int id = 0;
+        for (int i=1; i<personeRistoranti.size(); i++) {
+            row = personeRistoranti.get(i);
+            if (row[0].equals(idR) && row[1].equals(idU)) {
+                id = i;
+                break;
+            }
+        }
+        if (id!=0) {
+            personeRistoranti.remove(id);
+        } else {
+            System.out.println("Non è stato trovato il ristorante con i ristoratori");
+        }
+        scriviPersoneRistorantiFile();
+    }
+    /*public void addPersoneRistorantiByIdUtente(String idUtente, String idRistorante) {
+        for (int i = 0; i < personeRistoranti.size(); i++)
+            if (fav[1].equals(idUtente)) {
+                if (!fav[0].isEmpty() || fav[0] != "") {
+                    
+                }
+            }
+        }
+    }*/
 
     public void addNewFavourite(String username, String newFav) {
         //addNewFavourite(utenteLoggato.getUsername(), ristoranteFav);
@@ -112,33 +158,51 @@ public class GestoreUtenti {
     }
 
     private void aggiungiRigheFavourite() {
-    boolean checkfirst = true;
-
-    for (Utente row : this.utenti) {
-        if (checkfirst) {
-            checkfirst = false;
-            continue;
-        }
-
-        String username = row.getUsername();
-        
-        boolean esisteGià = false;
-        for (String[] entry : dataSetFavourite) {
-            if (entry.length > 0 && entry[0].equals(username)) {
-                esisteGià = true;
-                break;
+        boolean checkfirst = true;
+        for (Utente row : this.utenti) {
+            if (checkfirst) {
+                checkfirst = false;
+                continue;
+            }
+            String username = row.getUsername();
+            boolean esisteGià = false;
+            for (String[] entry : dataSetFavourite) {
+                if (entry.length > 0 && entry[0].equals(username)) {
+                    esisteGià = true;
+                    break;
+                }
+            }
+            // Aggiungi solo se non esiste
+            if (!esisteGià) {
+                dataSetFavourite.add(new String[]{username, ""});
             }
         }
-        
-        // Aggiungi solo se non esiste
-        if (!esisteGià) {
-            dataSetFavourite.add(new String[]{username, ""});
-        }
+        //System.out.println("Favourite caricato");
+        scriviFavouriteFile();
     }
-    
-    //System.out.println("Favourite caricato");
-    scriviFavouriteFile();
-}
+    private void aggiungiRighePersoneRistoranti() {
+        boolean checkfirst = true;
+        for (Utente row : this.utenti) {
+            if (checkfirst) {
+                checkfirst = false;
+                continue;
+            }
+            String id = row.getId();
+            boolean esisteGià = false;
+            for (String[] entry : personeRistoranti) {
+                if (entry.length > 0 && entry[0].equals(id)) {
+                    esisteGià = true;
+                    break;
+                }
+            }
+            // Aggiungi solo se non esiste
+            if (!esisteGià) {
+                dataSetFavourite.add(new String[]{id, ""});
+            }
+        }
+        //System.out.println("Favourite caricato");
+        scriviPersoneRistorantiFile();
+    }
 
     public static void createFavouriteDataSet() {
         try {
@@ -166,12 +230,29 @@ public class GestoreUtenti {
             riga[0] = dataSetFavourite.get(i)[0];
             riga[1] = dataSetFavourite.get(i)[1];
             writer.writeNext(riga);
-        
         }
         writer.flush();
+        //System.out.println("CSV scritto con successo!");
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
+    }
 
-        System.out.println("CSV scritto con successo!");
-
+    private void scriviPersoneRistorantiFile() {
+        //createFavouriteDataSet();
+        try (CSVWriter writer = new CSVWriter(new FileWriter(personeRistorantiPath),
+        ';',       // separatore personalizzato
+        CSVWriter.NO_QUOTE_CHARACTER,
+        CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+        CSVWriter.DEFAULT_LINE_END)) {
+        String[] riga = new String[2];
+        for (int i=0; i<personeRistoranti.size(); i++){
+            riga[0] = personeRistoranti.get(i)[0];
+            riga[1] = personeRistoranti.get(i)[1];
+            writer.writeNext(riga);
+        }
+        writer.flush();
+        //System.out.println("CSV scritto con successo!");
         } catch (IOException e) {
         e.printStackTrace();
         }
@@ -260,38 +341,73 @@ public class GestoreUtenti {
     }
 
     private void inserimentoFavouriteDati() {
-    int iRow = 0;
-    
-    try (BufferedReader reader = new BufferedReader(new FileReader(pathFavourite))) {
-        String line;
+        int iRow = 0;
         
-        while ((line = reader.readLine()) != null) {
-            // Salta righe vuote
-            if (line.trim().isEmpty()) {
-                continue;
-            }
+        try (BufferedReader reader = new BufferedReader(new FileReader(pathFavourite))) {
+            String line;
             
-            String[] appoggio = line.split(";", -1);
-            
-            // Verifica lunghezza e aggiungi
-            if (appoggio.length >= 2) {
-                // Caso normale: username;favourites
-                dataSetFavourite.add(new String[]{appoggio[0], appoggio[1]});
-            } else if (appoggio.length == 1) {
-                // Caso con solo username (nessun favourite)
-                dataSetFavourite.add(new String[]{appoggio[0], ""});
-            } else {
-                // Riga malformata, salta
-                System.out.println("Riga malformata ignorata: " + line);
-                continue;
+            while ((line = reader.readLine()) != null) {
+                // Salta righe vuote
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+                
+                String[] appoggio = line.split(";", -1);
+                
+                // Verifica lunghezza e aggiungi
+                if (appoggio.length >= 2) {
+                    // Caso normale: username;favourites
+                    dataSetFavourite.add(new String[]{appoggio[0], appoggio[1]});
+                } else if (appoggio.length == 1) {
+                    // Caso con solo username (nessun favourite)
+                    dataSetFavourite.add(new String[]{appoggio[0], ""});
+                } else {
+                    // Riga malformata, salta
+                    System.out.println("Riga malformata ignorata: " + line);
+                    continue;
+                }
+                iRow++;
             }
-            iRow++;
+            //System.out.println("Caricati " + iRow + " favourites dal file");
+        } catch (IOException e) {
+            System.out.println("File favourite non trovato - verrà creato.");
         }
-        System.out.println("Caricati " + iRow + " favourites dal file");
-    } catch (IOException e) {
-        System.out.println("File favourite non trovato - verrà creato.");
     }
-}
+
+    private void inserimentoPersoneRistorantiDati() {
+        int iRow = 0;
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(personeRistorantiPath))) {
+            String line;
+            
+            while ((line = reader.readLine()) != null) {
+                // Salta righe vuote
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+                
+                String[] appoggio = line.split(";", -1);
+                
+                // Verifica lunghezza e aggiungi
+                if (appoggio.length >= 2) {
+                    // Caso normale: username;favourites
+                    personeRistoranti.add(new String[]{appoggio[0], appoggio[1]});
+                } else if (appoggio.length == 1) {
+                    // Caso con solo username (nessun favourite)
+                    personeRistoranti.add(new String[]{appoggio[0], ""});
+                } else {
+                    // Riga malformata, salta
+                    System.out.println("Riga malformata ignorata: " + line);
+                    continue;
+                }
+                iRow++;
+            }
+            //System.out.println("Caricati " + iRow + " favourites dal file");
+        } catch (IOException e) {
+            System.out.println("File favourite non trovato - verrà creato.");
+        }
+    }
+
     public int numeroRighe() {
         
         
