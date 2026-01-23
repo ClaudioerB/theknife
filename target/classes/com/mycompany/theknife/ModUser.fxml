@@ -135,7 +135,7 @@
             <Font size="23.0"/>
           </font>
         </Label>
-        <Button fx:id="viewRestaurant" layoutX="1171.0" layoutY="384.0" mnemonicParsing="false" onAction="#visualizzaRistoranteButtonAction" text="Visualizza Ristorante">
+        <Button fx:id="viewRestaurant" layoutX="1017.0" layoutY="385.0" mnemonicParsing="false" onAction="#visualizzaRistoranteButtonAction" text="Visualizza Ristorante">
           <font>
             <Font size="20.0"/>
           </font>
@@ -156,27 +156,22 @@
             <Font size="23.0"/>
           </font>
         </Label>
-        <Button fx:id="viewRecensione" layoutX="1172.0" layoutY="788.0" mnemonicParsing="false" onAction="#visualizzaRecensioneButtonAction" text="Visualizza Recensione">
+        <Button fx:id="viewRecensione" layoutX="1172.0" layoutY="783.0" mnemonicParsing="false" onAction="#visualizzaRecensioneButtonAction" text="Visualizza Recensione">
           <font>
             <Font size="20.0"/>
           </font>
         </Button>
-        <Button fx:id="modifyRecensione" layoutX="1020.0" layoutY="788.0" mnemonicParsing="false" onAction="#visualizzaRistoranteButtonAction" text="Modifica">
+        <Button fx:id="goToRestaurant" layoutX="1435.0" layoutY="783.0" mnemonicParsing="false" onAction="#switchToRistorante" text="Vai al ristorante">
           <font>
             <Font size="20.0"/>
           </font>
         </Button>
-        <Button fx:id="goToRestaurant" layoutX="1435.0" layoutY="788.0" mnemonicParsing="false" onAction="#switchToRistorante" text="Vai al ristorante">
+        <Button fx:id="removePreferito" layoutX="1316.0" layoutY="385.0" mnemonicParsing="false" onAction="#rimuoviPreferito" text="Rimuovi Preferito">
           <font>
             <Font size="20.0"/>
           </font>
         </Button>
-        <Button fx:id="removePreferito" layoutX="1435.0" layoutY="384.0" mnemonicParsing="false" onAction="#rimuoviPreferito" text="Rimuovi Preferito">
-          <font>
-            <Font size="20.0"/>
-          </font>
-        </Button>
-        <Button fx:id="removeRecensione" layoutX="1538.0" layoutY="862.0" mnemonicParsing="false" onAction="#rimuoviRecensione" text="Rimuovi Recensione">
+        <Button fx:id="removeRecensione" layoutX="926.0" layoutY="783.0" mnemonicParsing="false" onAction="#rimuoviRecensione" text="Rimuovi Recensione">
           <font>
             <Font size="20.0"/>
           </font>
