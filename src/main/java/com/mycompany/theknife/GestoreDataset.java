@@ -291,5 +291,21 @@ public class GestoreDataset {
         }
         System.out.println();
     }
-    
+    public void removeRistoranteById(String idR) {
+        String[] row;
+        int id = 0;
+        for (int i=1; i<dataSet.size(); i++) {
+            row = dataSet.get(i);
+            if (row[16].equals(idR)) {
+                id = i;
+                break;
+            }
+        }
+        if (id!=0) {
+            System.out.println("eliminata"+id);
+            eliminaRiga(id);
+        } else {
+            System.out.println("Non è stato trovato il ristorante nel dataset");
+        }
+    }
 }

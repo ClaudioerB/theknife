@@ -57,24 +57,48 @@ public class ControllerModRistoratore {
       }
       filteredList = GestoreDataset.getDataSet();
       gestore = Gestore.getGestore();
+      gestoreUtenti = GestoreUtenti.getGestoreUtenti();
+      gestoreDataset = GestoreDataset.getGestoreDataset();
       //personeRistoranti = GestoreUtent
       utenteLoggato = gestore.getUtenteLoggato();
       textTitle.setText(utenteLoggato.getUsername());
-      //searchRistoratore(filteredList);
+      filter();
       fillListView(filteredList);
    }
 
-   private void searchRistoratore() {
-      ArrayList<String[]> appoggio = filteredList;
+   private void filter() {
+      ArrayList<String[]> appoggio = new ArrayList<>();
       boolean checkfirst = true;
+      String idRistoranti;
 
+      /*for (String[] row : filteredList) {
+         if (checkfirst) {
+            checkfirst = false;
+         } else {
+            idRistoranti = gestoreUtenti.getPersoneRistorantiByIdUtente(utenteLoggato.getId());
+            //System.out.println(idRistoranti);
+            if (idRistoranti.contains(row[16])) {
+               appoggio.add(row);
+            }
+         }
+      }*/
+      String idUtente;
       for (String[] row : filteredList) {
          if (checkfirst) {
-               checkfirst = false;
+            checkfirst = false;
+         } else {
+            idUtente = gestoreUtenti.getPersoneRistorantiByIdRistorante(row[16]);
+            //System.out.println(idRistoranti);
+            if (idUtente != null) {
+               if (idUtente.equals(utenteLoggato.getId())) {
+                  appoggio.add(row);
+               } 
             } else {
-               //if ()
+               System.out.println("Id utente null");
             }
+         }
       }
+      filteredList = appoggio;
    }
 
    @FXML 
@@ -120,7 +144,7 @@ public class ControllerModRistoratore {
                 listRestaurants.refresh();
             }
         }
-        if (list.isEmpty() || (list.size() == 1 )) {
+        if (list.isEmpty() || (list.size() == 0 )) {
             listRestaurants.getItems().add("Nessun ristorante trovato con i filtri selezionati.");
             listRestaurants.refresh();
         }
@@ -139,10 +163,17 @@ public class ControllerModRistoratore {
    private void switchIndietro() throws IOException {
       App.setRoot("ModUser");
    }
-   @FXML 
-   private void visualizzaRistoranteButtonAction() throws IOException {
-      return;
-   }
+   @FXML
+    private void visualizzaRistoranteButtonAction() throws IOException {
+        String selectedItem = listRestaurants.getSelectionModel().getSelectedItem();
+        if (selectedItem == null || selectedItem.startsWith("Nessun ristorante trovato")) {
+            // Nessun elemento selezionato o messaggio di nessun ristorante trovato
+            return;
+        }
+        String idRistorante = selectedItem.split(" - ")[0].replace("Ristorante N: ", "").trim();
+        ControllerViewRistorante.getInstance(GestoreRicerche.getGestoreRicerche().trovaRistorantiID(idRistorante), false);
+        App.setRoot("ViewRistorante");
+    }
    @FXML 
    private void switchToHome() throws IOException {
       App.setRoot("HomeLogged");
@@ -152,9 +183,14 @@ public class ControllerModRistoratore {
       App.setRoot("CreaRistorante");
    }
    @FXML 
+   private void rimuoviRistorante() throws IOException {
+      rimuovi();
+   }
+   @FXML 
    private void checkFilteredList() throws IOException {
       filteredList = gestoreDataset.getDataSet();
       searchingButtonAction();
+      filter();
       fillListView(filteredList);
    }
    
@@ -162,6 +198,25 @@ public class ControllerModRistoratore {
    private void resetButtonAction() throws IOException {
       filteredList = gestoreDataset.getDataSet();
       searchTextField.setText("");
+      filter();
+      fillListView(filteredList);
+   }
+
+   private void rimuovi() throws IOException {
+      String selectedItem = listRestaurants.getSelectionModel().getSelectedItem();
+      if (selectedItem == null || selectedItem.startsWith("Nessun ristorante trovato")) {
+         // Nessun elemento selezionato o messaggio di nessun ristorante trovato
+         return;
+      }
+      String idRistorante = selectedItem.split(" - ")[0].replace("Ristorante N: ", "").trim();
+      
+      //String[] ristorante = GestoreRicerche.getGestoreRicerche().trovaRistorantiID(idRistorante);
+      //gestoreUtenti.rimuoviPreferitoUtente(utenteLoggato.getUsername(),ristorante);
+
+      gestoreDataset.removeRistoranteById(idRistorante);
+      gestoreUtenti.removePersoneRistorantiByIdRistorante(idRistorante, utenteLoggato.getId());
+
+      filter(); 
       fillListView(filteredList);
    }
 }
