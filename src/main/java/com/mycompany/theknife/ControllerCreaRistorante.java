@@ -42,8 +42,6 @@ public class ControllerCreaRistorante {
     @FXML
     private TextArea descrizioneRistoranteTextArea;
     @FXML
-    private ListView recensioniRistoranteListView;
-    @FXML
     private ListView serviziRistoranteListView;
     @FXML
     private CheckBox prenotazioniCheckBox;
@@ -52,17 +50,47 @@ public class ControllerCreaRistorante {
     @FXML
     private ImageView theKnifeImageView;
     @FXML
-    private Button modificaTipiCucinaButton;
+    private Button eliminaTipiCucinaButton;
     @FXML
-    private Button modificaServiziButton;
-    
+    private Button aggiungiServiziButton;
+    @FXML
+    private Button eliminaServiziButton;
+    @FXML
+    private javafx.scene.control.MenuButton cucineFilterComboBox;
+    @FXML 
+    private javafx.scene.control.CheckMenuItem tutteItem;
+
     public ControllerCreaRistorante(){
 
     }
 
     public void initialize() {
+        popolaMenuCucineConRadio();
+    }
+   
+    private void popolaMenuCucineConRadio() {
+        cucineFilterComboBox.getItems().clear();
+
+        tutteItem = new javafx.scene.control.CheckMenuItem("Tutte le cucine");
+        tutteItem.setSelected(true);
+        tutteItem.setId("tutteCucine");
         
+        cucineFilterComboBox.getItems().add(tutteItem);
+
+        cucineFilterComboBox.getItems().add(new javafx.scene.control.SeparatorMenuItem());
+
+        boolean checkfirst = true;
+        for (String row : GestoreDataset.getDataSetCucina()) {
+            if (checkfirst) {
+                checkfirst = false;
+                continue;
+            }
+            javafx.scene.control.CheckMenuItem checkItem = new javafx.scene.control.CheckMenuItem(row);
+            
+            cucineFilterComboBox.getItems().add(checkItem);
+        }
     }
 
+    
 
 }
