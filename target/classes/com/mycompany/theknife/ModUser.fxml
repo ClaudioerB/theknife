@@ -124,30 +124,56 @@
             <Font size="23.0"/>
           </font>
         </Text>
-        <Button fx:id="logoutButton" layoutX="883.0" layoutY="887.0" mnemonicParsing="false" onAction="#switchHomeNotLogged" text="Log out" textAlignment="CENTER">
+        <Button fx:id="logoutButton" layoutX="883.0" layoutY="921.0" mnemonicParsing="false" onAction="#switchHomeNotLogged" text="Log out" textAlignment="CENTER">
           <font>
             <Font size="24.0"/>
           </font>
         </Button>
-        <ListView fx:id="listFavourite" layoutX="796.0" layoutY="206.0" prefHeight="302.0" prefWidth="955.0"/>
-        <Label layoutX="1175.0" layoutY="133.0" prefHeight="34.0" prefWidth="196.0" text="Ristoranti preferiti">
+        <ListView fx:id="listFavourite" layoutX="798.0" layoutY="150.0" prefHeight="200.0" prefWidth="955.0"/>
+        <Label layoutX="1177.0" layoutY="81.0" prefHeight="34.0" prefWidth="196.0" text="Ristoranti preferiti">
           <font>
             <Font size="23.0"/>
           </font>
         </Label>
-        <Button fx:id="viewRestaurant" layoutX="1218.0" layoutY="564.0" mnemonicParsing="false" onAction="#visualizzaRistoranteButtonAction" text="Visualizza">
+        <Button fx:id="viewRestaurant" layoutX="1017.0" layoutY="385.0" mnemonicParsing="false" onAction="#visualizzaRistoranteButtonAction" text="Visualizza Ristorante">
           <font>
             <Font size="20.0"/>
           </font>
         </Button>
-        <Button fx:id="logoutButton2" layoutX="769.0" layoutY="887.0" mnemonicParsing="false" onAction="#switchHomeNotLogged" text="Log out" textAlignment="CENTER">
+        <Button fx:id="logoutButton2" layoutX="769.0" layoutY="921.0" mnemonicParsing="false" onAction="#switchHomeNotLogged" text="Log out" textAlignment="CENTER">
           <font>
             <Font size="24.0"/>
           </font>
         </Button>
-        <Button fx:id="propriRistoranti" layoutX="997.0" layoutY="887.0" mnemonicParsing="false" onAction="#switchRistoratore" text="Ristoranti" textAlignment="CENTER">
+        <Button fx:id="propriRistoranti" layoutX="997.0" layoutY="921.0" mnemonicParsing="false" onAction="#switchRistoratore" text="Ristoranti" textAlignment="CENTER">
           <font>
             <Font size="24.0"/>
+          </font>
+        </Button>
+        <ListView fx:id="listRecensioni" layoutX="797.0" layoutY="551.0" prefHeight="200.0" prefWidth="955.0"/>
+        <Label layoutX="1168.0" layoutY="494.0" prefHeight="34.0" prefWidth="213.0" text="Le proprie recensioni">
+          <font>
+            <Font size="23.0"/>
+          </font>
+        </Label>
+        <Button fx:id="viewRecensione" layoutX="1172.0" layoutY="783.0" mnemonicParsing="false" onAction="#visualizzaRecensioneButtonAction" text="Visualizza Recensione">
+          <font>
+            <Font size="20.0"/>
+          </font>
+        </Button>
+        <Button fx:id="goToRestaurant" layoutX="1435.0" layoutY="783.0" mnemonicParsing="false" onAction="#switchToRistorante" text="Vai al ristorante">
+          <font>
+            <Font size="20.0"/>
+          </font>
+        </Button>
+        <Button fx:id="removePreferito" layoutX="1316.0" layoutY="385.0" mnemonicParsing="false" onAction="#rimuoviPreferito" text="Rimuovi Preferito">
+          <font>
+            <Font size="20.0"/>
+          </font>
+        </Button>
+        <Button fx:id="removeRecensione" layoutX="926.0" layoutY="783.0" mnemonicParsing="false" onAction="#rimuoviRecensione" text="Rimuovi Recensione">
+          <font>
+            <Font size="20.0"/>
           </font>
         </Button>
       </children>

@@ -69,8 +69,20 @@ public class ControllerModUser {
    @FXML 
    private javafx.scene.control.Button propriRistoranti;
 
+   @FXML 
+   private javafx.scene.control.Button viewRecensione;
+
+   @FXML 
+   private javafx.scene.control.Button modifyRecensione;
+
+   @FXML 
+   private javafx.scene.control.Button goToRestaurant;
+
    @FXML
    private javafx.scene.control.ListView<String> listFavourite;
+
+   @FXML
+   private javafx.scene.control.ListView<String> listRecensioni;
 
    private ArrayList<String[]> filteredList;
    private GestoreDataset gestoreDataset;
@@ -80,6 +92,20 @@ public class ControllerModUser {
    private Utente utenteLoggato;
    private String dataSetFavourite;
 
+   private ArrayList<Recensione> recensioni;
+   private GestoreRecensioni gestoreRecensioni;
+   private static String[] ristorante;
+
+   private Recensione vecchiaRecensione;
+   private ControllerModUser controller;
+
+
+
+   /*public ControllerModUser() {}
+   public ControllerModUser(int idRistorante, Recensione recensione) {
+      this.recensioneMod = recensione;
+      this.idMod = idRistorante;
+   }*/
    @FXML
    private void initialize() {
       String knifePath = System.getProperty("user.dir")
@@ -112,10 +138,16 @@ public class ControllerModUser {
       //gestoreDataset = new GestoreDataset();
       gestoreDataset = GestoreDataset.getGestoreDataset();
       filteredList = new ArrayList<>();
+
       gestore = Gestore.getGestore();
       gestoreUtenti = GestoreUtenti.getGestoreUtenti();
       utenteLoggato = gestore.getUtenteLoggato();
       dataSetFavourite = gestoreUtenti.getFavouriteByUsername(utenteLoggato.getUsername());
+
+      gestoreRecensioni= GestoreRecensioni.getGestoreRecensioni();
+      recensioni = gestoreRecensioni.getRecensioniByUsername(utenteLoggato.getUsername());
+
+
       setText();
 
       setRistoratore();
@@ -123,8 +155,29 @@ public class ControllerModUser {
       filter();
 
       fillListView(filteredList);
+      fillRecensioniView(recensioni);
       
    }
+
+   public void fillRecensioniView(ArrayList<Recensione> list) {
+        listRecensioni.getItems().clear();
+        
+        for (Recensione row : list) {
+            if (row != null) {
+                String appoggio ="Titolo: "+row.titolo+" - By: "+row.utenteRecensione + " - Voto: ";
+                for(int i=0; i<row.stelle; i++) {
+                    appoggio += "★";
+                }
+                appoggio += " - "+row.data+" - "+row.ora+"\n";
+                listRecensioni.getItems().add(appoggio);
+                listRecensioni.refresh();
+            }
+        }
+        if (list.isEmpty()){
+            listRecensioni.getItems().add("non ci sono recensioni.");
+            listRecensioni.refresh();
+        }
+    }
 
    private void setRistoratore() {
       if(utenteLoggato.isRistoratore()) {
@@ -306,6 +359,167 @@ public class ControllerModUser {
          gestoreUtenti.aggiornaUtente(utenteLoggato);
       }
       
+   }
+
+   @FXML 
+   private void rimuoviPreferito() throws IOException {
+      String selectedItem = listFavourite.getSelectionModel().getSelectedItem();
+      if (selectedItem == null || selectedItem.startsWith("Nessun ristorante trovato")) {
+         // Nessun elemento selezionato o messaggio di nessun ristorante trovato
+         return;
+      }
+      String idRistorante = selectedItem.split(" - ")[0].replace("Ristorante N: ", "").trim();
+      
+      String[] ristorante = GestoreRicerche.getGestoreRicerche().trovaRistorantiID(idRistorante);
+      //gestoreUtenti.rimuoviPreferitoUtente(utenteLoggato.getUsername(),ristorante);
+      utenteLoggato.removePreferito(ristorante);
+      dataSetFavourite = gestoreUtenti.getFavouriteByUsername(utenteLoggato.getUsername());
+      filter();
+      fillListView(filteredList);
+   }
+
+   @FXML 
+   private void switchToRistorante() throws IOException {
+      String selectedRecensione = (String) listRecensioni.getSelectionModel().getSelectedItem();
+      if(selectedRecensione != null && !selectedRecensione.equals("non ci sono recensioni.")) {
+         String[] partiRecensione = selectedRecensione.split(" - ");
+            String titoloSelezionato = partiRecensione[0].replace("Titolo: ", "").trim();
+            String UtenteSelezionato = partiRecensione[1].replace("By: ", "").trim();
+            String DataSelezionata = partiRecensione[3].trim();
+            String OraSelezionata = partiRecensione[4].trim();
+
+            Recensione recensioneS = null;
+            String idRistorante = null;
+            for(Recensione rec : recensioni) {
+               if(rec.utenteRecensione.equals(UtenteSelezionato)&& rec.getData().equals(DataSelezionata) && rec.getOra().equals(OraSelezionata)) {
+                  recensioneS = rec;
+                  idRistorante = rec.getId();
+                  break;
+               }
+            }
+            if (recensioneS != null) {
+               ControllerViewRistorante.getInstance(GestoreRicerche.getGestoreRicerche().trovaRistorantiID(idRistorante), false);
+               App.setRoot("ViewRistorante");
+            }
+            else {
+               System.out.println("Non c'è nessuna recensione selezionata");
+            }
+         
+      }
+   }
+
+   @FXML 
+   private void visualizzaRecensioneButtonAction() throws IOException {
+      String selectedRecensione = (String) listRecensioni.getSelectionModel().getSelectedItem();
+         if(selectedRecensione != null && !selectedRecensione.equals("non ci sono recensioni.")) {
+            String[] partiRecensione = selectedRecensione.split(" - ");
+            String titoloSelezionato = partiRecensione[0].replace("Titolo: ", "").trim();
+            String UtenteSelezionato = partiRecensione[1].replace("By: ", "").trim();
+            String DataSelezionata = partiRecensione[3].trim();
+            String OraSelezionata = partiRecensione[4].trim();
+
+            Recensione recensioneDaVisualizzare = null;
+            for(Recensione rec : recensioni) {
+                if(rec.utenteRecensione.equals(UtenteSelezionato)&& rec.getData().equals(DataSelezionata) && rec.getOra().equals(OraSelezionata)) {
+                    recensioneDaVisualizzare = rec;
+                    setRecensioneDaCambiare(rec);
+                    break;
+                }
+            }
+            if(recensioneDaVisualizzare != null && recensioneDaVisualizzare.getRisposta()!= null&& !recensioneDaVisualizzare.getRisposta().equals(" ")) {
+                FXMLLoader loader = new FXMLLoader(App.class.getResource("VisualizzaRecensione.fxml"));
+                Parent root = loader.load();
+
+                ControllerVisualizzaRecensione controller = loader.getController();
+                controller.setRecensione(recensioneDaVisualizzare);
+
+                Stage stage = new Stage();
+                stage.setTitle("Visualizza Recensione");
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL); 
+                stage.show(); 
+            }
+            else if (recensioneDaVisualizzare != null) {
+                FXMLLoader loader = new FXMLLoader(App.class.getResource("VisualizzaModRecensioneSenzaRisposta.fxml"));
+                Parent root = loader.load();
+
+                ControllerModVisualizzaRecensioneSenzaRisposta controller = loader.getController();
+                controller.setRecensione(recensioneDaVisualizzare);
+                controller.setController(this);
+
+                Stage stage = new Stage();
+                stage.setTitle("Visualizza Oppure Modifica Recensione");
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL); 
+                stage.show(); 
+            } 
+            else {
+                System.out.println("Recensione non trovata.");
+            } 
+        }
+   }
+   public void settingRecensione() {
+      recensioni = gestoreRecensioni.getRecensioniByUsername(utenteLoggato.getUsername());
+      fillRecensioniView(recensioni);
+   }
+   public void setRecensioneDaCambiare(Recensione rec) {
+      vecchiaRecensione = rec;
+   }
+   public Recensione getRecensioneVecchia() {
+      return vecchiaRecensione;
+   }
+
+   @FXML
+   private void rimuoviRecensione() throws IOException {
+      String selectedRecensione = (String) listRecensioni.getSelectionModel().getSelectedItem();
+      if(selectedRecensione != null && !selectedRecensione.equals("non ci sono recensioni.")) {
+         String[] partiRecensione = selectedRecensione.split(" - ");
+            String titoloSelezionato = partiRecensione[0].replace("Titolo: ", "").trim();
+            String UtenteSelezionato = partiRecensione[1].replace("By: ", "").trim();
+            String DataSelezionata = partiRecensione[3].trim();
+            String OraSelezionata = partiRecensione[4].trim();
+
+            Recensione recensioneS = null;
+            //String idRistorante = null;
+            /*for(Recensione rec : recensioni) {
+               if(rec.utenteRecensione.equals(UtenteSelezionato)&& rec.getData().equals(DataSelezionata) && rec.getOra().equals(OraSelezionata)) {
+                  recensioneS = rec;
+                  idRistorante = rec.getId();
+                  break;
+               }
+            }*/
+            int idR = 0;
+            ArrayList<Recensione> recensioniArr = gestoreRecensioni.getRecensioni();
+            for (int i=1; i<recensioniArr.size(); i++) {
+               Recensione rec = recensioniArr.get(i);
+
+               if(rec.utenteRecensione.equals(UtenteSelezionato)&& rec.getData().equals(DataSelezionata) && rec.getOra().equals(OraSelezionata)) {
+                  recensioneS = rec;
+                  //idRistorante = rec.getId();
+                  idR = i;
+                  break;
+               }
+            }
+            if(recensioneS != null && recensioneS.getRisposta()!= null&& !recensioneS.getRisposta().equals(" ")) {
+               System.out.println("Impossibile eliminare la recensione siccome possiede una risposta");
+            }
+            else if (recensioneS != null && idR != 0) {
+               gestoreRecensioni.rimuoviRecensione(idR);
+            }
+            else if (idR == 0){
+               System.out.println("Non esiste la recensione");
+            }
+            else {
+               System.out.println("Non c'è nessuna recensione selezionata");
+            }
+         /*String selectedItem = listRecensioni.getSelectionModel().getSelectedItem();
+         if (selectedItem == null || selectedItem.startsWith("non ci sono recensioni.")) {
+         // Nessun elemento selezionato o messaggio di nessun ristorante trovato
+         return;
+         }*/
+         recensioni = gestoreRecensioni.getRecensioniByUsername(utenteLoggato.getUsername());
+         fillRecensioniView(recensioni);
+      }
    }
 
    @FXML 

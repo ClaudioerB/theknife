@@ -456,6 +456,7 @@ public class HomeLoggedController {
 
     @FXML 
     private void switchToHomeNotLogged() throws IOException {
+        Gestore.getGestore().setUtenteLoggato(null);
         App.setRoot("HomeNotLogged");
     }
 }

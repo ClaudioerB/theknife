@@ -58,17 +58,40 @@ public class GestoreRecensioni {
         }
     }
 
-    public void modificaRecensione(int i, String date, String time) {
+    public void modificaRecensione(Recensione recensione, Recensione rVecchia) {
+
+        String utente = rVecchia.getUtenteRecensione();
+        String data = rVecchia.getData();
+        String time = rVecchia.getOra();
+        int id = 0;
+        if (recensione != null && rVecchia != null) {
+            for (int i=1; i<recensioni.size(); i++) {
+                Recensione rec = recensioni.get(i);
+                if(rec.utenteRecensione.equals(utente)&& rec.getData().equals(data) && rec.getOra().equals(time)) {
+                    id = i;
+                    break;
+                }
+            }
+        }
+        if (id == 0) {
+            //non vi è nussna recnsione possibile
+        } else {
+            modificaRecensioneById(id, recensione);
+        }
+    }
+
+    public void modificaRecensioneById(int id, Recensione recensione) {
         if (recensioni.isEmpty()) {
             System.out.println("Non è presente nessun commento.");
         }
         else {
-            System.out.println("Inserire il testo da modificare");
-            //String txt = input.nextLine();
-            String txt = "Testo moficiato";
-            recensioni.get(i).setRecensione(txt);
-            recensioni.get(i).setData(date);
-            recensioni.get(i).setOra(time);
+            String date = recensione.getData(), time = recensione.getOra(), txt = recensione.getRecensione(),title=recensione.getTitolo();
+            double star=recensione.getStelle();
+            recensioni.get(id).setRecensione(txt);
+            recensioni.get(id).setData(date);
+            recensioni.get(id).setOra(time);
+            recensioni.get(id).setStelle(star);
+            recensioni.get(id).setTitolo(title);
             scriviFile();
         }
     }
@@ -164,6 +187,16 @@ public class GestoreRecensioni {
         ArrayList<Recensione> recensioniRistorante = new ArrayList<Recensione>();
         for (Recensione recensione : recensioni) {
             if (recensione.getId().equals(string)) {
+                recensioniRistorante.add(recensione);
+            }
+        }
+        return recensioniRistorante;
+    }
+
+    public ArrayList<Recensione> getRecensioniByUsername(String username) {
+        ArrayList<Recensione> recensioniRistorante = new ArrayList<Recensione>();
+        for (Recensione recensione : recensioni) {
+            if (recensione.getUtenteRecensione().equals(username)) {
                 recensioniRistorante.add(recensione);
             }
         }

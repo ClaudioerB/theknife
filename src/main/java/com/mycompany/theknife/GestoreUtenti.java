@@ -431,7 +431,12 @@ public boolean controlloPassword(String password) {
                     for (String string : appoggio) {
                         
                         if(!string.equals(ristoranteString)){
-                            favorite=favorite+string;
+                            //favorite=favorite+string;
+                            if (favorite=="") {
+                                favorite=string;
+                            } else {
+                                favorite=favorite+","+string;
+                            }
                         }
                         
                     }
