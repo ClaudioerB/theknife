@@ -157,6 +157,7 @@ public class ControllerModRistoratore {
       searchingButtonAction();
       fillListView(filteredList);
    }
+   
    @FXML 
    private void resetButtonAction() throws IOException {
       filteredList = gestoreDataset.getDataSet();

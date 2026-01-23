@@ -196,6 +196,20 @@ public class GestoreDataset {
         this.dataSet.add(riga);
         scriviFile();
     }
+    public int LastId(){
+        int maxId = 0;
+        for (int i = 1; i < dataSet.size(); i++) { // Skip header
+            try {
+                int id = Integer.parseInt(dataSet.get(i)[16]);
+                if (id > maxId) {
+                    maxId = id;
+                }
+            } catch (NumberFormatException e) {
+                // Handle non-integer, skip or log
+            }
+        }
+        return maxId+1;
+    }
     private void scriviFile() {
         
         try (CSVWriter writer = new CSVWriter(new FileWriter(filePath),
