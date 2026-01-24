@@ -142,8 +142,9 @@ public class ControllerViewRistorante {
         setPrezzo();
         isEditable();
         theKnifeImageViewSet();
-        if(isLogged() && !Modifica)
+        if(isLogged() && !Modifica){
             isInPreferiti();
+        }
         else {
             aggiungiPreferitiButton.setDisable(true);
             rimuoviPreferitiButton.setDisable(true);
@@ -179,7 +180,13 @@ public class ControllerViewRistorante {
                     rimuoviPreferitiButton.setVisible(false);
                 }
             }
-           
+           if(preferitiUtente.isEmpty()){
+                rimuoviPreferitiButton.setDisable(true);
+                aggiungiPreferitiButton.setDisable(false);
+                aggiungiPreferitiButton.setText("Aggiungi ai preferiti");
+                rimuoviPreferitiButton.setText("Rimuovi dai preferiti");
+                rimuoviPreferitiButton.setVisible(false);
+           }
         }
     }
     @FXML
