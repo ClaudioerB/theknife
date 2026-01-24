@@ -158,7 +158,8 @@ public class GestoreRecensioni {
                 recensioni.get(iRow).setRecensione(appoggio[4]);
                 recensioni.get(iRow).setData(appoggio[5]);
                 recensioni.get(iRow).setOra(appoggio[6]);
-                
+                if(appoggio.length==8)
+                    recensioni.get(iRow).setRisposta(appoggio[7]);
                 iRow++;
             }
         } catch (IOException e) {

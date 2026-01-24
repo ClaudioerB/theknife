@@ -79,7 +79,9 @@ public class ControllerViewRistorante {
     private Button rimuoviPreferitiButton;
     @FXML
     private Button salvaButton;
-    
+    @FXML
+    private Button rispondiButton;
+
     private static String[] ristorante;
     private ArrayList<Recensione> recensioni;
     private String[] servizi;
@@ -142,14 +144,34 @@ public class ControllerViewRistorante {
         setPrezzo();
         isEditable();
         theKnifeImageViewSet();
-        if(isLogged() && !Modifica){
+        if(isLogged() && !Modifica ){
             isInPreferiti();
+            if(isProprietario()&&!recensioni.isEmpty()){
+                rispondiButton.setDisable(false);
+                rispondiButton.setVisible(true);
+            }
+            rispondiButton.setDisable(true);
+            rispondiButton.setVisible(false);
         }
         else {
             aggiungiPreferitiButton.setDisable(true);
             rimuoviPreferitiButton.setDisable(true);
             aggiungiPreferitiButton.setVisible(false);
             rimuoviPreferitiButton.setVisible(false);
+            rispondiButton.setDisable(true);
+            rispondiButton.setVisible(false);
+        }
+    }
+    
+    private boolean isProprietario() {
+        Gestore gestore = Gestore.getGestore();
+        Utente utenteLoggato = gestore.getUtenteLoggato();
+        GestoreUtenti gestoreUtenti =GestoreUtenti.getGestoreUtenti();
+        if(gestoreUtenti.getPersoneRistorantiByIdRistorante(ristorante[16]).equals(utenteLoggato.getId())){
+            System.out.println(gestoreUtenti.getPersoneRistorantiByIdRistorante(ristorante[16])+"   "+utenteLoggato.getId());
+            return true;
+        }else{
+            return false;
         }
     }
     public void setRecensioni() {
@@ -188,6 +210,34 @@ public class ControllerViewRistorante {
                 rimuoviPreferitiButton.setVisible(false);
            }
         }
+    }
+    @FXML
+    private void rispondiButtonAction() throws IOException{
+        String selectedRecensione = (String) recensioniRistoranteListView.getSelectionModel().getSelectedItem();
+        String[] partiRecensione = selectedRecensione.split(" - ");
+        String titoloSelezionato = partiRecensione[0].replace("Titolo: ", "").trim();
+        String UtenteSelezionato = partiRecensione[1].replace("By: ", "").trim();
+        String DataSelezionata = partiRecensione[3].trim();
+        String OraSelezionata = partiRecensione[4].trim();
+
+        Recensione recensioneDaVisualizzare = null;
+        for(Recensione rec : recensioni) {
+            if(rec.utenteRecensione.equals(UtenteSelezionato)&& rec.getData().equals(DataSelezionata) && rec.getOra().equals(OraSelezionata)) {
+                recensioneDaVisualizzare = rec;
+                break;
+            }
+        }
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("VisualizzaRecensione.fxml"));
+        Parent root = loader.load();
+
+        ControllerVisualizzaRecensione controller = loader.getController();
+        controller.setRecensione(recensioneDaVisualizzare);
+
+        Stage stage = new Stage();
+        stage.setTitle("Visualizza Recensione");
+        stage.setScene(new Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL); 
+        stage.show(); 
     }
     @FXML
     private void visualizzaRecensione() throws IOException {
