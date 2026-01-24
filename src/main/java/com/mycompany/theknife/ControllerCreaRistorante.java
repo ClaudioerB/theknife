@@ -190,7 +190,13 @@ public class ControllerCreaRistorante {
     }
     @FXML
     private void checkFilteredList(javafx.scene.control.CheckMenuItem checkItem) {
-        cucineArrayList.add(checkItem.getText());
+        if (checkItem.isSelected()) {
+            cucineArrayList.add(checkItem.getText());
+        }
+        else{
+            cucineArrayList.remove(checkItem.getText());
+        }
+
         fillCucineListView();
 
     }
