@@ -219,4 +219,15 @@ public class ControllerModRistoratore {
       filter(); 
       fillListView(filteredList);
    }
+   @FXML 
+   private void modifyRistorante() throws IOException {
+      String selectedItem = listRestaurants.getSelectionModel().getSelectedItem();
+      if (selectedItem == null || selectedItem.startsWith("Nessun ristorante trovato")) {
+         // Nessun elemento selezionato o messaggio di nessun ristorante trovato
+         return;
+      }
+      String idRistorante = selectedItem.split(" - ")[0].replace("Ristorante N: ", "").trim();
+      ControllerViewRistorante.getInstance(GestoreRicerche.getGestoreRicerche().trovaRistorantiID(idRistorante), true);
+      App.setRoot("ViewRistorante");
+   }
 }

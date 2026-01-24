@@ -61,6 +61,18 @@ public class GestoreDataset {
             e.printStackTrace();
         }
     }
+    public int getId(String idR) {
+        String[] row;
+        int id = 0;
+        for (int i=1; i<dataSet.size(); i++) {
+            row = dataSet.get(i);
+            if (row[16].equals(idR)) {
+                id = i;
+                break;
+            }
+        }
+        return id;
+    }
 
     public void aggiungiRigaCucina(String riga) {
         this.dataSetCucina.add(riga);
