@@ -111,9 +111,8 @@ public class HomeNotLoggedController {
             );
             knifeImageView.setVisible(true);
         }
-        //gestoreDataset.createCucineDataSet();
-        //gestoreDataset.aggiungiRigaCucina(path);
-        //gestoreDataset.printDataSetCucina(2);
+        
+
 
         ratingFilter.setRating(0);
         filteredList = gestoreDataset.getDataSet();
@@ -184,19 +183,87 @@ public class HomeNotLoggedController {
         //System.out.println(cucineFilterComboBox.getItems().get(0).getText());
     }
 
-    private void removeCucina(String selectedCucina) {
+    /*private void removeCucina(String selectedCucina) {
+        System.out.println("DEBUG: selectedCucina = [" + selectedCucina + "]");
+        System.out.println("DEBUG: selectedCucina length = " + selectedCucina.length());
+        System.out.println("DEBUG singola: [" + filteredList.get(3)[5].trim().toLowerCase() + "] vs [" + selectedCucina.trim() + "] = " + filteredList.get(3)[5].trim().toLowerCase().equals(selectedCucina));
         ArrayList<String[]> tempList = new ArrayList<>(filteredList);
+        boolean check;
+        selectedCucina = selectedCucina.trim();
         for (String[] row : filteredList) {
+            check = false;
+            if (row[5].contains(",")) {
+                String[] tipiCucina = row[5].toLowerCase().split(",");
+                boolean trovata = false;
+                for (String tipoCucina : tipiCucina) {
+                    if (tipoCucina.trim().equals(selectedCucina)) {
+                        trovata = true;
+                        break;
+                    } 
+                }
+                if (!trovata) {
+                    check = true;
+                }
+            } else {
+                String tipoCucina = row[5].trim().toLowerCase();
+                if (!tipoCucina.equals(selectedCucina)) {
+                    //tempList.remove(row);
+                    check = true;
+                }
+            }
+            
+            if (check) {
+                tempList.remove(row);
+            }
+        }
+        /*for (String[] row : filteredList) {
             String tipoCucina = row[5].toLowerCase();
             if (!tipoCucina.equals(selectedCucina)) {
                 tempList.remove(row);
             }
-        }
-        filteredList = tempList;
+        } */
+        //filteredList = tempList;
         /*
         filteredList.removeIf(row -> 
             row.length > 5 && !row[5].toLowerCase().equals(selectedCucina)
         ); */
+    //}
+    private void removeCucina(String selectedCucina) {
+        ArrayList<String[]> tempList = new ArrayList<>();
+        selectedCucina = selectedCucina.trim();
+        
+        boolean checkfirst = true;
+        for (String[] row : filteredList) {
+            if (checkfirst) {
+                checkfirst = false;
+                tempList.add(row);
+                continue;
+            }
+            
+            boolean cucinaTrovata = false;
+            
+            if (row[5].contains(",")) {
+                String[] tipiCucina = row[5].split(",");
+                for (String tipoCucina : tipiCucina) {
+                    String cucinaPulita = tipoCucina.trim().toLowerCase();
+                    if (cucinaPulita.equals(selectedCucina)) {
+                        cucinaTrovata = true;
+                        break;
+                    }
+                }
+            } else {
+                String cucinaPulita = row[5].trim().toLowerCase();
+                if (cucinaPulita.equals(selectedCucina)) {
+                    cucinaTrovata = true;
+                }
+            }
+            
+            if (cucinaTrovata) {
+                tempList.add(row);
+            }
+        }
+        
+        filteredList = tempList;
     }
 
     private void searchingButtonActionTipiCucine() {
@@ -338,13 +405,25 @@ public class HomeNotLoggedController {
                 checkfirst = false;
             } else {
                 String nome = row[0].toLowerCase();
+                String indirizzo = row[1].toLowerCase();
                 String stato = row[2].toLowerCase();
                 String citta = row[3].toLowerCase();
                 String prezzo = row[4].toLowerCase();
                 String tipo = row[5].toLowerCase();
+                String lon = row[6].toLowerCase();
+                String lat = row[7].toLowerCase();
+                String phone = row[8].toLowerCase();
+                String url = row[9].toLowerCase();
+                String award = row[10].toLowerCase();
+                String servizi = row[11].toLowerCase();
+                String descrizione = row[12].toLowerCase();
 
                 if (!(nome.contains(searchText) || stato.contains(searchText) ||
                     citta.contains(searchText) || prezzo.contains(searchText) ||
+                    indirizzo.contains(searchText) || lon.contains(searchText) ||
+                    lat.contains(searchText) || phone.contains(searchText) ||
+                    url.contains(searchText) || award.contains(searchText) ||
+                    servizi.contains(searchText) || descrizione.contains(searchText) ||
                     tipo.contains(searchText))) {
                         //tempList.add(row);
                         tempList2.remove(row);

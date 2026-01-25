@@ -24,22 +24,34 @@ public class GestoreDataset {
         dataSet= new ArrayList<String[]>();
         dataSetCucina= new ArrayList<String>();
         inserimentoDati();
+
         inserimentoDatiCucina();
         //aggiungiRigheCucina();
+        //scriviFileCucina();
         gestoreDataset = this;
     }
 
     private void aggiungiRigheCucina() {
-
+        dataSetCucina.clear();
         boolean checkfirst = true;
         for (String[] row : this.dataSet) {
             if (checkfirst) {
                 checkfirst = false;
                 continue;
             }
-            String tipoCucina = row[5];
-            if (!dataSetCucina.contains(tipoCucina)) {
-                dataSetCucina.add(tipoCucina);
+            if (row[5].contains(",")) {
+                String[] tipiCucina = row[5].split(",");
+                for (String tipoCucina : tipiCucina) {
+                    String cucinaPulita = tipoCucina.trim(); // Rimuovi spazi
+                    if (!cucinaPulita.isEmpty() && !dataSetCucina.contains(cucinaPulita)) {
+                        dataSetCucina.add(cucinaPulita);
+                    }
+                }
+            } else {
+                String cucinaPulita = row[5].trim();
+                if (!cucinaPulita.isEmpty() && !dataSetCucina.contains(cucinaPulita)) {
+                    dataSetCucina.add(cucinaPulita);
+                }
             }
         }
         System.out.println("Cucine caricate nel dataset cucina");

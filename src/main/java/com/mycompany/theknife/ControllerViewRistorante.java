@@ -25,6 +25,8 @@ public class ControllerViewRistorante {
     private javafx.scene.control.TextField nomeRistoranteField;
     @FXML
     private TextField indirizzoRistoranteField;
+		@FXML
+    private Button rispondiButton;
     @FXML
     private TextField telefonoRistoranteField;
     @FXML
@@ -66,9 +68,9 @@ public class ControllerViewRistorante {
     @FXML
     private ImageView theKnifeImageView;
     @FXML
-    private Button modificaTipiCucinaButton;
-    @FXML
     private Button modificaServiziButton;
+    @FXML
+    private Button rimuoviCucineButton;
     @FXML
     private Button rimuoviServiziButton;
     @FXML
@@ -79,9 +81,13 @@ public class ControllerViewRistorante {
     private Button rimuoviPreferitiButton;
     @FXML
     private Button salvaButton;
+    @FXML 
+    private javafx.scene.control.CheckMenuItem tutteItem;
     @FXML
-    private Button rispondiButton;
-
+    private javafx.scene.control.MenuButton cucineFilterComboBox;
+    @FXML
+    private javafx.scene.control.Label errorFieldcampiVuotiLabel;
+    
     private static String[] ristorante;
     private ArrayList<Recensione> recensioni;
     private String[] servizi;
@@ -92,6 +98,8 @@ public class ControllerViewRistorante {
     private static ControllerViewRistorante instance = null;
     private String prz;
     private String serviziAdd;
+    private ArrayList<String> cucineArrayList;
+    ArrayList<javafx.scene.control.CheckMenuItem> checkMenuItemsList;
     public ControllerViewRistorante() {
         
     }
@@ -116,18 +124,31 @@ public class ControllerViewRistorante {
         gestoreDataset = GestoreDataset.getGestoreDataset();
         setServizi(); 
         setTipiCucina();
+        errorFieldcampiVuotiLabel.setVisible(false);
         nomeRistoranteField.setText(ristorante[0]);
         indirizzoRistoranteField.setText(ristorante[1]);
         telefonoRistoranteField.setText(ristorante[8]); 
         statoRistoranteField.setText(ristorante[2]);
-        tipoCucinaRistoranteListView.getItems().clear();
-        tipoCucinaRistoranteListView.getItems().addAll(tipiCucina);
         sitoWebRistoranteField.setText(ristorante[9]);
         cittaRistoranteField.setText(ristorante[3]);
         awardField.setText(ristorante[10]);
-        serviziRistoranteListView.getItems().clear();
-        serviziRistoranteListView.getItems().addAll(servizi);
+        fillServiziListView();
         descrizioneRistoranteTextArea.setText(ristorante[12]);
+        cucineArrayList=new ArrayList<String>();
+        //checkMenuItemsList=new ArrayList<javafx.scene.control.CheckMenuItem>();
+        for (String cucina : tipiCucina) {
+            if (!cucina.trim().isEmpty()) {
+                cucineArrayList.add(cucina.trim());
+            }
+        }
+        if (checkMenuItemsList == null || checkMenuItemsList.isEmpty()) {
+            checkMenuItemsList = new ArrayList<javafx.scene.control.CheckMenuItem>();
+            popolaMenuCucineConRadio();
+        } else {
+            aggiornaSelezioneCucine();
+        }
+        tipoCucinaRistoranteListView.getItems().clear();
+        tipoCucinaRistoranteListView.getItems().addAll(cucineArrayList);
         fillListView(recensioni);
         prz = ristorante[4];
         ratingRistorante.setRating(Double.parseDouble(ristorante[13]));
@@ -152,13 +173,12 @@ public class ControllerViewRistorante {
             }
             rispondiButton.setDisable(true);
             rispondiButton.setVisible(false);
-        }
-        else {
+        } else {
             aggiungiPreferitiButton.setDisable(true);
             rimuoviPreferitiButton.setDisable(true);
             aggiungiPreferitiButton.setVisible(false);
             rimuoviPreferitiButton.setVisible(false);
-            rispondiButton.setDisable(true);
+						rispondiButton.setDisable(true);
             rispondiButton.setVisible(false);
         }
     }
@@ -172,6 +192,74 @@ public class ControllerViewRistorante {
             return true;
         }else{
             return false;
+        }
+    }
+    private void aggiornaSelezioneCucine() {
+        for (javafx.scene.control.CheckMenuItem checkItem : checkMenuItemsList) {
+            checkItem.setSelected(cucineArrayList.contains(checkItem.getText()));
+        }
+    }
+    private void popolaMenuCucineConRadio() {
+        cucineFilterComboBox.getItems().clear();
+
+        tutteItem = new javafx.scene.control.CheckMenuItem("Tutte le cucine");
+        tutteItem.setSelected(true);
+        tutteItem.setId("tutteCucine");
+        
+        cucineFilterComboBox.getItems().add(tutteItem);
+
+        cucineFilterComboBox.getItems().add(new javafx.scene.control.SeparatorMenuItem());
+
+        boolean checkfirst = true;
+        for (String row : GestoreDataset.getDataSetCucina()) {
+            if (checkfirst) {
+                checkfirst = false;
+                continue;
+            }
+            
+            javafx.scene.control.CheckMenuItem checkItem = new javafx.scene.control.CheckMenuItem(row);
+            checkMenuItemsList.add(checkItem);
+                checkItem.setOnAction(e -> {
+                checkFilteredList(checkItem);
+            });
+            cucineFilterComboBox.getItems().add(checkItem);
+        }
+    }
+    
+    private void checkFilteredList(javafx.scene.control.CheckMenuItem checkItem) {
+        if (checkItem.isSelected()) {
+            if (!cucineArrayList.contains(checkItem.getText())) {
+                cucineArrayList.add(checkItem.getText());
+            }
+        } else {
+            cucineArrayList.remove(checkItem.getText());
+        }
+        fillCucineListView();
+    }
+    private void fillServiziListView() {
+        serviziRistoranteListView.getItems().clear();
+        
+        if (servizi == null || servizi.length == 0 || (servizi.length == 1 && servizi[0].trim().isEmpty())) {
+            serviziRistoranteListView.getItems().add("Non è presente alcun servizio");
+        } else {
+            for (String servizio : servizi) {
+                if (!servizio.trim().isEmpty()) {
+                    serviziRistoranteListView.getItems().add(servizio);
+                }
+            }
+        }
+        serviziRistoranteListView.refresh();
+    }
+    private void fillCucineListView(){
+        tipoCucinaRistoranteListView.getItems().clear();
+        
+        for (String row : cucineArrayList) {
+            tipoCucinaRistoranteListView.getItems().add(row);
+        }
+        tipoCucinaRistoranteListView.refresh();
+        
+        if (cucineArrayList.isEmpty()) {
+            tipoCucinaRistoranteListView.getItems().add("Nessuna cucina aggiunta");
         }
     }
     public void setRecensioni() {
@@ -202,13 +290,13 @@ public class ControllerViewRistorante {
                     rimuoviPreferitiButton.setVisible(false);
                 }
             }
-           if(preferitiUtente.isEmpty()){
+            if(preferitiUtente.isEmpty()){
                 rimuoviPreferitiButton.setDisable(true);
                 aggiungiPreferitiButton.setDisable(false);
                 aggiungiPreferitiButton.setText("Aggiungi ai preferiti");
                 rimuoviPreferitiButton.setText("Rimuovi dai preferiti");
                 rimuoviPreferitiButton.setVisible(false);
-           }
+            }
         }
     }
     @FXML
@@ -288,17 +376,88 @@ public class ControllerViewRistorante {
         }
     }
     @FXML 
+    private void rimuoviCucina() throws IOException {
+        String selected=tipoCucinaRistoranteListView.getSelectionModel().getSelectedItem().toString();
+        cucineArrayList.remove(selected);
+        fillCucineListView();
+        for (javafx.scene.control.CheckMenuItem checkMenuItem : checkMenuItemsList) {
+            if(checkMenuItem.getText().equals(selected)){
+                checkMenuItem.setSelected(false);
+                break;
+            }
+        }
+    }
+    private void refreshData() {
+        setServizi(); 
+        setTipiCucina();
+        errorFieldcampiVuotiLabel.setVisible(false);
+        nomeRistoranteField.setText(ristorante[0]);
+        indirizzoRistoranteField.setText(ristorante[1]);
+        telefonoRistoranteField.setText(ristorante[8]); 
+        statoRistoranteField.setText(ristorante[2]);
+        sitoWebRistoranteField.setText(ristorante[9]);
+        cittaRistoranteField.setText(ristorante[3]);
+        awardField.setText(ristorante[10]);
+        descrizioneRistoranteTextArea.setText(ristorante[12]);
+        fillServiziListView();
+        cucineArrayList.clear();
+        for (String cucina : tipiCucina) {
+            if (!cucina.trim().isEmpty()) {
+                cucineArrayList.add(cucina.trim());
+            }
+        }
+        aggiornaSelezioneCucine();
+        tipoCucinaRistoranteListView.getItems().clear();
+        tipoCucinaRistoranteListView.getItems().addAll(cucineArrayList);
+        recensioni = gestoreRecensioni.getRecensioniRistorante(ristorante[16]);
+        fillListView(recensioni);
+        prz = ristorante[4];
+        setPrezzo();
+        ratingRistorante.setRating(Double.parseDouble(ristorante[13]));
+        prenotazioniCheckBox.setSelected(ristorante[15].equals("1"));
+        consegnaCheckBox.setSelected(ristorante[14].equals("1"));
+    }
+    @FXML 
     private void salvaData() throws IOException {
         String idRistorante = this.ristorante[16];
         int idRow = gestoreDataset.getId(idRistorante);
-        modificaText();
-        modificaChekbox();
-        gestoreDataset.setRiga(idRow, ristorante);
-        initialize();
+        errorFieldcampiVuotiLabel.setVisible(false);
+        if (modificaText() && modificaCucina()) {
+            modificaChekbox();
+            gestoreDataset.setRiga(idRow, ristorante);
+            //initialize();
+            refreshData();
+            System.out.println("Dati salvati con successo!");
+        } else {
+            errorFieldcampiVuotiLabel.setVisible(true);
+        }
     }
 
-    private void modificaText() {
-
+    private boolean modificaCucina() {
+        String cucina="";
+        boolean checkFirst=true;
+        for(String string : cucineArrayList){
+            if(checkFirst){
+                cucina=string;
+                checkFirst=false;
+            } else {
+                cucina=cucina+","+string;
+            }
+        }
+        if (cucina.isEmpty()) {
+            return false;
+        }
+        ristorante[5] = cucina;
+        return true;
+    }
+    private boolean modificaText() {
+        if (nomeRistoranteField.getText().isEmpty() || indirizzoRistoranteField.getText().isEmpty() || telefonoRistoranteField.getText().isEmpty()
+            ||statoRistoranteField.getText().isEmpty()||sitoWebRistoranteField.getText().isEmpty()
+            ||cittaRistoranteField.getText().isEmpty()||awardField.getText().isEmpty()||descrizioneRistoranteTextArea.getText().isEmpty()) {
+            
+            return false;
+        }
+        
         ristorante[0] = nomeRistoranteField.getText();
         ristorante[1] = indirizzoRistoranteField.getText();
         ristorante[8] = telefonoRistoranteField.getText();
@@ -308,11 +467,13 @@ public class ControllerViewRistorante {
         ristorante[10] = awardField.getText();
         ristorante[12] = descrizioneRistoranteTextArea.getText();
         
-        if (prz != "" && !prz.isEmpty()) {
-            ristorante[4] = getPrz();
+        if (getPrz() == null || getPrz().isEmpty() ||serviziAdd == null || serviziAdd.isEmpty()) {
+            return false;
         }
 
+        ristorante[4] = getPrz();
         ristorante[11] = serviziAdd;
+        return true;
     }
 
     private void modificaChekbox() {
@@ -367,12 +528,14 @@ public class ControllerViewRistorante {
 
     @FXML 
     private void addServizio() throws IOException {
-        String text = serviziTextField.getText();
-        serviziTextField.setText("");
-        
-        //serviziRistoranteListView.getItems().addAll(servizi);
-        serviziRistoranteListView.getItems().add(text);
-        addServizioByString(text);
+        String text = serviziTextField.getText().trim();
+        if (!text.isEmpty()) {
+            serviziTextField.setText("");
+            addServizioByString(text);
+            ristorante[11] = serviziAdd;
+            setServizi(); 
+            fillServiziListView();
+        }
     }
     private void addServizioByString(String text) {
         if (serviziAdd.contains(text)) {
@@ -384,8 +547,8 @@ public class ControllerViewRistorante {
                 serviziAdd = serviziAdd.replaceFirst(",","");
             }
             if (!serviziAdd.isEmpty() && serviziAdd.charAt(serviziAdd.length() - 1) == ',') {
-            serviziAdd = serviziAdd.substring(0, serviziAdd.length() - 1);
-        }
+                serviziAdd = serviziAdd.substring(0, serviziAdd.length() - 1);
+            }
         } else {
             if (serviziAdd.isEmpty()) {
                 serviziAdd = text;
@@ -400,19 +563,22 @@ public class ControllerViewRistorante {
         int selectedIdx = serviziRistoranteListView.getSelectionModel().getSelectedIndex();
         
         if (selectedIdx != -1) {
-            serviziRistoranteListView.getItems().remove(selectedIdx);
-        }
-        Object[] currentItems = serviziRistoranteListView.getItems().toArray();
-        serviziAdd = ""; 
-        
-        for (int i = 0; i < currentItems.length; i++) {
-            if (i == 0) {
-                serviziAdd = currentItems[i].toString();
-            } else {
-                serviziAdd += "," + currentItems[i].toString();
+            Object[] currentItems = serviziRistoranteListView.getItems().toArray();
+            serviziAdd = ""; 
+            for (int i = 0; i < currentItems.length; i++) {
+                if (i != selectedIdx && !currentItems[i].toString().equals("Non è presente alcun servizio")) {
+                    if (serviziAdd.isEmpty()) {
+                        serviziAdd = currentItems[i].toString();
+                    } else {
+                        serviziAdd += "," + currentItems[i].toString();
+                    }
+                }
             }
+            ristorante[11] = serviziAdd;
+            
+            setServizi();
+            fillServiziListView();
         }
-
     }
 
     @FXML
@@ -530,15 +696,17 @@ public class ControllerViewRistorante {
             prezzo2CheckMenuItem.setDisable(true);
             prezzo3CheckMenuItem.setDisable(true);
             prezzo4CheckMenuItem.setDisable(true);
-            modificaTipiCucinaButton.setDisable(true);
             modificaServiziButton.setDisable(true);
             modificaServiziButton.setVisible(false);
-            modificaTipiCucinaButton.setVisible(false);
             salvaButton.setDisable(true);
             salvaButton.setVisible(false);
             rimuoviServiziButton.setDisable(true);
             rimuoviServiziButton.setVisible(false);
             serviziTextField.setVisible(false);
+            rimuoviCucineButton.setDisable(true);
+            rimuoviCucineButton.setVisible(false);
+            cucineFilterComboBox.setDisable(true);
+            cucineFilterComboBox.setVisible(false);
         }
         else {
             aggiungiRecensioneButton.setDisable(true);
