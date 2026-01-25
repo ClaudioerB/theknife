@@ -311,8 +311,8 @@ public class HomeLoggedController {
                 
                 deliveryValue = setDeliveryOrPrenotationValue(row[14]);
                 prenotationValue = setDeliveryOrPrenotationValue(row[15]);
-
-                listViewRestaurants.getItems().add("Ristorante N: "+row[16]+" - Nome: "+row[0] + " - Stato: " + row[2] + " - Città: " + row[3]+ " - Prezzo:" + row[4] + " - Tipo: " + row[5] + " - Consegna: " + deliveryValue + " - Prenotazione: " + prenotationValue + " - Valutazione: " + row[13]);
+                String valutazione = String.valueOf(gestoreDataset.calcStelle(row[13]));
+                listViewRestaurants.getItems().add("Ristorante N: "+row[16]+" - Nome: "+row[0] + " - Stato: " + row[2] + " - Città: " + row[3]+ " - Prezzo:" + row[4] + " - Tipo: " + row[5] + " - Consegna: " + deliveryValue + " - Prenotazione: " + prenotationValue + " - Valutazione: " + valutazione);
                 listViewRestaurants.refresh();
             }
         }
@@ -433,33 +433,32 @@ public class HomeLoggedController {
     private void starAction() {
         int tag = 13;
         double rating = ratingFilter.getRating();
-        System.out.println(rating);
-
+        //System.out.println(rating);
         if (rating  == 0) {
-            // Non applicare alcun filtro
             return;
         }
         else {
             ArrayList<String[]> tempList = new ArrayList<>(filteredList);
-            for (String[] row : filteredList) {
+            for (int i = tempList.size() - 1; i >= 0; i--) {
+                String[] row = tempList.get(i);
+                if (i == 0) {
+                    continue;
+                }
+                
                 double restaurantRating;
                 try {
-                    restaurantRating = Double.parseDouble(row[tag]);
+                    restaurantRating = gestoreDataset.calcStelle(row[tag]);
                 } catch (NumberFormatException e) {
-                    // Se il valore non è un numero valido, rimuovi il ristorante
-                    tempList.remove(row);
+                    tempList.remove(i);
                     continue;
                 }
                 if (restaurantRating < rating) {
-                    tempList.remove(row);
+                    tempList.remove(i);
                 }
-                /*if (restaurantRating < rating) {
-                    tempList.remove(row);
-                } */
             }
             filteredList = tempList;
         }
-    }    
+    }     
 
     @FXML
     private void checkFilteredList() throws IOException {

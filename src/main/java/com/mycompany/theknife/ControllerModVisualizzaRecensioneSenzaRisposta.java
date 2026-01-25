@@ -84,6 +84,14 @@ public class ControllerModVisualizzaRecensioneSenzaRisposta {
             recensioneNuova.setOra(time);
 
             gestoreRecensioni.modificaRecensione(recensioneNuova, recensioneVecchia);
+            GestoreDataset gestoreDataset = GestoreDataset.getGestoreDataset();
+            if (!controller.getIdRistorante().isEmpty() && controller.getIdRistorante() != null) {
+                String idR = controller.getIdRistorante();
+                String ratingOld = String.valueOf(recensioneVecchia.getStelle());
+                gestoreDataset.changeStelle(String.valueOf(rating), ratingOld, idR);
+            } else {
+                System.out.println("Non possibile trovare id ristorante per la recensione");
+            }
         }
         controller.settingRecensione();
         Stage stage = (Stage) TitoloField.getScene().getWindow();

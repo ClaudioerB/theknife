@@ -139,8 +139,8 @@ public class ControllerModRistoratore {
                 
                 deliveryValue = setDeliveryOrPrenotationValue(row[14]);
                 prenotationValue = setDeliveryOrPrenotationValue(row[15]);
-
-                listRestaurants.getItems().add("Ristorante N: "+row[16]+" - Nome: "+row[0] + " - Stato: " + row[2] + " - Città: " + row[3]+ " - Prezzo:" + row[4] + " - Tipo: " + row[5] + " - Consegna: " + deliveryValue + " - Prenotazione: " + prenotationValue + " - Valutazione: " + row[13]);
+                String valutazione = String.valueOf(gestoreDataset.calcStelle(row[13]));
+                listRestaurants.getItems().add("Ristorante N: "+row[16]+" - Nome: "+row[0] + " - Stato: " + row[2] + " - Città: " + row[3]+ " - Prezzo:" + row[4] + " - Tipo: " + row[5] + " - Consegna: " + deliveryValue + " - Prenotazione: " + prenotationValue + " - Valutazione: " + valutazione);
                 listRestaurants.refresh();
             }
         }

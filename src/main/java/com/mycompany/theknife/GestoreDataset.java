@@ -28,6 +28,7 @@ public class GestoreDataset {
         inserimentoDatiCucina();
         //aggiungiRigheCucina();
         //scriviFileCucina();
+        //controllaDatasetRecensioni();
         gestoreDataset = this;
     }
 
@@ -84,6 +85,112 @@ public class GestoreDataset {
             }
         }
         return id;
+    }
+    public void controllaDatasetRecensioniById(String idR) {
+        GestoreRecensioni gestoreRecensioni = GestoreRecensioni.getGestoreRecensioni();
+        ArrayList<Recensione> recensioni = gestoreRecensioni.getRecensioni();
+        for (Recensione line : recensioni) {
+            if (line.getId().equals(idR)) {
+                addStelle(String.valueOf(line.getStelle()), idR);
+            }
+        }
+    }
+    private void controllaDatasetRecensioni() {
+        GestoreRecensioni gestoreRecensioni = GestoreRecensioni.getGestoreRecensioni();
+        ArrayList<Recensione> recensioni = gestoreRecensioni.getRecensioni();
+        for (Recensione line : recensioni) {
+            String idR = line.getId();
+            for (String[] row : dataSet) {
+                if (row[16].equals(idR)) {
+                    addStelle(String.valueOf(line.getStelle()), idR);
+                }
+            }
+        }
+    }
+    /*public void countStelle(double value, String idR) {
+        /*int count = 0;
+        for (int i=0; i<value;i++) {
+            count++;
+        }
+        double rating = (double) count;
+        addStelle(String.valueOf(value), idR);
+    }*/
+    public void addStelle(String stella,String idR) {
+        int id = getId(idR);
+        String[] row = getRiga(id);
+        if (!(row[13].isEmpty() || row[13] == null)) {
+            row[13] = row[13] + ","+stella;
+        } else {
+            row[13] = stella;
+        }
+        setRiga(id, row);
+    }
+    public void changeStelle(String stellaNew, String stellaOld,String idR) {
+        int id = getId(idR);
+        String[] row = getRiga(id);
+        if (!(row[13].isEmpty() || row[13] == null)&&row[13].contains(stellaOld)) {
+            row[13].replaceFirst(stellaOld, stellaNew);
+        } else {
+            System.out.println("Non è presente nessuna stella");
+        }
+        setRiga(id, row);
+    }
+    public void removeStelle(String stella,String idR) {
+        int id = getId(idR);
+        String[] row = getRiga(id);
+        if (!(row[13].isEmpty() || row[13] == null)&&row[13].contains(stella)) {
+            if (row[13].contains(",")) {
+                row[13] = row[13].replaceFirst(stella+",", "");
+            } else {
+                row[13] = "0";
+            }
+        } else {
+            System.out.println("Non è presente nessuna stella");
+        }
+        setRiga(id, row);
+    }
+    public double calcStelle(String stelle) {
+        String[] stars;
+        double value = 0;
+        int count = 0;
+        double tot;
+        //(double) Math.round(valore1);
+        //Math.round(valore * 2) / 2.0;
+        if (stelle == null || stelle.isEmpty()) {
+            return 0.0;
+        } else {
+            if (stelle.contains(",")) {
+                stars = stelle.trim().split(",");
+                for (String row : stars) {
+                    value = value + Double.parseDouble(row);
+                    count++;
+                }
+                tot = value / (double) count;
+            } else {
+                count ++;
+                value = Double.parseDouble(stelle.trim());
+                tot = value / (double) count;
+            }
+        }
+        
+        return Math.round(tot);
+        //return Math.round(tot * 2) / 2.0;
+
+        //return tot;
+        /*
+        if (stelle.contains(",")) {
+            stars = stelle.trim().split(",");
+            for (String row : stars) {
+                value = value + Double.parseDouble(row);
+                count++;
+            }
+            tot = value / (double) count;
+        } else {
+            count ++;
+            value = Double.parseDouble(stelle.trim());
+            tot = value / (double) count;
+        }
+        return Math.round(tot * 2) / 2.0; */
     }
 
     public void aggiungiRigaCucina(String riga) {
@@ -235,7 +342,7 @@ public class GestoreDataset {
         return maxId+1;
     }
     private void scriviFile() {
-        
+        if (dataSet == null || dataSet.isEmpty()) return;
         try (CSVWriter writer = new CSVWriter(new FileWriter(filePath),
         ';',       // separatore personalizzato
         CSVWriter.NO_QUOTE_CHARACTER,

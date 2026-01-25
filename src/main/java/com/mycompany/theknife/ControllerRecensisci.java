@@ -71,8 +71,16 @@ public class ControllerRecensisci {
             Utente utenteLoggato = gestore.getUtenteLoggato();
             Recensione nuovaRecensione = new Recensione(ControllerViewRistorante.getRistorante()[16],utenteLoggato.getUsername(),titolo,   testo, rating, addData(), addTime());
             gestoreRecensioni.aggiungiRecensione(nuovaRecensione);
-            controllerViewRistorante.fillListView(gestoreRecensioni.getRecensioniRistorante(ControllerViewRistorante.getRistorante()[16]));
+            GestoreDataset gestoreDataset = GestoreDataset.getGestoreDataset();
+            gestoreDataset.addStelle(String.valueOf(rating), ControllerViewRistorante.getRistorante()[16]);
+            String idRistorante = ControllerViewRistorante.getRistorante()[16];
+            int idRow = gestoreDataset.getId(idRistorante);
+            String[] ristoranteAggiornato = gestoreDataset.getRiga(idRow);
+            ControllerViewRistorante.getInstance(ristoranteAggiornato, false);
             controllerViewRistorante.setRecensioni();
+            controllerViewRistorante.fillListView(gestoreRecensioni.getRecensioniRistorante(idRistorante));
+            gestoreDataset.addStelle(String.valueOf(rating), ControllerViewRistorante.getRistorante()[16]);
+            controllerViewRistorante.setRating();
             ((Stage) TitoloField.getScene().getWindow()).close();
         }
         

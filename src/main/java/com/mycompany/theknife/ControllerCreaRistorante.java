@@ -74,6 +74,7 @@ public class ControllerCreaRistorante {
     ArrayList<String> cucineArrayList;
     ArrayList<String> serviziArrayList;
     ArrayList<javafx.scene.control.CheckMenuItem> checkMenuItemsList;
+    private Utente utenteLoggato;
     public ControllerCreaRistorante(){
 
     }
@@ -88,6 +89,7 @@ public class ControllerCreaRistorante {
         theKnifeImageViewSet();
         fillServiziListView();
         fillCucineListView();
+        utenteLoggato = Gestore.getGestore().getUtenteLoggato();
     }
     
     @FXML
@@ -132,7 +134,7 @@ public class ControllerCreaRistorante {
             }
             ristorante[11]=servizi;
             ristorante[12]=descrizioneRistoranteTextArea.getText();
-            ristorante[13]="0";
+            ristorante[13]="0.0";
             if(consegnaCheckBox.isSelected())
                 ristorante[14]="1";
             else
@@ -143,6 +145,8 @@ public class ControllerCreaRistorante {
                 ristorante[15]="0";
             ristorante[16]=gestoreDataset.LastId()+"";
             gestoreDataset.aggiungiRiga(ristorante);
+            GestoreUtenti gestoreUtenti = GestoreUtenti.getGestoreUtenti();
+            gestoreUtenti.addNewPersoneRistoranti(utenteLoggato.getId(),ristorante[16]);
             App.setRoot("ModRistoratore");
         }
         else{

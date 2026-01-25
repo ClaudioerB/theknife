@@ -99,7 +99,7 @@ public class ControllerModUser {
    private Recensione vecchiaRecensione;
    private ControllerModUser controller;
 
-
+   private String idRistorante = null;
 
    /*public ControllerModUser() {}
    public ControllerModUser(int idRistorante, Recensione recensione) {
@@ -423,6 +423,7 @@ public class ControllerModUser {
                 if(rec.utenteRecensione.equals(UtenteSelezionato)&& rec.getData().equals(DataSelezionata) && rec.getOra().equals(OraSelezionata)) {
                     recensioneDaVisualizzare = rec;
                     setRecensioneDaCambiare(rec);
+                    setIdRistorante(rec.getId());
                     break;
                 }
             }
@@ -458,6 +459,12 @@ public class ControllerModUser {
             } 
         }
    }
+   public void setIdRistorante(String id) {
+      idRistorante = id;
+   }
+   public String getIdRistorante() {
+      return idRistorante;
+   }
    public void settingRecensione() {
       recensioni = gestoreRecensioni.getRecensioniByUsername(utenteLoggato.getUsername());
       fillRecensioniView(recensioni);
@@ -490,12 +497,14 @@ public class ControllerModUser {
             }*/
             int idR = 0;
             ArrayList<Recensione> recensioniArr = gestoreRecensioni.getRecensioni();
+            String rating = null;
             for (int i=1; i<recensioniArr.size(); i++) {
                Recensione rec = recensioniArr.get(i);
 
                if(rec.utenteRecensione.equals(UtenteSelezionato)&& rec.getData().equals(DataSelezionata) && rec.getOra().equals(OraSelezionata)) {
                   recensioneS = rec;
                   //idRistorante = rec.getId();
+                  rating = String.valueOf(rec.getStelle());
                   idR = i;
                   break;
                }
@@ -505,6 +514,7 @@ public class ControllerModUser {
             }
             else if (recensioneS != null && idR != 0) {
                gestoreRecensioni.rimuoviRecensione(idR);
+               gestoreDataset.removeStelle(rating,String.valueOf(idR));
             }
             else if (idR == 0){
                System.out.println("Non esiste la recensione");

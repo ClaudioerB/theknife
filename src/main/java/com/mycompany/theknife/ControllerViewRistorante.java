@@ -151,7 +151,8 @@ public class ControllerViewRistorante {
         tipoCucinaRistoranteListView.getItems().addAll(cucineArrayList);
         fillListView(recensioni);
         prz = ristorante[4];
-        ratingRistorante.setRating(Double.parseDouble(ristorante[13]));
+        ratingRistorante.setRating(gestoreDataset.calcStelle(ristorante[13]));
+        //ratingRistorante.setRating(Double.parseDouble(ristorante[13]));
         if(ristorante[15].equals("1")) {
             prenotazioniCheckBox.setSelected(true);
         } else {
@@ -178,7 +179,7 @@ public class ControllerViewRistorante {
             rimuoviPreferitiButton.setDisable(true);
             aggiungiPreferitiButton.setVisible(false);
             rimuoviPreferitiButton.setVisible(false);
-						rispondiButton.setDisable(true);
+			rispondiButton.setDisable(true);
             rispondiButton.setVisible(false);
         }
     }
@@ -264,6 +265,7 @@ public class ControllerViewRistorante {
     }
     public void setRecensioni() {
         recensioni = gestoreRecensioni.getRecensioniRistorante(ristorante[16]);
+
     }
     private void isInPreferiti() {
         Gestore gestore = Gestore.getGestore();
@@ -413,7 +415,7 @@ public class ControllerViewRistorante {
         fillListView(recensioni);
         prz = ristorante[4];
         setPrezzo();
-        ratingRistorante.setRating(Double.parseDouble(ristorante[13]));
+        setRating();
         prenotazioniCheckBox.setSelected(ristorante[15].equals("1"));
         consegnaCheckBox.setSelected(ristorante[14].equals("1"));
     }
@@ -609,7 +611,7 @@ public class ControllerViewRistorante {
 
     public void fillListView(ArrayList<Recensione> list) {
         recensioniRistoranteListView.getItems().clear();
-        
+        //gestoreDataset.addStelle(stella, ristorante[16]);
         for (Recensione row : list) {
             if (row != null) {
                 String appoggio ="Titolo: "+row.titolo+" - By: "+row.utenteRecensione + " - Voto: ";
@@ -662,6 +664,12 @@ public class ControllerViewRistorante {
         stage.setScene(new Scene(root));
         stage.initModality(Modality.APPLICATION_MODAL); // se vuoi bloccare la finestra principale
         stage.show(); // o showAndWait() se ti serve aspettare la chiusura
+        //gestoreDataset.controllaDatasetRecensioniById(ristorante[16]);
+        setRating();
+    }
+    public void setRating() {
+        double rating = gestoreDataset.calcStelle(ristorante[13]);
+        ratingRistorante.setRating(rating);
     }
 
     public void theKnifeImageViewSet() {

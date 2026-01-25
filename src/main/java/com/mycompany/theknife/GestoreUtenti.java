@@ -140,7 +140,24 @@ public class GestoreUtenti {
             }
         }
     }*/
+    public void addNewPersoneRistoranti(String idU, String idR) {
+        String[] rowNew = {idR,idU};
+        //personeRistoranti.add(rowNew);
+        
+        for (int i = 0; i < personeRistoranti.size(); i++) {
+            if (personeRistoranti.get(i)[0].equals(idR)) {
+                String currentFavs = personeRistoranti.get(i)[1];
+                if (currentFavs == null || currentFavs.isEmpty()) {
+                    personeRistoranti.get(i)[1] = idU;
+                }
+                scriviPersoneRistorantiFile();
+                return;
+            }
+        }
 
+        personeRistoranti.add(rowNew);
+        scriviPersoneRistorantiFile();
+    }
     public void addNewFavourite(String username, String newFav) {
         //addNewFavourite(utenteLoggato.getUsername(), ristoranteFav);
         for (int i = 0; i < dataSetFavourite.size(); i++) {
