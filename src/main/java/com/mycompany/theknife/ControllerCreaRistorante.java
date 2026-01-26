@@ -12,6 +12,15 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+
+/**
+ * @author TheKnifeTeam
+ * 
+ * ControllerCreaRistorante rappresenta il controller per la scena CreaRistorante.<br>
+ * Si occupa di gestire l'interfaccia di creazione di un nuovo ristorante da parte di un ristoratore.<br>
+ * 
+ * @version 1.0
+ */
 public class ControllerCreaRistorante {
     @FXML
     private javafx.scene.control.TextField nomeRistoranteField;
@@ -75,10 +84,16 @@ public class ControllerCreaRistorante {
     ArrayList<String> serviziArrayList;
     ArrayList<javafx.scene.control.CheckMenuItem> checkMenuItemsList;
     private Utente utenteLoggato;
+    /**
+     * Costruttore di ControllerCreaRistorante.<br>
+     */
     public ControllerCreaRistorante(){
-
     }
 
+    /**
+     * Metodo che inizializza la scena con i campi vuoti.<br>
+     * Impostando i menu di cucine e servizi e il logo.<br>
+     */
     public void initialize() {
         cucineArrayList=new ArrayList<String>();
         serviziArrayList=new ArrayList<String>();
@@ -92,6 +107,10 @@ public class ControllerCreaRistorante {
         utenteLoggato = Gestore.getGestore().getUtenteLoggato();
     }
     
+    /**
+     * Metodo FXML per creare un nuovo ristorante.<br>
+     * Esegue il controllo che tutti i campi siano compilati e se sono compilati esegue la creazione del nuovo ristorante.<br>
+     */
     @FXML
     private void creaRistoranteButtonAction() throws IOException{
         if(!nomeRistoranteField.getText().isEmpty()&&!indirizzoRistoranteField.getText().isEmpty()&&!statoRistoranteField.getText().isEmpty()&&!cittaRistoranteField.getText().isEmpty()
@@ -154,6 +173,10 @@ public class ControllerCreaRistorante {
         }
     }
 
+    /**
+     * Metodo per popolare il menu di cucine con radio button.<br>
+     * Chiama il metodo checkFilteredList per popolare il menu di cucine con checkbox.<br>
+     */
     private void popolaMenuCucineConRadio() {
         cucineFilterComboBox.getItems().clear();
 
@@ -180,6 +203,9 @@ public class ControllerCreaRistorante {
             cucineFilterComboBox.getItems().add(checkItem);
         }
     }
+    /**
+     * Metodo per imposare l'immagine del logo.<br>
+     */
     public void theKnifeImageViewSet() {
         
         String knifePath = System.getProperty("user.dir")
@@ -192,6 +218,11 @@ public class ControllerCreaRistorante {
             theKnifeImageView.setVisible(true);
         }
     }
+    /**
+     * Metodo per aggiornare la lista di cucine.<br>
+     * Chiama il metodo fillCucineListView per aggiornare la lista di cucine.<br>
+     * @param checkItem CheckMenuItem della cucina selezionata
+     */
     @FXML
     private void checkFilteredList(javafx.scene.control.CheckMenuItem checkItem) {
         if (checkItem.isSelected()) {
@@ -200,11 +231,13 @@ public class ControllerCreaRistorante {
         else{
             cucineArrayList.remove(checkItem.getText());
         }
-
         fillCucineListView();
-
     }
 
+    /**
+     * Metodo per aggiornare la lista di cucine.<br>
+     * Se la lista di cucine è vuota, aggiunge "Nessuna cucina aggiunta" al menu.<br>
+     */
     private void fillCucineListView(){
         tipoCucinaRistoranteListView.getItems().clear();
         boolean checkfirst = true;
@@ -219,6 +252,10 @@ public class ControllerCreaRistorante {
             tipoCucinaRistoranteListView.refresh();
         }
     }
+    /**
+     * Metodo per eliminare la cucina selezionata.<br>
+     * Chiama il metodo fillCucineListView per aggiornare la lista di cunine.<br>
+     */
     @FXML
     private void eliminaCucinaButtonAction(){
         String selected=tipoCucinaRistoranteListView.getSelectionModel().getSelectedItem().toString();
@@ -230,17 +267,23 @@ public class ControllerCreaRistorante {
                 break;
             }
         }
-        
-            
     }
+
+    /**
+     * Metodo per eliminare il servizio selezionato.<br>
+     * Chiama il metodo fillServiziListView per aggiornare la lista di servizi.<br>
+     */
     @FXML
     private void eliminaServiziButtonAction(){
         String selected=serviziRistoranteListView.getSelectionModel().getSelectedItem().toString();
         serviziArrayList.remove(selected);
         fillServiziListView();
-            
     }
 
+    /**
+     * Metodo per aggiornare la lista di servizi.<br>
+     * Se la lista di servizi è vuota, aggiunge "Nessun servizio aggiunto" al menu.<br>
+     */
     private void fillServiziListView() {
         serviziRistoranteListView.getItems().clear();
         for (String row : serviziArrayList) {
@@ -254,41 +297,65 @@ public class ControllerCreaRistorante {
             serviziRistoranteListView.refresh();
         }
     }
+    /**
+     * Metodo per aggiungere un servizio.<br>
+     * Se il campo di servizio non è vuoto, aggiunge il servizio alla lista di servizi.<br>
+     * Chiama il metodo fillServiziListView per aggiornare la lista di servizi.<br>
+     */
     @FXML
     private void AggiungiServiziButtonAction(){
         if(!servizioField.getText().isEmpty()){
-             serviziArrayList.add(servizioField.getText());
-             errorFieldServiziVuotoLabel.setVisible(false);
-             servizioField.setText("");
-             fillServiziListView();
+            serviziArrayList.add(servizioField.getText());
+            errorFieldServiziVuotoLabel.setVisible(false);
+            servizioField.setText("");
+            fillServiziListView();
         }
         else{
             errorFieldServiziVuotoLabel.setVisible(true);
         }
-        
     }
+    /**
+     * Metodo per tornare alla schermata Home.<br>
+     * @throws IOException
+     */
     @FXML 
     private void switchToHome() throws IOException {
         App.setRoot("HomeLogged");
     }
+    /**
+     * Metodo per impostare il valore del prezzo.<br>
+     * Se il prezzo 1 viene selezionato, disattiva i prezzo 2, 3 e 4.<br>
+     */
     @FXML
     private void price1Action(){
         prezzo2CheckMenuItem.setSelected(false);
         prezzo3CheckMenuItem.setSelected(false);
         prezzo4CheckMenuItem.setSelected(false);
     }
+    /**
+     * Metodo per impostare il valore del prezzo.<br>
+     * Se il prezzo 2 viene selezionato, disattiva i prezzo 1, 3 e 4.<br>
+     */
     @FXML
     private void price2Action(){
         prezzo1CheckMenuItem.setSelected(false);
         prezzo3CheckMenuItem.setSelected(false);
         prezzo4CheckMenuItem.setSelected(false);
     }
+    /**
+     * Metodo per impostare il valore del prezzo.<br>
+     * Se il prezzo 3 viene selezionato, disattiva i prezzo 1, 2 e 4.<br>
+     */
     @FXML
     private void price3Action(){
         prezzo2CheckMenuItem.setSelected(false);
         prezzo1CheckMenuItem.setSelected(false);
         prezzo4CheckMenuItem.setSelected(false);
     }
+    /**
+     * Metodo per impostare il valore del prezzo.<br>
+     * Se il prezzo 4 viene selezionato, disattiva i prezzo 1, 2 e 3.<br>
+     */
     @FXML
     private void price4Action(){
         prezzo2CheckMenuItem.setSelected(false);

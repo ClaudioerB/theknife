@@ -3,6 +3,14 @@ package com.mycompany.theknife;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
+/**
+ * @author TheKnifeTeam
+ * 
+ * ControllerChangePasswordUser rappresenta il controller per la scena ChangePasswordUser.<br>
+ * Si occupa di gestire l'interfaccia di modifica della password dell'utente.<br>
+ * 
+ * @version 1.0
+ */
 public class ControllerChangePasswordUser {
 
    @FXML 
@@ -25,6 +33,9 @@ public class ControllerChangePasswordUser {
    private Stage myStage;
    private GestoreUtenti gestoreUtenti;
 
+   /**
+    * Metodo FXML che inizializza il controller e imposta i valori iniziali.<br>
+    */
    @FXML 
    private void initialize() {
       gestore = Gestore.getGestore();
@@ -35,11 +46,20 @@ public class ControllerChangePasswordUser {
       pswFieldNew.setText("");
    }
 
+   /**
+    * Metodo che imposta la stage.<br>
+    * @param stage stage da impostare
+    */
    public void setMyStage(Stage stage) {
       this.myStage = stage;
    }  
 
-
+   /**
+    * Metodo FXML che salva la password dell'utente.<br>
+    * Chiama il metodo controlloPassword per verificare la correttezza della password.<br>
+    * Chiama il metodo close per chiudere la stage.<br>
+    * @throws java.io.IOException
+    */
    @FXML 
    private void saveData() throws java.io.IOException {
       
@@ -67,6 +87,10 @@ public class ControllerChangePasswordUser {
 
    }
 
+   /**
+    * Metodo FXML che chiude la stage prima di salvare la password.<br>
+    * @throws java.io.IOException
+    */
    @FXML 
    private void indietro() throws java.io.IOException {
       myStage.close();

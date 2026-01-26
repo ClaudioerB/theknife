@@ -13,6 +13,15 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+/**
+ * @author TheKnifeTeam
+ * 
+ * ControllerVisualizzaRecensione rappresenta il controller per la scena di VisualizzaRecensione.<br>
+ * Si occupa di gestire l'interfaccia di visualizzazione di una recensione con una risposta del proprietario.<br>
+ * Se l'utente è il proprietario della recensione, viene mostrata la possibilità di rispondere alla recensione.<br>
+ * 
+ * @version 1.0
+ */
 public class ControllerVisualizzaRecensione {
     @FXML
     private javafx.scene.control.TextField TitoloField;
@@ -31,21 +40,32 @@ public class ControllerVisualizzaRecensione {
     
     String[] ristorante;
 
+    /**
+     * Costruttore di ControllerVisualizzaRecensione<br>
+     */
     public ControllerVisualizzaRecensione() {
         
     }   
+    /**
+     * Metodo di inizializzazione<br>
+     * Inizializza il logo e disabilita la modifica ai campi di testo.<br>
+     */
     public void initialize() {
-        
         theKnifeImageViewSet();
         setDisableFields();
-        
-        
     }
+    /**
+     * Metodo per impostare la risposta della recensione.<br>
+     */
     private void setRisposta() {
         if(this.recensioneCorrente.Risposta!=null){
             RispostaArea.setText(recensioneCorrente.Risposta);
         }
     }
+    /**
+     * Metodo per verificare se l'utente loggato è proprietario della recensione.<br>
+     * @return
+     */
     private boolean isProprietario() {
         Gestore gestore = Gestore.getGestore();
         Utente utenteLoggato = gestore.getUtenteLoggato();
@@ -56,6 +76,9 @@ public class ControllerVisualizzaRecensione {
             return false;
         }
     }
+    /**
+     * Metodo per impostare il logo.<br>
+     */
     public void theKnifeImageViewSet() {
         String knifePath = System.getProperty("user.dir")
                 + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
@@ -68,12 +91,21 @@ public class ControllerVisualizzaRecensione {
         }
     }
 
-   private void setDisableFields() {
+    /**
+     * Metodo per disabilitare la modifica ai campi di testo.<br>
+     */
+    private void setDisableFields() {
         TitoloField.setEditable(false);
         TestoArea.setEditable(false);
         ratingRecensione.setDisable(true);
     }
 
+    /**
+     * Metodo per impostare la recensione da visualizzare.<br>
+     * Chiama il metodo setRisposta per impostare la risposta.<br>
+     * Chiama il metodo isProprietario per verificare se l'utente loggato è proprietario della recensione.<br>
+     * @param recensioneDaVisualizzare recensione da visualizzare
+     */
     public void setRecensione(Recensione recensioneDaVisualizzare) {
         this.recensioneCorrente = recensioneDaVisualizzare;
         TitoloField.setText(recensioneDaVisualizzare.getTitolo());
@@ -87,6 +119,10 @@ public class ControllerVisualizzaRecensione {
             RispostaArea.setEditable(true);
         }
     }
+    /**
+     * Metodo FXML per salvare la risposta della recensione.<br>
+     * Chiama il metodo closeWindow per chiudere la finestra.<br>
+     */
     @FXML
     private void salvaButtonAction(){
         this.recensioneCorrente.Risposta=RispostaArea.getText();
@@ -96,6 +132,9 @@ public class ControllerVisualizzaRecensione {
         gestoreRecensioni.aggiungiRecensione(recensioneCorrente);
         closeWindow();
     }
+    /**
+     * Metodo FXML per chiudere la finestra.<br>
+     */
     @FXML
     private void closeWindow() {
         Stage stage = (Stage) TitoloField.getScene().getWindow();

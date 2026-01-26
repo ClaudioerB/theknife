@@ -10,6 +10,17 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * @author TheKnifeTeam
+ * 
+ * ControllerModUser rappresenta il controller per la scena ModUser.<br>
+ * Si occupa di gestire l'interfaccia di funzioni che possiede un utente loggato.<br>
+ * Le sue funzioni includono la visualizzazione delle proprie recensioni e dei ristoranti preferiti.<br>
+ * Inoltre la possibilità di vedere i propri dati e anche modificarli.<br><br>
+ * Se l'utente è un ristoratore potrà accedere alla scena per vedere i suoi ristoranti.<br>
+ * 
+ * @version 1.0
+ */
 public class ControllerModUser {
    
    @FXML
@@ -33,6 +44,9 @@ public class ControllerModUser {
    @FXML
    private javafx.scene.image.ImageView changeIdStato;
 
+   @FXML
+   private javafx.scene.image.ImageView changeIdEmail;
+
    @FXML 
    private javafx.scene.control.Button indietroButton;
 
@@ -41,6 +55,9 @@ public class ControllerModUser {
 
    @FXML 
    private javafx.scene.text.Text cognomeText;
+
+   @FXML 
+   private javafx.scene.text.Text emailText;
 
    @FXML 
    private javafx.scene.text.Text indirizzoText;
@@ -106,33 +123,40 @@ public class ControllerModUser {
       this.recensioneMod = recensione;
       this.idMod = idRistorante;
    }*/
+   /**
+     * Metodo FXML che inizializza la scena.<br>
+     * Inoltre carica l'icona del knife e anche il dataset dei ristoranti preferiti e recensioni.<br>
+     * Carica anche i dati dell'utente loggato.<br>
+     */
    @FXML
    private void initialize() {
       String knifePath = System.getProperty("user.dir")
-                + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
-        java.io.File knifeFile = new java.io.File(knifePath);
-        if (knifeFile.exists()) {       
-            knifeImageView.setImage(
-                    new javafx.scene.image.Image(knifeFile.toURI().toString())
-            );
-            knifeImageView.setVisible(true);
-        }
-        String changePath = System.getProperty("user.dir")
-                + "/src/main/java/com/mycompany/theknife/data/refresh.png";  
-        java.io.File changeFile = new java.io.File(changePath);
-        if (changeFile.exists()) {       
-            changeIdNome.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
-            changeIdNome.setVisible(true);
-            changeIdCognome.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
-            changeIdCognome.setVisible(true);
-            changeIdCitta.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
-            changeIdCitta.setVisible(true);
-            changeIdPassword.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
-            changeIdPassword.setVisible(true);
-            changeIdIndirizzo.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
-            changeIdIndirizzo.setVisible(true);
-            changeIdStato.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
-            changeIdStato.setVisible(true);
+               + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
+      java.io.File knifeFile = new java.io.File(knifePath);
+      if (knifeFile.exists()) {       
+         knifeImageView.setImage(
+            new javafx.scene.image.Image(knifeFile.toURI().toString())
+         );
+         knifeImageView.setVisible(true);
+      }
+      String changePath = System.getProperty("user.dir")
+               + "/src/main/java/com/mycompany/theknife/data/refresh.png";  
+      java.io.File changeFile = new java.io.File(changePath);
+      if (changeFile.exists()) {       
+         changeIdNome.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
+         changeIdNome.setVisible(true);
+         changeIdCognome.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
+         changeIdCognome.setVisible(true);
+         changeIdCitta.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
+         changeIdCitta.setVisible(true);
+         changeIdPassword.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
+         changeIdPassword.setVisible(true);
+         changeIdIndirizzo.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
+         changeIdIndirizzo.setVisible(true);
+         changeIdStato.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
+         changeIdStato.setVisible(true);
+         changeIdEmail.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
+         changeIdEmail.setVisible(true);
       }
 
       //gestoreDataset = new GestoreDataset();
@@ -146,8 +170,6 @@ public class ControllerModUser {
 
       gestoreRecensioni= GestoreRecensioni.getGestoreRecensioni();
       recensioni = gestoreRecensioni.getRecensioniByUsername(utenteLoggato.getUsername());
-
-
       setText();
 
       setRistoratore();
@@ -156,29 +178,37 @@ public class ControllerModUser {
 
       fillListView(filteredList);
       fillRecensioniView(recensioni);
-      
    }
 
+   /**
+    * Metodo che riempie la ListView con le recensioni dell'utente.<br>
+    * Se non ci sono recensioni, viene mostrato il messaggio "non ci sono recensioni".<br>
+    * @param list Lista dell recensioni dell'utente
+    */
    public void fillRecensioniView(ArrayList<Recensione> list) {
-        listRecensioni.getItems().clear();
-        
-        for (Recensione row : list) {
-            if (row != null) {
-                String appoggio ="Titolo: "+row.titolo+" - By: "+row.utenteRecensione + " - Voto: ";
-                for(int i=0; i<row.stelle; i++) {
-                    appoggio += "★";
-                }
-                appoggio += " - "+row.data+" - "+row.ora+"\n";
-                listRecensioni.getItems().add(appoggio);
-                listRecensioni.refresh();
+      listRecensioni.getItems().clear();
+      
+      for (Recensione row : list) {
+         if (row != null) {
+            String appoggio ="Titolo: "+row.titolo+" - By: "+row.utenteRecensione + " - Voto: ";
+            for(int i=0; i<row.stelle; i++) {
+               appoggio += "★";
             }
-        }
-        if (list.isEmpty()){
-            listRecensioni.getItems().add("non ci sono recensioni.");
+            appoggio += " - "+row.data+" - "+row.ora+"\n";
+            listRecensioni.getItems().add(appoggio);
             listRecensioni.refresh();
-        }
-    }
+         }
+      }
+      if (list.isEmpty()){
+         listRecensioni.getItems().add("non ci sono recensioni.");
+         listRecensioni.refresh();
+      }
+   }
 
+   /**
+    * Metodo che setta la visibilità dei pulsanti in base all'utente loggato.<br>
+    * Se l'utente è un ristoratore viene mostrato il pulsante per vedere i suoi ristoranti.<br>
+    */
    private void setRistoratore() {
       if(utenteLoggato.isRistoratore()) {
          logoutButton2.setVisible(true);
@@ -192,76 +222,128 @@ public class ControllerModUser {
       }
    }
 
+   /**
+    * Metodo che riempie la ListView con i ristoranti preferiti dell'utente.<br>
+    * Se non ci sono ristoranti preferiti, viene mostrato il messaggio "Nessun ristorante trovato nei preferiti".<br>
+    * @param list Lista dei ristoranti preferiti dell'utente
+    */
    private void fillListView(ArrayList<String[]> list) {
-        listFavourite.getItems().clear();
-        boolean checkfirst = true;
-        for (String[] row : list) {
-            listFavourite.getItems().add("Ristorante N: "+row[16]+" - Nome: "+row[0] + " - Stato: " + row[2] + " - Città: " + row[3]+ " - Prezzo:" + row[4] + " - Tipo: " + row[5]);
-            listFavourite.refresh();
-        }
-        if (list.isEmpty() || (list.size() == 1 && checkfirst == false)) {
-            listFavourite.getItems().add("Nessun ristorante trovato nei preferiti.");
-            listFavourite.refresh();
-        }
-    }
+      listFavourite.getItems().clear();
+      boolean checkfirst = true;
+      for (String[] row : list) {
+         listFavourite.getItems().add("Ristorante N: "+row[16]+" - Nome: "+row[0] + " - Stato: " + row[2] + " - Città: " + row[3]+ " - Prezzo:" + row[4] + " - Tipo: " + row[5]);
+         listFavourite.refresh();
+      }
+      if (list.isEmpty() || (list.size() == 1 && checkfirst == false)) {
+         listFavourite.getItems().add("Nessun ristorante trovato nei preferiti.");
+         listFavourite.refresh();
+      }
+   }
 
+   /**
+    * Metodo che filtra i ristoranti in base ai preferiti dell'utente.<br>
+    */
    private void filter() {
-    gestoreUtenti = GestoreUtenti.getGestoreUtenti();
-    
+      gestoreUtenti = GestoreUtenti.getGestoreUtenti();
+      
 
-    if (dataSetFavourite == null || dataSetFavourite.isEmpty()) {
-        filteredList.clear();
-        return;
-    }
-    
-    String[] favouriteIds = dataSetFavourite.split(",");
-    
-    ArrayList<String> favIdsList = new ArrayList<>();
-    for (String id : favouriteIds) {
-        String trimmedId = id.trim();
-        favIdsList.add(trimmedId);
-    }
+      if (dataSetFavourite == null || dataSetFavourite.isEmpty()) {
+         filteredList.clear();
+         return;
+      }
 
-    filteredList.clear();
-    
-    
-    int trovati = 0;
-    for (String[] row : gestoreDataset.getDataSet()) {
-        String rowId = row[16].trim();  
-        if (favIdsList.contains(rowId)) {
+      String[] favouriteIds = dataSetFavourite.split(",");
+
+      ArrayList<String> favIdsList = new ArrayList<>();
+      for (String id : favouriteIds) {
+         String trimmedId = id.trim();
+         favIdsList.add(trimmedId);
+      }
+
+      filteredList.clear();
+      
+      
+      int trovati = 0;
+      for (String[] row : gestoreDataset.getDataSet()) {
+         String rowId = row[16].trim();  
+         if (favIdsList.contains(rowId)) {
             filteredList.add(row);
             trovati++;
-        }
-    }
-    
+         }
+      }
     //System.out.println("Totale ristoranti trovati: " + trovati);
-}
+   }
 
+   /**
+    * Metodo FXML che gestisce la modifica del nome dell'utente.<br>
+    * Chiama il metodo changeData passando come parametro "Nome".<br>
+    * @throws IOException
+    */
    @FXML 
    private void changeNomeData() throws IOException {
       changeData("Nome");
    }
+   /**
+    * Metodo FXML che gestisce la modifica del cognome dell'utente.<br>
+    * Chiama il metodo changeData passando come parametro "Cognome".<br>
+    * @throws IOException
+    */
    @FXML
    private void changeCognomeData() throws IOException {
       changeData("Cognome");
    }
+   /**
+    * Metodo FXML che gestisce la modifica della città dell'utente.<br>
+    * Chiama il metodo changeData passando come parametro "Città".<br>
+    * @throws IOException
+    */
    @FXML 
    private void changeCittaData() throws IOException {
       changeData("Città");
    }
+   /**
+    * Metodo FXML che gestisce la modifica della password dell'utente.<br>
+    * Chiama il metodo changePsw() per cambire password.<br>
+    * @throws IOException
+    */
    @FXML
    private void changePasswordData() throws IOException {
       changePsw();
    }
+   /**
+    * Metodo FXML che gestisce la modifica dell'indirizzo dell'utente.<br>
+    * Chiama il metodo changeData passando come parametro "Indirizzo".<br>
+    * @throws IOException
+    */
    @FXML 
    private void changeIndirizzoData() throws IOException {
       changeData("Indirizzo");
    }
+   /**
+    * Metodo FXML che gestisce la modifica dello stato dell'utente.<br>
+    * Chiama il metodo changeData passando come parametro "Stato".<br>
+    * @throws IOException
+    */
    @FXML
    private void changeStatoData() throws IOException {
       changeData("Stato");
    }
+   /**
+    * Metodo FXML che gestisce la modifica dell'email dell'utente.<br>
+    * Chiama il metodo changeData passando come parametro "Email".<br>
+    * @throws IOException
+    */
+   @FXML 
+   private void changeEamilData() throws IOException {
+      changeData("Email");
+   }
 
+   /**
+    * Metodo che gestisce la modifica di un campo dell'utente.<br>
+    * Apre una nuova finestra cambiando il campo da modificare.<br>
+    * Infine cambia i dati dell'utente e riempie la ListView.<br>
+    * @param field Campo dell'utente da modificare
+    */
    private void changeData(String field) throws IOException {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("ChangeDataUser.fxml"));
       Parent root = loader.load();
@@ -281,6 +363,12 @@ public class ControllerModUser {
       setCredenziali();
    }
 
+   /**
+    * Metodo che gestisce la modifica della password dell'utente.<br>
+    * Apre una nuova finestra per cambiare la password.<br>
+    * Infine cambia i dati dell'utente e li salva nel dataset.<br>
+    * @throws IOException
+    */
    private void changePsw() throws IOException {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("ChangePasswordUser.fxml"));
       Parent root = loader.load();
@@ -299,18 +387,26 @@ public class ControllerModUser {
       setCredenziali();
    }
 
+   /**
+     * Metodo che gestisce l'azione del pulsante "Visualizza Ristorante".<br>
+     * Visualizza nel dettaglio il ristorante selezionato.<br>
+     * @throws IOException
+     */
    @FXML
-    private void visualizzaRistoranteButtonAction() throws IOException {
-        String selectedItem = listFavourite.getSelectionModel().getSelectedItem();
-        if (selectedItem == null || selectedItem.startsWith("Nessun ristorante trovato")) {
-            // Nessun elemento selezionato o messaggio di nessun ristorante trovato
-            return;
-        }
-        String idRistorante = selectedItem.split(" - ")[0].replace("Ristorante N: ", "").trim();
-        ControllerViewRistorante.getInstance(GestoreRicerche.getGestoreRicerche().trovaRistorantiID(idRistorante), false);
-        App.setRoot("ViewRistorante");
-    }
+   private void visualizzaRistoranteButtonAction() throws IOException {
+      String selectedItem = listFavourite.getSelectionModel().getSelectedItem();
+      if (selectedItem == null || selectedItem.startsWith("Nessun ristorante trovato")) {
+         // Nessun elemento selezionato o messaggio di nessun ristorante trovato
+         return;
+      }
+      String idRistorante = selectedItem.split(" - ")[0].replace("Ristorante N: ", "").trim();
+      ControllerViewRistorante.getInstance(GestoreRicerche.getGestoreRicerche().trovaRistorantiID(idRistorante), false);
+      App.setRoot("ViewRistorante");
+   }
 
+   /**
+    * Metodo che riempie i campi con i dati dell'utente.<br>
+    */
    public void setText() {
       gestore = Gestore.getGestore();
       utenteLoggato = gestore.getUtenteLoggato();
@@ -322,6 +418,7 @@ public class ControllerModUser {
          indirizzoText.setText(utenteLoggato.getIndirizzo());
          cittaText.setText(utenteLoggato.getCittà());
          statoText.setText(utenteLoggato.getStato());
+         emailText.setText(utenteLoggato.getEmail());
          int lenPsw = utenteLoggato.getPasswordHash().length();
          String stringPsw = "";
          for (int i = 0; i < lenPsw; i++) {
@@ -333,6 +430,9 @@ public class ControllerModUser {
          return;
       }
    }
+   /**
+    * Metodo che aggiorna i dati dell'utente.<br>
+    */
 
    private void setCredenziali() {
       GestoreUtenti gestoreUtenti = GestoreUtenti.getGestoreUtenti();
@@ -340,6 +440,7 @@ public class ControllerModUser {
       String username = utenteLoggato.getUsername();
 
       String password = utenteLoggato.getPasswordHash();
+      String email = utenteLoggato.getEmail();
       String nome = utenteLoggato.getNome();
       String cognome = utenteLoggato.getCognome();
       String indirizzo = utenteLoggato.getIndirizzo();
@@ -352,15 +453,20 @@ public class ControllerModUser {
          user.setPasswordHash(password);
          user.setNome(nome);
          user.setCognome(cognome);
+         user.setEmail(email);
          user.setIndirizzo(indirizzo);
          user.setCittà(città);
          user.setStato(stato);
-
          gestoreUtenti.aggiornaUtente(utenteLoggato);
       }
-      
    }
 
+   /**
+    * Metodo che rimuove un ristorante dai preferiti dell'utente.<br>
+    * Chiama il metodo rimuoviPreferitoUtente per rimuovere il ristorante selezionato.<br>
+    * Chiama i filtri e riempie la ListView.<br>
+    * @throws IOException
+    */
    @FXML 
    private void rimuoviPreferito() throws IOException {
       String selectedItem = listFavourite.getSelectionModel().getSelectedItem();
@@ -378,6 +484,12 @@ public class ControllerModUser {
       fillListView(filteredList);
    }
 
+   /**
+    * Metodo che visualizza un ristorante dalla recensione dell'utente selezionata.<br>
+    * Visualizza nel dettaglio il ristorante selezionato.<br>
+    * Se non trova il ristorante, visualizza un messaggio di errore.<br>
+    * @throws IOException
+    */
    @FXML 
    private void switchToRistorante() throws IOException {
       String selectedRecensione = (String) listRecensioni.getSelectionModel().getSelectedItem();
@@ -408,74 +520,102 @@ public class ControllerModUser {
       }
    }
 
+   /**
+    * Metodo che visualizza la recensione dell'utente selezionata.<br>
+    * Visualizza nel dettaglio la recensione selezionata.<br>
+    * Se la recensione non esiste, visualizza un messaggio di errore.<br>
+    * @throws IOException
+    */
    @FXML 
    private void visualizzaRecensioneButtonAction() throws IOException {
       String selectedRecensione = (String) listRecensioni.getSelectionModel().getSelectedItem();
-         if(selectedRecensione != null && !selectedRecensione.equals("non ci sono recensioni.")) {
-            String[] partiRecensione = selectedRecensione.split(" - ");
-            String titoloSelezionato = partiRecensione[0].replace("Titolo: ", "").trim();
-            String UtenteSelezionato = partiRecensione[1].replace("By: ", "").trim();
-            String DataSelezionata = partiRecensione[3].trim();
-            String OraSelezionata = partiRecensione[4].trim();
-
-            Recensione recensioneDaVisualizzare = null;
-            for(Recensione rec : recensioni) {
-                if(rec.utenteRecensione.equals(UtenteSelezionato)&& rec.getData().equals(DataSelezionata) && rec.getOra().equals(OraSelezionata)) {
-                    recensioneDaVisualizzare = rec;
-                    setRecensioneDaCambiare(rec);
-                    setIdRistorante(rec.getId());
-                    break;
-                }
+      if(selectedRecensione != null && !selectedRecensione.equals("non ci sono recensioni.")) {
+         String[] partiRecensione = selectedRecensione.split(" - ");
+         String titoloSelezionato = partiRecensione[0].replace("Titolo: ", "").trim();
+         String UtenteSelezionato = partiRecensione[1].replace("By: ", "").trim();
+         String DataSelezionata = partiRecensione[3].trim();
+         String OraSelezionata = partiRecensione[4].trim();
+         Recensione recensioneDaVisualizzare = null;
+         for(Recensione rec : recensioni) {
+            if(rec.utenteRecensione.equals(UtenteSelezionato)&& rec.getData().equals(DataSelezionata) && rec.getOra().equals(OraSelezionata)) {
+               recensioneDaVisualizzare = rec;
+               setRecensioneDaCambiare(rec);
+               setIdRistorante(rec.getId());
+               break;
             }
-            if(recensioneDaVisualizzare != null && recensioneDaVisualizzare.getRisposta()!= null&& !recensioneDaVisualizzare.getRisposta().equals(" ")) {
-                FXMLLoader loader = new FXMLLoader(App.class.getResource("VisualizzaRecensione.fxml"));
-                Parent root = loader.load();
-
-                ControllerVisualizzaRecensione controller = loader.getController();
-                controller.setRecensione(recensioneDaVisualizzare);
-
-                Stage stage = new Stage();
-                stage.setTitle("Visualizza Recensione");
-                stage.setScene(new Scene(root));
-                stage.initModality(Modality.APPLICATION_MODAL); 
-                stage.show(); 
-            }
-            else if (recensioneDaVisualizzare != null) {
-                FXMLLoader loader = new FXMLLoader(App.class.getResource("VisualizzaModRecensioneSenzaRisposta.fxml"));
-                Parent root = loader.load();
-
-                ControllerModVisualizzaRecensioneSenzaRisposta controller = loader.getController();
-                controller.setRecensione(recensioneDaVisualizzare);
-                controller.setController(this);
-
-                Stage stage = new Stage();
-                stage.setTitle("Visualizza Oppure Modifica Recensione");
-                stage.setScene(new Scene(root));
-                stage.initModality(Modality.APPLICATION_MODAL); 
-                stage.show(); 
-            } 
-            else {
-                System.out.println("Recensione non trovata.");
-            } 
-        }
+         }
+         if(recensioneDaVisualizzare != null && recensioneDaVisualizzare.getRisposta()!= null&& !recensioneDaVisualizzare.getRisposta().equals(" ")) {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("VisualizzaRecensione.fxml"));
+            Parent root = loader.load();
+            ControllerVisualizzaRecensione controller = loader.getController();
+            controller.setRecensione(recensioneDaVisualizzare);
+            Stage stage = new Stage();
+            stage.setTitle("Visualizza Recensione");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL); 
+            stage.show(); 
+         }
+         else if (recensioneDaVisualizzare != null) {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("VisualizzaModRecensioneSenzaRisposta.fxml"));
+            Parent root = loader.load();
+            ControllerModVisualizzaRecensioneSenzaRisposta controller = loader.getController();
+            controller.setRecensione(recensioneDaVisualizzare);
+            controller.setController(this);
+            Stage stage = new Stage();
+            stage.setTitle("Visualizza Oppure Modifica Recensione");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL); 
+            stage.show(); 
+         } 
+         else {
+            System.out.println("Recensione non trovata.");
+         } 
+      }
    }
+   /**
+    * Metodo per impostare l'id del ristorante.<br>
+    * @param id Id del ristorante
+    */
    public void setIdRistorante(String id) {
       idRistorante = id;
    }
+   /**
+    * Metodo per ottenere l'id del ristorante.<br>
+    * @return Id del ristorante
+    */
    public String getIdRistorante() {
       return idRistorante;
    }
+   /**
+    * Metodo che imposta le recensioni dell'utente loggato.<br>
+    * Chiama fillRecensioniView per visualizzare le recensioni selezionate.<br>
+    */
    public void settingRecensione() {
       recensioni = gestoreRecensioni.getRecensioniByUsername(utenteLoggato.getUsername());
       fillRecensioniView(recensioni);
    }
+   /**
+    * Metodo per impostare la recensione da cambiare.<br>
+    * @param rec Recensione da cambiare
+    */
    public void setRecensioneDaCambiare(Recensione rec) {
       vecchiaRecensione = rec;
    }
+   /**
+    * Metodo per ottenere la recensione vecchia.<br>
+    * @return Recensione vecchia
+    */
    public Recensione getRecensioneVecchia() {
       return vecchiaRecensione;
    }
 
+   /**
+    * Metodo per rimuovere una recensione.<br>
+    * Chiama il metodo rimuoviRecensioneper eliminare la recensione dal dataset.<br>
+    * Chiama il metodo removeStelle per rimuovere la valutazione dal ristorante.<br>
+    * Infine chiama fillRecensioniView per visualizzare le recensioni aggiornate dopo la rimozione.<br>
+    * @throws IOException 
+    */
    @FXML
    private void rimuoviRecensione() throws IOException {
       String selectedRecensione = (String) listRecensioni.getSelectionModel().getSelectedItem();
@@ -500,6 +640,9 @@ public class ControllerModUser {
             String rating = null;
             for (int i=1; i<recensioniArr.size(); i++) {
                Recensione rec = recensioniArr.get(i);
+            //      break;
+            //   }
+            //}
 
                if(rec.utenteRecensione.equals(UtenteSelezionato)&& rec.getData().equals(DataSelezionata) && rec.getOra().equals(OraSelezionata)) {
                   recensioneS = rec;
@@ -510,6 +653,7 @@ public class ControllerModUser {
                }
             }
             if(recensioneS != null && recensioneS.getRisposta()!= null&& !recensioneS.getRisposta().equals(" ")) {
+            // Trova la recensione selezionata e rimuovila
                System.out.println("Impossibile eliminare la recensione siccome possiede una risposta");
             }
             else if (recensioneS != null && idR != 0) {
@@ -532,17 +676,29 @@ public class ControllerModUser {
       }
    }
 
+   /**
+    * Metodo per ritornare alla schermata ModRistoratore.<br>
+    * @throws IOException
+    */
    @FXML 
    private void switchRistoratore() throws IOException { 
       App.setRoot("ModRistoratore");
    }
 
+   /**
+    * Metodo per ritornare alla schermata HomeNotLogged.<br>
+    * @throws IOException
+    */
    @FXML 
    private void switchHomeNotLogged() throws IOException {
       Gestore.getGestore().setUtenteLoggato(null);
       App.setRoot("HomeNotLogged");
    }
 
+   /**
+    * Metodo per ritornare alla schermata HomeLogged.<br>
+    * @throws IOException
+    */
    @FXML 
    private void switchToHome() throws IOException {
       App.setRoot("HomeLogged");

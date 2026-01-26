@@ -10,6 +10,14 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
+/**
+ * @author TheKnifeTeam
+ * 
+ * LoginController rappresenta il controller per la scena di CreateUser.<br>
+ * Si occupa di gestire l'interfaccia di creazione di un nuovo utente.<br>
+ * 
+ * @version 1.0
+ */
 public class ControllerCreateUser {
 
     @FXML
@@ -60,8 +68,10 @@ public class ControllerCreateUser {
     @FXML 
     private javafx.scene.control.Label creationPassword2ErrorMessageLabel;
     
-
-
+    /**
+     * Metodo FXML che inizializza la scena di registrazione.<br>
+     * Inizializza l'immagine del logo e i vari textField.<br>
+     */
     @FXML
     private void initialize() {
         creationUsernameErrorMessageLabel.setVisible(false);
@@ -78,6 +88,12 @@ public class ControllerCreateUser {
             );
         }
     }
+    /**
+     * Metodo FXML che crea un nuovo utente.<br>
+     * Crea il nuovo utente controllando che abbia inserito tutti i dati richiesti.<br>
+     * Chiama il metodo creaUtente del GestoreUtenti per aggiungere l'utente al dataset.<br>
+     * @throws IOException
+     */
     @FXML
     private void createUser() throws IOException {
         String username = usernameTextField.getText();
@@ -111,14 +127,23 @@ public class ControllerCreateUser {
         }
     }
     
+    /**
+     * Metodo FXML che controlla se il checkbox del cliente è selezionato.<br>
+     * Se il checkbox del cliente è selezionato, il checkbox del ristoratore viene deselezionato.<br>
+     * Utilizzato per indicare se l'utente si vuole registrare come cliente.<br>
+     */
     @FXML
     private void CheckBoxes1Checker() {
         if (clienteCheckBox.isSelected()) {
             ristoratoreCheckBox.setSelected(false);
         }
-        
     }
 
+    /**
+     * Metodo FXML che controlla se il checkbox del ristoratore è selezionato.<br>
+     * Se il checkbox del ristoratore è selezionato, il checkbox del cliente viene deselezionato.<br>
+     * Utilizzato per indicare se l'utente si vuole registrare come ristoratore.<br>
+     */
     @FXML
     private void CheckBoxes2Checker() {
         
@@ -127,6 +152,10 @@ public class ControllerCreateUser {
         }
     }
     
+    /**
+     * Metodo FXML che porta alla schermata HomeNotLogged cioè senza l'accesso.<br>
+     * @throws IOException
+     */
     @FXML
     private void switchToHomeNotLogged() throws IOException {
         App.setRoot("HomeNotLogged");

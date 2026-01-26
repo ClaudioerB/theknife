@@ -8,6 +8,14 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
+/**
+ * @author TheKnifeTeam
+ * 
+ * LoginController rappresenta il controller per la scena di Login.<br>
+ * Si occupa di gestire l'interfaccia di login del'utente e la sua registrazione.<br>
+ * 
+ * @version 1.0
+ */
 public class LoginController {
 
     @FXML
@@ -30,6 +38,10 @@ public class LoginController {
 
     private GestoreUtenti gestoreUtenti;
 
+    /**
+     * Metodo FXML che inizializza la scena di login.<br>
+     * Inizializza l'immagine del logo.<br>
+     */
     @FXML
     private void initialize() {
         loginErrorMessageLabel.setVisible(false);
@@ -43,11 +55,19 @@ public class LoginController {
         }
     }
     
+    /**
+     * Metodo FXML che inizializza la scena di registrazione.<br>
+     * @throws IOException
+     */
     @FXML
     private void switchToRegister() throws IOException {
         App.setRoot("CreateUser");
     }
 
+    /**
+     * Metodo FXML che porta alla schermata HomeLogged dopo aver verificato le credenziali di accesso.<br>
+     * @throws IOException
+     */
     @FXML
     private void switchToHomeLogged() throws IOException {
         String username = usernameTextField.getText();
@@ -56,7 +76,7 @@ public class LoginController {
         gestoreUtenti = GestoreUtenti.getGestoreUtenti();
         Gestore gestore = Gestore.getGestore();
         
-        //caldarolacagilio Mo8!Cq97
+        //caldarolacagilio Mo8!Cq97 -> esempio 
         //System.out.println(gestoreUtenti.verificaCredenziali(username, password));
         if (gestoreUtenti.verificaCredenziali(username, password)) {
             gestore.setUtenteLoggato(gestoreUtenti.getUtenteByUsername(username));
@@ -70,6 +90,10 @@ public class LoginController {
         }
     }
     
+    /**
+     * Metodo FXML che porta alla schermata HomeNotLogged.<br>
+     * @throws IOException
+     */
     @FXML
     private void switchToHomeNotLogged() throws IOException {
         App.setRoot("HomeNotLogged");

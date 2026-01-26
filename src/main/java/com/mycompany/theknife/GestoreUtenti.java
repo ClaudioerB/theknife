@@ -9,8 +9,22 @@ import java.util.ArrayList;
 
 import com.opencsv.CSVWriter;
 
+/**
+ * @author TheKnifeTeam
+ * 
+ * GestoreUtenti è la classe che gestisce il dataset degli utenti.<br>
+ * Utilizza OpenCSV per la lettura e scrittura dei file CSV.<br>
+ * 
+ * Le funzionalità includono l'aggiunta, la rimozione e la modifica di righe nei dataset.
+ * I dataset vengono caricati da un file CSV all'avvio e salvati su file ad ogni modifica. <br>
+ * Questa classe inizializza il dataset degli utenti e gestisce anche i dataset dei preferiti degli utenti e anche il dataset delle persone che possiedono un ristorante.<br>
+ * <br>
+ * Note: Alcuni metodi di test sono inclusi solo per scopi di debug.
+ * 
+ * @version 1.0
+ */
 public class GestoreUtenti {
-   
+
     private ArrayList<Utente> utenti;    
     private String filePath;
     private String fileUserPath;
@@ -22,6 +36,11 @@ public class GestoreUtenti {
 
     private static ArrayList<String[]> personeRistoranti;
 
+    /**
+     * Costruttore della classe GestoreUtenti.<br>
+     * Inizializza il dataset degli utenti, il dataset dei preferiti degli utenti e il dataset delle persone che possiedono un ristorante.<br>
+     * Poi li carica da un file CSV e li salva su file ad ogni modifica.
+     */
     private GestoreUtenti() {
         filePath = System.getProperty("user.dir")+"/src/main/resources/Users/users.csv"; 
         fileUserPath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\datasetUtenti.CSV";
@@ -46,44 +65,84 @@ public class GestoreUtenti {
         aggiungiRighePersoneRistoranti();
         scriviPersoneRistorantiFile();
     }
+    /**
+     * Metodo che restituisce l'istanza unica della classe GestoreUtenti.<br>
+     * 
+     * @return l'istanza unica della classe GestoreUtenti
+     */
     public static GestoreUtenti getGestoreUtenti() {
         if(gestoreUtenti == null) {
             gestoreUtenti = new GestoreUtenti();
         }
         return gestoreUtenti;
     }
-
+    /**
+     * Metodo che restituisce il dataset degli utenti.<br>
+     * 
+     * @return il dataset degli utenti
+     */
     public ArrayList<Utente> getUtenti() {
         return utenti;
     }
-
+    /**
+     * Metodo che imposta il dataset degli utenti.<br>
+     * @param utenti la lista degli utenti da impostare
+     */
     public void setUtenti(ArrayList<Utente> utenti) {
         this.utenti = utenti;
     }
-
+    /**
+     * Metodo che restituisce il dataset dei preferiti degli utenti.<br>
+     * @return il dataset dei preferiti degli utenti
+     */
     public ArrayList<String[]> getFavourite() {
         return dataSetFavourite;
     }
+    /**
+     * Metodo che restituisce il dataset delle persone che possiedono un ristorante.<br>
+     * @return il dataset delle persone che possiedono un ristorante
+     */
     public ArrayList<String[]> getPersoneRistoranti() {
         return personeRistoranti;
     }
-
+    /**
+     * Restituisce l'utente con l'indice specificato.<br>
+     * @param i l'indice dell'utente nel dataset
+     * @return l'utente con l'indice specificato
+     */
     public Utente getUtenteSingolo(int i) {
         return utenti.get(i);
     }
-
+    /**
+     * Imposta l'utente con l'indice specificato.<br>
+     * @param utente l'utente da impostare
+     * @param i l'indice dell'utente nel dataset
+     */
     public void setUtenteSingolo(Utente utente, int i) {
         this.utenti.set(i, utente);
 
     }
+    /**
+     * Metodo che aggiunge un utente al dataset.<br>
+     * Chiama il metodo scriviFile per scrivere il file CSV con l'utente aggiunto.<br>
+     * @param utente l'utente da aggiungere
+     */
     public void aggiungiUtente(Utente utente) {
         utenti.add(utente);
         scriviNewFile();
     }
+    /**
+     * Metodo che rimuove un utente dal dataset.<br>
+     * Chiama il metodo scriviFile per scrivere il file CSV con l'utente rimosso.<br>
+     * @param i l'indice dell'utente da rimuovere
+     */
     public void rimuoviUtente(int i) {
         utenti.remove(i);
         scriviNewFile();
     }
+    /**
+     * Metodo che stampa tutti gli utenti nel dataset.<br>
+     */
     public void printUtenti() {
         for (Utente utente : utenti) {
             System.out.println(utente.getNome()+" "+utente.getCognome()+" "+utente.getUsername()+" "+utente.getPasswordHash()+" "+utente.getCittà()+" "+utente.getIndirizzo());
@@ -98,6 +157,11 @@ public class GestoreUtenti {
         }
         return false; // Nessun favorito trovato
     }*/
+    /**
+     * Restituisce i preferiti dell'utente con lo username specificato.<br>
+     * @param username lo username dell'utente
+     * @return i preferiti dell'utente
+     */
     public String getFavouriteByUsername(String username) {
         for (String[] fav : dataSetFavourite) {
             if (fav[0].equals(username)) {
@@ -106,6 +170,11 @@ public class GestoreUtenti {
         }
         return null; // Utente non trovato
     }
+    /**
+     * Restituisce il ristorante con l'id specificato.<br>
+     * @param id L'indice del ristorante
+     * @return il ristoratore che possie il ristorante
+     */
     public String getPersoneRistorantiByIdRistorante(String id) {
         for (String[] row : personeRistoranti) {
             if (row[0].equals(id)) {
@@ -114,6 +183,12 @@ public class GestoreUtenti {
         }
         return null; // Utente non trovato
     }
+    /**
+     * Rimuove il ristorante con l'id specificato.<br>
+     * Chiama il metodo scriviPersoneRistorantiFile per scrivere il file CSV con il ristorante rimosso.<br>
+     * @param idR L'indice del ristorante
+     * @param idU L'indice del ristoratore
+     */
     public void removePersoneRistorantiByIdRistorante(String idR, String idU) {
         String[] row;
         int id = 0;
@@ -140,6 +215,12 @@ public class GestoreUtenti {
             }
         }
     }*/
+    /**
+     * Aggiunge un nuovo ristorante al dataset.<br>
+     * Chiama il metodo scriviPersoneRistorantiFile per scrivere il file CSV con il ristorante aggiunto.<br>
+     * @param idR L'indice del ristorante
+     * @param idU L'indice del ristoratore
+     */
     public void addNewPersoneRistoranti(String idU, String idR) {
         String[] rowNew = {idR,idU};
         //personeRistoranti.add(rowNew);
@@ -158,6 +239,11 @@ public class GestoreUtenti {
         personeRistoranti.add(rowNew);
         scriviPersoneRistorantiFile();
     }
+    /**
+     * Aggiunge un nuovo preferito al dataset.<br>
+     * @param username lo username dell'utente
+     * @param newFav Indice del nuovo ristorante preferito
+     */
     public void addNewFavourite(String username, String newFav) {
         //addNewFavourite(utenteLoggato.getUsername(), ristoranteFav);
         for (int i = 0; i < dataSetFavourite.size(); i++) {
@@ -173,7 +259,10 @@ public class GestoreUtenti {
             }
         }
     }
-
+    /**
+     * Aggiunge righe al dataset dei preferiti.<br>
+     * Chiama il metodo scriviFavouriteFile per scrivere il file CSV con le righe aggiunte.<br>
+     */
     private void aggiungiRigheFavourite() {
         boolean checkfirst = true;
         for (Utente row : this.utenti) {
@@ -197,6 +286,10 @@ public class GestoreUtenti {
         //System.out.println("Favourite caricato");
         scriviFavouriteFile();
     }
+    /**
+     * Aggiunge righe al dataset dei ristoranti e ristoratori.<br>
+     * Chiama il metodo scriviPersoneRistorantiFile per scrivere il file CSV con le righe aggiunte.<br>
+     */
     private void aggiungiRighePersoneRistoranti() {
         boolean checkfirst = true;
         for (Utente row : this.utenti) {
@@ -220,7 +313,9 @@ public class GestoreUtenti {
         //System.out.println("Favourite caricato");
         scriviPersoneRistorantiFile();
     }
-
+    /**
+     * Crea il file dei preferiti.<br>
+     */
     public static void createFavouriteDataSet() {
         try {
             File myObj = new File(pathFavourite);
@@ -234,7 +329,10 @@ public class GestoreUtenti {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Scrive il file dei preferiti.<br>
+     * Utilizza OpenCSV per la scrittura del file CSV.<br>
+     */
     private void scriviFavouriteFile() {
         //createFavouriteDataSet();
         try (CSVWriter writer = new CSVWriter(new FileWriter(pathFavourite),
@@ -254,7 +352,10 @@ public class GestoreUtenti {
         e.printStackTrace();
         }
     }
-
+    /**
+     * Metodo che scrive il dataset dei ristoranti e ristoratori nel file CSV.<br>
+     * Utilizza la libreria CSVWriter per scrivere il file CSV.<br>
+     */
     private void scriviPersoneRistorantiFile() {
         //createFavouriteDataSet();
         try (CSVWriter writer = new CSVWriter(new FileWriter(personeRistorantiPath),
@@ -274,7 +375,10 @@ public class GestoreUtenti {
         e.printStackTrace();
         }
     }
-
+    /**
+     * Metodo che scrive il dataset degli utenti nel file CSV.<br>
+     * Utilizza la libreria CSVWriter per scrivere il file CSV.<br>
+     */
     private void scriviNewFile() {
         
     
@@ -310,6 +414,11 @@ public class GestoreUtenti {
         e.printStackTrace();
         }
     }
+    /**
+     * Metodo che restituisce il numero di righe del file CSV.<br>
+     * Utilizza la libreria BufferedReader per la lettura del file CSV.<br>
+     * @return numero di righe
+     */
     public int nRigheUtentiFile(){
         int righe = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(fileUserPath))) {
@@ -321,7 +430,10 @@ public class GestoreUtenti {
         }
         return righe;
     }
-
+    /**
+     * Metodo che inserisce i dati dal dataset nella lista di utenti.<br>
+     * Utilizza la libreria BufferedReader per la lettura del file CSV.<br>
+     */
     private void inserimentoNewDati() {
         String[] appoggio;
         int iRow = 0;
@@ -356,7 +468,10 @@ public class GestoreUtenti {
             System.out.println("File non trovato.");
         }
     }
-
+    /**
+     * Metodo che inserisce i dati dal dataset dei ristoranti nella lista dei preferiti.<br>
+     * Utilizza la libreria BufferedReader per la lettura del file CSV.<br>
+     */
     private void inserimentoFavouriteDati() {
         int iRow = 0;
         
@@ -390,7 +505,10 @@ public class GestoreUtenti {
             System.out.println("File favourite non trovato - verrà creato.");
         }
     }
-
+    /**
+     * Metodo che inserisce i dati dal dataset dei ristoranti e ristoratori nella lista personeRistoranti.<br>
+     * Utilizza la libreria BufferedReader per la lettura del file CSV.<br>
+     */
     private void inserimentoPersoneRistorantiDati() {
         int iRow = 0;
         
@@ -424,7 +542,11 @@ public class GestoreUtenti {
             System.out.println("File favourite non trovato - verrà creato.");
         }
     }
-
+    /**
+     * Metodo che restituisce il numero di righe del file CSV.<br>
+     * Utilizza la libreria BufferedReader per la lettura del file CSV.<br>
+     * @return numero di righe
+     */
     public int numeroRighe() {
         
         
@@ -441,7 +563,12 @@ public class GestoreUtenti {
         }
         return righe;
     }
-
+    /**
+     * Metodo che verifica le credenziali di un utente.<br>
+     * @param username Username dell'utente da verificare
+     * @param password Password dell'utente da verificare
+     * @return true se le credenziali sono valide, altrimenti false
+     */
     public boolean verificaCredenziali(String username, String password) {
         for (Utente utente : utenti) {
             if (utente.getUsername().equals(username) && utente.getPasswordHash().equals(password)) {
@@ -459,18 +586,26 @@ public class GestoreUtenti {
         }*/
         return false; // Credenziali non valide
     }
-
+    /**
+     * Metodo che aggiorna un utente nel dataset.<br>
+     * Chiama il metodo scriviFile per scrivere il file CSV con l'utente aggiornato.<br>
+     * @param utente l'utente da aggiornare
+     */
     public void aggiornaUtente(Utente utente) {
-    for (int i = 0; i < utenti.size(); i++) {
-        if (utenti.get(i).getUsername().equals(utente.getUsername())) {
-            utenti.set(i, utente);
-            scriviNewFile(); 
-            return;
+        for (int i = 0; i < utenti.size(); i++) {
+            if (utenti.get(i).getUsername().equals(utente.getUsername())) {
+                utenti.set(i, utente);
+                scriviNewFile(); 
+                return;
+            }
         }
     }
-    }
-
-public boolean controlloPassword(String password) {
+    /**
+     * Metodo che controlla la validità della password.<br>
+     * @param password la password dell'utente da controllare
+     * @return true se la password e' valida, altrimenti false
+     */
+    public boolean controlloPassword(String password) {
         // Implementa qui la logica per controllare la validità della password
         // Ad esempio, puoi verificare la lunghezza minima, la presenza di caratteri speciali, ecc.
         if (password.length() >= 8 && password.matches(".*[A-Z].*") && password.matches(".*[a-z].*") && password.matches(".*\\d.*")) {
@@ -479,7 +614,11 @@ public boolean controlloPassword(String password) {
             return false; // Password non valida
         }
     }
-
+    /**
+     * Metodo che restituisce l'utente con lo username specificato.<br>
+     * @param username lo username dell'utente
+     * @return l'utente trovato
+     */
     public Utente getUtenteByUsername(String username) {
         for (Utente utente : utenti) {
             if (utente.getUsername().equals(username)) {
@@ -488,7 +627,11 @@ public boolean controlloPassword(String password) {
         }
         return null; // Utente non trovato
     }
-
+    /**
+     * Metodo che crea un nuovo utente.<br>
+     * Chiama il metodo aggiungiUtente per aggiungere l'utente al dataset.<br>
+     * @param nuovoUtente l'utente da creare
+     */
     public int creaUtente(Utente nuovoUtente) {
         // Verifica se l'username esiste già
         for (Utente utente : utenti) {
@@ -508,6 +651,10 @@ public boolean controlloPassword(String password) {
         aggiungiUtente(nuovoUtente);
         return 0; // Utente creato con successo
     }
+    /**
+     * Metodo che stampa l'elenco dei preferiti dell'utente con lo username specificato.<br>
+     * @param username lo username dell'utente
+     */
     public ArrayList<String[]> getPreferitiUtente(String username) {
         ArrayList<String[]> preferitiUtente = new ArrayList<>();
         for (String[] fav : dataSetFavourite) {
@@ -523,17 +670,24 @@ public boolean controlloPassword(String password) {
                 printPreferitiUtente();
                 break; // Esci dal ciclo una volta trovato l'utente
             }
-           
         }
-
         return preferitiUtente;
     }
+    /**
+     * Metodo che stampa l'elenco dei preferiti dell'utente loggato.<br>
+     */
     public void printPreferitiUtente(){
         Gestore gestore=Gestore.getGestore();
         for (String[] string : gestore.getUtenteLoggato().getPreferiti()) {
             System.out.println(string[1]);
         }
     }
+    /**
+     * Metodo che aggiunge un preferito all'utente con lo username specificato.<br>
+     * Chiama il metodo scriviFavouriteFile per aggiornare il file CSV dei preferiti.
+     * @param username lo username dell'utente
+     * @param ristorante il ristorante da aggiungere
+     */
     public void aggiungiPreferitoUtente(String username, String[] ristorante) {
         for (String[] fav : dataSetFavourite) {
             if (fav[0].equals(username)) {
@@ -549,6 +703,39 @@ public boolean controlloPassword(String password) {
             }
         }
     }
+    /**
+     * Metodo che rimuove un preferito all'utente con lo username specificato.<br>
+     * Chiama il metodo scriviFavouriteFile per aggiornare il file CSV dei preferiti.
+     * @param username lo username dell'utente
+     * @param ristorante l'id del ristorante da rimuovere
+     */
+    public void rimuoviPreferitoUtente(String username, String ristorante) {
+        for (String[] fav : dataSetFavourite) {
+            if (fav[0].equals(username)) {
+                String currentFavs = fav[1];
+                if (currentFavs == null || currentFavs.isEmpty()) {
+                } else {
+                    String[] preferiti=fav[1].split(",");
+                    String[] appoggio=preferiti.clone();
+                    String favorite="";
+                    for (String string : appoggio) {
+                        if(!string.equals(ristorante)){
+                            favorite=favorite+string+",";
+                        }
+                    }
+                    fav[1]=favorite;
+                }
+                scriviFavouriteFile();
+                return;
+            }
+        }
+    }
+    /**
+     * Metodo che rimuove un preferito all'utente con lo username specificato.<br>
+     * Chiama il metodo scriviFavouriteFile per aggiornare il file CSV dei preferiti.
+     * @param username lo username dell'utente
+     * @param ristorante il ristorante da rimuovere
+     */
     public void rimuoviPreferitoUtente(String username, String[] ristorante) {
         for (String[] fav : dataSetFavourite) {
             if (fav[0].equals(username)) {

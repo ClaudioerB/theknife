@@ -176,6 +176,21 @@
             <Font size="20.0"/>
           </font>
         </Button>
+        <Label layoutX="280.0" layoutY="887.0" text="Email">
+          <font>
+            <Font name="System Bold" size="24.0"/>
+          </font>
+        </Label>
+        <ImageView fx:id="changeIdEmail" fitHeight="30.0" fitWidth="24.0" layoutX="440.0" layoutY="892.0" onMouseClicked="#changeEamilData" opacity="0.29" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../../../../java/com/mycompany/theknife/data/refresh.png"/>
+          </image>
+        </ImageView>
+        <Text fx:id="emailText" layoutX="58.0" layoutY="958.0" strokeType="OUTSIDE" strokeWidth="0.0" text="email" textAlignment="CENTER" wrappingWidth="505.09461975097656">
+          <font>
+            <Font size="23.0"/>
+          </font>
+        </Text>
       </children>
     </AnchorPane>
   </children>

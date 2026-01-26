@@ -20,6 +20,18 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * @author TheKnifeTeam
+ * 
+ * ControllerViewRistorante rappresenta il controller per la scena ViewRistorante.<br>
+ * Si occupa di gestire l'interfaccia di visualizzazione di un ristorante specifico.<br>
+ * Le sue funzioni includono la visualizzazione nel dettaglio dei ristoranti, la visualizzazione delle recensioni e scriverla se l'utente è loggato.
+ * Inoltre la possibilità di selezionarlo come preferito da parte dell'utente loggato.<br>
+ * <br>
+ * Invece se l'utente è il proprietario del ristorante, viene mostrata la possibilità di modificare i parametri del ristorante.<br>
+ * 
+ * @version 1.0
+ */
 public class ControllerViewRistorante {
     @FXML
     private javafx.scene.control.TextField nomeRistoranteField;
@@ -100,14 +112,26 @@ public class ControllerViewRistorante {
     private String serviziAdd;
     private ArrayList<String> cucineArrayList;
     ArrayList<javafx.scene.control.CheckMenuItem> checkMenuItemsList;
-    public ControllerViewRistorante() {
-        
-    }
+    /**
+     * Costruttore di ControllerViewRistorante vuoto.
+     */
+    public ControllerViewRistorante() {}
+    /**
+     * Costruttore di ControllerViewRistorante.<br>
+     * Inizializza le informazioni del ristorante da visualizzare e se l'utente può modificare le informazioni.<br>
+     * @param ristoranteInfo array di stringhe che contiene le informazioni del ristorante da visualizzare.
+     * @param modifica booleano che indica se il ristorante può modificare le informazioni.
+     */
     private ControllerViewRistorante(String[] ristoranteInfo, boolean modifica) {
-        
         ristorante = ristoranteInfo;
         this.Modifica = modifica;
     }
+    /**
+     * Metodo per ottenere l'istanza di ControllerViewRistorante.<br>
+     * @param ristoranteInfo array di stringhe che contiene le informazioni del ristorante da visualizzare.
+     * @param modifica booleano che indica se il ristorante puo' modificare le informazioni.
+     * @return istanza di ControllerViewRistorante
+     */
     public static ControllerViewRistorante getInstance(String[] ristoranteInfo, boolean modifica) {
         if(instance == null)
             instance =new ControllerViewRistorante(ristoranteInfo, modifica);
@@ -117,6 +141,11 @@ public class ControllerViewRistorante {
         }
         return instance;
     }
+    /**
+     * Metodo per inizializzare le informazioni del ristorante da visualizzare.<br>
+     * Inoltre imposta anche le azioni che possono essere eseguite dall'utente e quali invece non possono.<br>
+     * Mostra possibilmente anche i filtri per la modifica del ristorante.<br>
+     */
     public void initialize() {
         
         gestoreRecensioni= GestoreRecensioni.getGestoreRecensioni();
@@ -184,6 +213,11 @@ public class ControllerViewRistorante {
         }
     }
     
+    /**
+     * Metodo per verificare se l'utente loggato e' proprietario del ristorante.<br>
+     * Chiama il metodo getPersoneRistorantiByIdRistorante del GestoreUtenti per verificare autenticità.<br>
+     * @return true se l'utente loggato e' proprietario del ristorante
+     */
     private boolean isProprietario() {
         Gestore gestore = Gestore.getGestore();
         Utente utenteLoggato = gestore.getUtenteLoggato();
@@ -195,11 +229,18 @@ public class ControllerViewRistorante {
             return false;
         }
     }
+    /**
+     * Metodo per aggiornare la selezione delle cucine nel menu.<br>
+     */
     private void aggiornaSelezioneCucine() {
         for (javafx.scene.control.CheckMenuItem checkItem : checkMenuItemsList) {
             checkItem.setSelected(cucineArrayList.contains(checkItem.getText()));
         }
     }
+    /**
+     * Metodo per popolare il menu con le cucine.<br>
+     * Chiama il metodo checkFilteredList per aggiornare la selezione delle cucine nel menu.<br>
+     */
     private void popolaMenuCucineConRadio() {
         cucineFilterComboBox.getItems().clear();
 
@@ -227,6 +268,11 @@ public class ControllerViewRistorante {
         }
     }
     
+    /**
+     * Metodo per verificare se una cucina e' stata selezionata.<br>
+     * Chiama il metodo checkFilteredList per aggiornare la selezione delle cucine nel menu.<br>
+     * @param checkItem CheckMenuItem della cucina selezionata
+     */
     private void checkFilteredList(javafx.scene.control.CheckMenuItem checkItem) {
         if (checkItem.isSelected()) {
             if (!cucineArrayList.contains(checkItem.getText())) {
@@ -237,6 +283,10 @@ public class ControllerViewRistorante {
         }
         fillCucineListView();
     }
+    /**
+     * Metodo per riempire la ListView con i servizi del ristorante.<br>
+     * Se non ci sono servizi, viene mostrato il messaggio "Non é presente alcun servizio".<br>
+     */
     private void fillServiziListView() {
         serviziRistoranteListView.getItems().clear();
         
@@ -251,6 +301,10 @@ public class ControllerViewRistorante {
         }
         serviziRistoranteListView.refresh();
     }
+    /**
+     * Metodo per riempire la ListView con le cucine del ristorante.<br>
+     * Se non ci sono cucine, viene mostrato il messaggio "Nessuna cucina aggiunta".<br>
+     */
     private void fillCucineListView(){
         tipoCucinaRistoranteListView.getItems().clear();
         
@@ -263,10 +317,15 @@ public class ControllerViewRistorante {
             tipoCucinaRistoranteListView.getItems().add("Nessuna cucina aggiunta");
         }
     }
+    /**
+     * Metodo per impostare le recensioni del ristorante nel controller.<br>
+     */
     public void setRecensioni() {
         recensioni = gestoreRecensioni.getRecensioniRistorante(ristorante[16]);
-
     }
+    /**
+     * Metodo per verificare se il ristorante e' stato già aggiunto ai preferiti.<br>
+     */
     private void isInPreferiti() {
         Gestore gestore = Gestore.getGestore();
         Utente utenteLoggato = gestore.getUtenteLoggato();
@@ -301,6 +360,11 @@ public class ControllerViewRistorante {
             }
         }
     }
+    /**
+     * Metodo FXML per aprire la finestra per rispondere alla recensione.<br>
+     * Questo è possibile solo se si è il proprietario del ristorante.<br>
+     * @throws IOException
+     */
     @FXML
     private void rispondiButtonAction() throws IOException{
         String selectedRecensione = (String) recensioniRistoranteListView.getSelectionModel().getSelectedItem();
@@ -329,6 +393,11 @@ public class ControllerViewRistorante {
         stage.initModality(Modality.APPLICATION_MODAL); 
         stage.show(); 
     }
+    /**
+     * Metodo FXML per aprire la finestra per visualizzare la recensione.<br>
+     * Viene visualizzata la recensione con risposta se presente, altrimenti viene visualizzata la recensione senza risposta.<br>
+     * @throws IOException
+     */
     @FXML
     private void visualizzaRecensione() throws IOException {
         String selectedRecensione = (String) recensioniRistoranteListView.getSelectionModel().getSelectedItem();
@@ -377,6 +446,12 @@ public class ControllerViewRistorante {
             } 
         }
     }
+    /**
+     * Metodo FXML per rimuovere una cucina dal ristorante quando avviene la modifica.<br>
+     * Rimuove anche la cucina dalla lista di cucine.<br>
+     * Chiama il metodo fillCucineListView per aggiornare la lista di cucine.<br>
+     * @throws IOException
+     */
     @FXML 
     private void rimuoviCucina() throws IOException {
         String selected=tipoCucinaRistoranteListView.getSelectionModel().getSelectedItem().toString();
@@ -389,6 +464,11 @@ public class ControllerViewRistorante {
             }
         }
     }
+
+    /**
+     * Metodo per aggiornare i campi del ristorante.<br>
+     * Viene utilizzato per evitare di inizializzare di nuovo i campi del ristorante.<br>
+     */
     private void refreshData() {
         setServizi(); 
         setTipiCucina();
@@ -419,6 +499,16 @@ public class ControllerViewRistorante {
         prenotazioniCheckBox.setSelected(ristorante[15].equals("1"));
         consegnaCheckBox.setSelected(ristorante[14].equals("1"));
     }
+    /**
+     * Metodo FXML per salvare i dati del ristorante quando avviene la modifica.<br>
+     * <ul>
+     * <li>Chiama il metodo modificaCucina per aggiornare la cucina del ristorante.</li>
+     * <li>Chiama il metodo modificaText per aggiornare il testo del ristorante.</li>
+     * <li>Chiama il metodo modificaChekbox per aggiornare le checkbox del ristorante.</li>
+     * <li>Chiama il metodo refreshData per aggiornare i dati del ristorante.</li>
+     * </ul>
+     * @throws IOException
+     */
     @FXML 
     private void salvaData() throws IOException {
         String idRistorante = this.ristorante[16];
@@ -435,6 +525,10 @@ public class ControllerViewRistorante {
         }
     }
 
+    /**
+     * Metodo per aggiornare la cucina del ristorante.<br>
+     * @return boolean true se almeno una cucina e' stata selezionata, false altrimenti
+     */
     private boolean modificaCucina() {
         String cucina="";
         boolean checkFirst=true;
@@ -452,6 +546,11 @@ public class ControllerViewRistorante {
         ristorante[5] = cucina;
         return true;
     }
+    /**
+     * Metodo per aggiornare i diversi parametri del ristorante.<br>
+     * Tra cui nome, indirizzo, telefono, stato, sito web, citta, award, descrizione.<br>
+     * @return boolean true se tutti i campi sono stati inseriti, false altrimenti
+     */
     private boolean modificaText() {
         if (nomeRistoranteField.getText().isEmpty() || indirizzoRistoranteField.getText().isEmpty() || telefonoRistoranteField.getText().isEmpty()
             ||statoRistoranteField.getText().isEmpty()||sitoWebRistoranteField.getText().isEmpty()
@@ -459,7 +558,6 @@ public class ControllerViewRistorante {
             
             return false;
         }
-        
         ristorante[0] = nomeRistoranteField.getText();
         ristorante[1] = indirizzoRistoranteField.getText();
         ristorante[8] = telefonoRistoranteField.getText();
@@ -472,12 +570,15 @@ public class ControllerViewRistorante {
         if (getPrz() == null || getPrz().isEmpty() ||serviziAdd == null || serviziAdd.isEmpty()) {
             return false;
         }
-
         ristorante[4] = getPrz();
         ristorante[11] = serviziAdd;
         return true;
     }
 
+    /**
+     * Metodo per aggiornare le checkbox del ristorante.<br>
+     * Tra cui consegna e prenotazioni.
+     */
     private void modificaChekbox() {
         if (consegnaCheckBox.isSelected()) {
             ristorante[14] = "1";
@@ -492,6 +593,11 @@ public class ControllerViewRistorante {
         }
     }
 
+    /**
+     * Metodo FXML per impostare il prezzo del ristorante a un valore.<br>
+     * Chiama il metodo setFalsePrezzo per impostare tutte le checkbox di prezzo a false.<br>
+     * Chiama il metodo setPrz per impostare il prezzo del ristorante.<br>
+     */
     @FXML
     private void handlePrezzo1() {
         if (prezzo1CheckMenuItem.isSelected()) {
@@ -501,6 +607,11 @@ public class ControllerViewRistorante {
         }
     }
 
+    /**
+     * Metodo FXML per impostare il prezzo del ristorante a due di valore.<br>
+     * Chiama il metodo setFalsePrezzo per impostare tutte le checkbox di prezzo a false.<br>
+     * Chiama il metodo setPrz per impostare il prezzo del ristorante.<br>
+     */
     @FXML
     private void handlePrezzo2() {
         if (prezzo2CheckMenuItem.isSelected()) {
@@ -510,6 +621,11 @@ public class ControllerViewRistorante {
         }
     }
 
+    /**
+     * Metodo FXML per impostare il prezzo del ristorante a tre di valore.<br>
+     * Chiama il metodo setFalsePrezzo per impostare tutte le checkbox di prezzo a false.<br>
+     * Chiama il metodo setPrz per impostare il prezzo del ristorante.<br>
+     */
     @FXML
     private void handlePrezzo3() {
         if (prezzo3CheckMenuItem.isSelected()) {
@@ -519,6 +635,11 @@ public class ControllerViewRistorante {
         }
     }
 
+    /**
+     * Metodo FXML per impostare il prezzo del ristorante a quattro di valore.<br>
+     * Chiama il metodo setFalsePrezzo per impostare tutte le checkbox di prezzo a false.<br>
+     * Chiama il metodo setPrz per impostare il prezzo del ristorante.<br>
+     */
     @FXML
     private void handlePrezzo4() {
         if (prezzo4CheckMenuItem.isSelected()) {
@@ -528,6 +649,13 @@ public class ControllerViewRistorante {
         }
     }
 
+    /**
+     * Metodo FXML per aggiungere un servizio al ristorante.<br>
+     * Chiama il metodo addServizioByString per aggiungere il servizio al ristorante.<br>
+     * Chiama il metodo setServizi per impostare il servizio del ristorante.<br>
+     * Chiama il metodo fillServiziListView per riempire la ListView con i servizi del ristorante.<br>
+     * @throws IOException
+     */
     @FXML 
     private void addServizio() throws IOException {
         String text = serviziTextField.getText().trim();
@@ -539,6 +667,10 @@ public class ControllerViewRistorante {
             fillServiziListView();
         }
     }
+    /**
+     * Metodo per aggiungere un servizio al ristorante controllando se il servizio e' gia' presente.<br>
+     * @param text il servizio da aggiungere
+     */
     private void addServizioByString(String text) {
         if (serviziAdd.contains(text)) {
             serviziAdd = serviziAdd.replace(text, "");
@@ -560,6 +692,12 @@ public class ControllerViewRistorante {
         }
     }
 
+    /**
+     * Metodo FXML per rimuovere un servizio dal ristorante verificando se il servizio e' presente.<br>
+     * Chiama il metodo setServizi per impostare il servizio del ristorante.<br>
+     * Chiama il metodo fillServiziListView per riempire la ListView con i servizi del ristorante.<br>
+     * @throws IOException
+     */
     @FXML 
     private void rimuoviServizio() throws IOException {
         int selectedIdx = serviziRistoranteListView.getSelectionModel().getSelectedIndex();
@@ -583,6 +721,10 @@ public class ControllerViewRistorante {
         }
     }
 
+    /**
+     * Metodo FXML per aggiungere il ristorante ai preferiti.<br>
+     * @throws IOException
+     */
     @FXML
     private void toPreferiti() throws IOException {
         Gestore gestore = Gestore.getGestore();
@@ -596,6 +738,10 @@ public class ControllerViewRistorante {
             rimuoviPreferitiButton.setText("Rimuovi dai preferiti");
         }
     }
+    /**
+     * Metodo FXML per rimuovere il ristorante dai preferiti.<br>
+     * @throws IOException
+     */
     @FXML
     private void removePreferiti() throws IOException {
         Gestore gestore = Gestore.getGestore();
@@ -609,6 +755,11 @@ public class ControllerViewRistorante {
         }
     }
 
+    /**
+     * Metodo per riempire la ListView con le recensioni del ristorante.<br>
+     * Se non ci sono recensioni, viene mostrato il messaggio "non ci sono recensioni".<br>
+     * @param list
+     */
     public void fillListView(ArrayList<Recensione> list) {
         recensioniRistoranteListView.getItems().clear();
         //gestoreDataset.addStelle(stella, ristorante[16]);
@@ -628,6 +779,10 @@ public class ControllerViewRistorante {
             recensioniRistoranteListView.refresh();
         }
     }
+    /**
+     * Metodo per verificare se l'utente e' loggato.<br>
+     * @return true se l'utente e' loggato, false altrimenti
+     */
     private boolean isLogged() {
         Gestore gestore = Gestore.getGestore();
         if(gestore.getUtenteLoggato()==null || Modifica) {
@@ -641,10 +796,19 @@ public class ControllerViewRistorante {
             return true;
         }
     }
+    /**
+     * Metodo per ottenere il ristorante.<br>
+     * @return ristorante con i suoi parametri
+     */
     public static String[] getRistorante() {
         return ristorante;
     }
 
+    /**
+     * Metodo FXML per tornare alla Home.<br>
+     * Se l'utente e' loggato, viene mostrata la HomeLogged, altrimenti la HomeNotLogged.<br>
+     * @throws IOException
+     */
     @FXML
     private void toHome() throws IOException {
         if(Gestore.getGestore().getUtenteLoggato()==null)
@@ -653,6 +817,12 @@ public class ControllerViewRistorante {
             App.setRoot("HomeLogged");
     }
 
+    /**
+     * Metodo FXML per aggiungere una recensione al ristorante.<br>
+     * Avviene tramite la finestra Recensisci.<br>
+     * Infine chiama il metodo setRating per aggiornare la valutazione del ristorante.<br>
+     * @throws IOException
+     */
     @FXML
     private void aggiungiRecensione() throws IOException {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("Recensisci.fxml"));
@@ -667,11 +837,17 @@ public class ControllerViewRistorante {
         //gestoreDataset.controllaDatasetRecensioniById(ristorante[16]);
         setRating();
     }
+    /**
+     * Metodo per aggiornare la valutazione del ristorante.<br>
+     */
     public void setRating() {
         double rating = gestoreDataset.calcStelle(ristorante[13]);
         ratingRistorante.setRating(rating);
     }
 
+    /**
+     * Metodo per visualizzare il logo The Knife.<br>
+     */
     public void theKnifeImageViewSet() {
         
         String knifePath = System.getProperty("user.dir")
@@ -684,6 +860,10 @@ public class ControllerViewRistorante {
             theKnifeImageView.setVisible(true);
         }
     }
+    /**
+     * Metodo per verificare se l'utente e' il proprietario del ristorante.<br>
+     * Se l'utente e' il proprietario del ristorante, vengono visualizzati i pulsanti di modifica.<br>
+     */
     private void isEditable() {
         if(!Modifica) {
             nomeRistoranteField.setEditable(false);
@@ -727,18 +907,33 @@ public class ControllerViewRistorante {
 
         }
     }
+    /**
+     * Metodo per disabilitare tutti i pulsanti di prezzo.<br>
+     */
     private void setFalsePrezzo() {
         prezzo1CheckMenuItem.setSelected(false);
         prezzo2CheckMenuItem.setSelected(false);
         prezzo3CheckMenuItem.setSelected(false);
         prezzo4CheckMenuItem.setSelected(false);
     }
+    /**
+     * Metodo per impostare il valore del prezzo del ristorante.<br>
+     * @param value valore del prezzo del ristorante
+     */
     private void setPrz(String value) {
         prz = value;
     }
+    /**
+     * Metodo per ottenere il prezzo del ristorante.<br>
+     * @return prezzo del ristorante
+     */
     private String getPrz() {
         return prz;
     }
+    /**
+     * Metodo per impostare il prezzo del ristorante.<br>
+     * Chiama il metodo setPrezzo per impostare il valore del prezzo del ristorante.<br>
+     */
     private void setPrezzo() {
         switch(ristorante[4].length()) {
             case 1:
@@ -766,9 +961,15 @@ public class ControllerViewRistorante {
                 break;
         }
     }
+    /**
+     * Metodo per impostare i tipi di cucina del ristorante.<br>
+     */
     private void setTipiCucina() {
         tipiCucina=ristorante[5].split(",");
     }
+    /**
+     * Metodo per impostare i servizi del ristorante.<br>
+     */
     public void setServizi() {
         servizi=ristorante[11].split(",");
         serviziAdd = ristorante[11];

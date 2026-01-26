@@ -10,6 +10,15 @@ import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+/**
+ * @author TheKnifeTeam
+ * 
+ * ControllerModVisualizzaRecensioneSenzaRisposta rappresenta il controller per la scena di VisualizzaModRecensioneSenzaRisposta.<br>
+ * Si occupa di gestire l'interfaccia di visualizzazione di una recensione senza risposta del proprietario.<br>
+ * Permette anche di modificare la recesione se l'utente è colui che l'ha scritta.<br>
+ * 
+ * @version 1.0
+ */
 public class ControllerModVisualizzaRecensioneSenzaRisposta {
     @FXML
     private javafx.scene.control.TextField TitoloField;
@@ -32,16 +41,29 @@ public class ControllerModVisualizzaRecensioneSenzaRisposta {
     private Gestore gestore;
     private GestoreRecensioni gestoreRecensioni;
 
-    public ControllerModVisualizzaRecensioneSenzaRisposta() {}   
+    /**
+     * Costruttore di ControllerModVisualizzaRecensioneSenzaRisposta
+     */
+    public ControllerModVisualizzaRecensioneSenzaRisposta() {} 
+    /**
+     * Metodo per impostare il controller.<br>
+     * @param controller ControllerModUser
+     */
     public void setController(ControllerModUser controller) {
         this.controller = controller;
     }
+    /**
+     * Metodo per inizializzare la scena.<br>
+     * Inizializza il logo di Theknife.<br>
+     */
     public void initialize() {
         gestore = Gestore.getGestore();
         gestoreRecensioni = GestoreRecensioni.getGestoreRecensioni();
         theKnifeImageViewSet();
-        //setDisableFields();
     }
+    /**
+     * Metodo per impostare il logo.<br>
+     */
     public void theKnifeImageViewSet() {
         String knifePath = System.getProperty("user.dir")
                 + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
@@ -53,16 +75,22 @@ public class ControllerModVisualizzaRecensioneSenzaRisposta {
             theKnifeImageView.setVisible(true);
         }
     }
-    private void setDisableFields() {
-        TitoloField.setEditable(false);
-        TestoArea.setEditable(false);
-        ratingRecensione.setDisable(true);
-    }
+    /**
+     * Metodo per impostare la recensione da visualizzare.<br>
+     * @param recensioneDaVisualizzare Recensione da visualizzare
+     */
     public void setRecensione(Recensione recensioneDaVisualizzare) {
         TitoloField.setText(recensioneDaVisualizzare.getTitolo());
         TestoArea.setText(recensioneDaVisualizzare.getRecensione());
         ratingRecensione.setRating(recensioneDaVisualizzare.getStelle());
     }
+    /**
+     * Metodo FXML per salvare le modifiche della recensione.<br>
+     * Chiama addData e addTime per aggiungere la data e l'ora correnti alla recensione.<br>
+     * Chiama isettingRecensione per impostare la recensione.<br>
+     * Infine chiama close per chiudere la finestra.<br>
+     * @throws IOException
+     */
     @FXML 
     private void salvaAction() throws IOException {
         recensioneVecchia = controller.getRecensioneVecchia();
@@ -97,17 +125,28 @@ public class ControllerModVisualizzaRecensioneSenzaRisposta {
         Stage stage = (Stage) TitoloField.getScene().getWindow();
         stage.close();
     }
+    /**
+     * Metodo FXML per chiudere la finestra.<br>
+     */
     @FXML
     private void closeWindow() {
         Stage stage = (Stage) TitoloField.getScene().getWindow();
         stage.close();
     }
+    /**
+     * Metodo per ottenere la data corrente.<br>
+     * @return data in stringa
+     */
     private String addData() {
         LocalDateTime myDateObj = LocalDateTime.now();   
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String formattedDate = myDateObj.format(myFormatObj);
         return formattedDate;
     }
+    /**
+     * Metodo per ottenere l'ora corrente.<br>
+     * @return ora in stringa
+     */
     private String addTime() {
         LocalDateTime myDateObj = LocalDateTime.now();   
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("HH:mm:ss");

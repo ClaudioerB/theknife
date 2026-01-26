@@ -11,18 +11,37 @@ import java.time.format.DateTimeFormatter;
 
 import com.opencsv.CSVWriter;
 
+/**
+ * @author TheKnifeTeam
+ * 
+ * GestoreRecensioni è la classe che gestisce il dataset delle recensioni.
+ * Utilizza OpenCSV per la lettura e scrittura dei file CSV.
+ * 
+ * Le funzionalità includono l'aggiunta, la rimozione e la modifica di righe nel dataset delle recensioni.
+ * Il dataset viene caricato da un file CSV all'avvio e salvato su file ad ogni modifica.
+ * 
+ * Note: Alcuni metodi di test sono inclusi solo per scopi di debug.
+ * 
+ * @version 1.0
+ */
 public class GestoreRecensioni {
     ArrayList<Recensione> recensioni;
     private String filePath;
     private static GestoreRecensioni gestoreRecensioni;
-
+    /**
+     * Costruttore della classe GestoreRecensioni che carica il dataset delle recensioni dal file CSV
+     * Chiama il metodo inserimentoDati per caricare il dataset delle recensioni.
+     */
     private GestoreRecensioni() {
         gestoreRecensioni = this;
         filePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\recensioni.CSV";
         this.recensioni = new ArrayList<Recensione>();
         inserimentoDati();
     }
-
+    /**
+     * Metodo per ottenere l'istanza della classe GestoreRecensioni
+     * @return istanza della classe GestoreRecensioni
+     */
     public static GestoreRecensioni getGestoreRecensioni() {
         if(gestoreRecensioni == null) {
             gestoreRecensioni = new GestoreRecensioni();
@@ -30,24 +49,41 @@ public class GestoreRecensioni {
         return gestoreRecensioni;
     }
 
-    
+    /**
+     * Costruttore della classe GestoreRecensioni che prende come parametro un array di recensioni.
+     * @param recensioni array di recensioni
+     */
     public GestoreRecensioni(ArrayList<Recensione> recensioni) {
         this.recensioni = recensioni;
     }
-
+    /**
+     * Metodo per ottenere il dataset delle recensioni.
+     * @return dataset delle recensioni
+     */
     public ArrayList<Recensione> getRecensioni() {
         return recensioni;
     }
-
+    /**
+     * Metodo per impostare il dataset delle recensioni.
+     * @param recensioni lista di recensioni da impostare
+     */
     public void setRecensioni(ArrayList<Recensione> recensioni) {
         this.recensioni = recensioni;
     }
-
+    /**
+     * Metodo per aggiungere una recensione al dataset.
+     * Chiama il metodo scriviFile per salvare il dataset su file.
+     * @param recensione recensione da aggiungere
+     */
     public void aggiungiRecensione(Recensione recensione) {
         recensioni.add(recensione);
         scriviFile();
     }
-
+    /**
+     * Metodo per rimuovere una recensione dal dataset.
+     * Chiama il metodo scriviFile per salvare il dataset su file.
+     * @param i indice della recensione da rimuovere
+     */
     public void rimuoviRecensione(int i) {
         if (recensioni.isEmpty()) {
             System.out.println("Non è presente nessun commento.");
@@ -57,7 +93,12 @@ public class GestoreRecensioni {
             scriviFile();
         }
     }
-
+    /**
+     * Metodo per modificare una recensione nel dataset.
+     * Chiama il metodo modificaRecensioneById per modificare la recensione con l'indice specificato.
+     * @param recensione recensione da impostare
+     * @param rVecchia recensione da modificare
+     */
     public void modificaRecensione(Recensione recensione, Recensione rVecchia) {
 
         String utente = rVecchia.getUtenteRecensione();
@@ -79,7 +120,12 @@ public class GestoreRecensioni {
             modificaRecensioneById(id, recensione);
         }
     }
-
+    /**
+     * Metodo per modificare una recensione nel dataset.
+     * Chiama il metodo scriviFile per salvare il dataset su file.
+     * @param id indice della recensione da modificare
+     * @param recensione recensione da impostare
+     */
     public void modificaRecensioneById(int id, Recensione recensione) {
         if (recensioni.isEmpty()) {
             System.out.println("Non è presente nessun commento.");
@@ -95,7 +141,9 @@ public class GestoreRecensioni {
             scriviFile();
         }
     }
-
+    /**
+     * Metodo per stampare le recensioni nel dataset.
+     */
     public void printRecensioni() {
         if (!recensioni.isEmpty()) {
             for (Recensione recensione : recensioni) {
@@ -107,9 +155,12 @@ public class GestoreRecensioni {
             System.out.println("\nAl momento non ci sono recensioni disponibili!\n");
         }
     }
-
+    /**
+     * Metodo per salvare il dataset delle recensioni su file CSV.
+     * Utilizza CSVWriter per la scrittura del file CSV.
+     */
     private void scriviFile() {
-        
+        GestoreDataset gestoreDataset = GestoreDataset.getGestoreDataset();
         try (CSVWriter writer = new CSVWriter(new FileWriter(filePath),
         ';',       // separatore personalizzato
         CSVWriter.NO_QUOTE_CHARACTER,
@@ -120,6 +171,7 @@ public class GestoreRecensioni {
         writer.writeNext(riga);
         for (int i=0; i<recensioni.size(); i++){
             riga[0] = recensioni.get(i).getId();
+            //gestoreDataset.controllaDatasetRecensioniById(riga[0]);
             riga[1] = recensioni.get(i).getUtenteRecensione();
             riga[2] = recensioni.get(i).getTitolo();
             riga[3] = String.valueOf(recensioni.get(i).getStelle());
@@ -137,7 +189,10 @@ public class GestoreRecensioni {
             e.printStackTrace();
         }
     }  
-
+    /**
+     * Metodo per caricare il dataset delle recensioni dal file CSV.
+     * Utilizza BufferedReader per la lettura del file CSV.
+     */
     private void inserimentoDati() { 
         String[] appoggio;
         int iRow = 0;
@@ -166,7 +221,11 @@ public class GestoreRecensioni {
             System.out.println("File non trovato.");
         }
     }
-
+    /**
+     * Metodo che restituisce il numero di righe nel dataset delle recensioni.
+     * Utilizza BufferedReader per la lettura del file CSV.
+     * @return numero di recensioni nel dataset
+     */
     public int numeroRighe() {
         
         
@@ -183,7 +242,11 @@ public class GestoreRecensioni {
         }
         return righe;
     }
-
+    /**
+     * Metodo per ottenere le recensioni di un ristorante specifico dal dataset.
+     * @param string ID del ristorante
+     * @return recensioni del ristorante
+     */
     public ArrayList<Recensione> getRecensioniRistorante(String string) {
         ArrayList<Recensione> recensioniRistorante = new ArrayList<Recensione>();
         for (Recensione recensione : recensioni) {
@@ -193,7 +256,11 @@ public class GestoreRecensioni {
         }
         return recensioniRistorante;
     }
-
+    /**
+     * Metodo per ottenere le recensioni di un utente specifico dal dataset.
+     * @param username username dell'utente
+     * @return recensioni dell'utente
+     */
     public ArrayList<Recensione> getRecensioniByUsername(String username) {
         ArrayList<Recensione> recensioniRistorante = new ArrayList<Recensione>();
         for (Recensione recensione : recensioni) {

@@ -7,6 +7,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 
+/**
+ * @author TheKnifeTeam
+ * 
+ * HomeNotLoggedController rappresenta il controller per la scena HomeNotLogged.<br>
+ * Si occupa di gestire l'interfaccia utente della scena HomeNotLogged prima dell'accesso.<br>
+ * Le sue funzioni includono la visualizzazione nel dettaglio dei ristoranti con l'utilizzo di filtri.
+ * Inoltre permette di accedere al profilo dell'utente non loggato che rappresenta il login e la registrazione.<br>
+ * 
+ * @version 1.0
+ */
 public class HomeNotLoggedController {
 
     @FXML
@@ -77,12 +87,20 @@ public class HomeNotLoggedController {
     @FXML 
     private javafx.scene.control.RadioMenuItem tutteItem;
 
+    /**
+     * Costruttore della scena HomeNotLoggedController.<br>
+     * Inizializza il gestoreDataset e la filteredList per la visualizzazione dei ristoranti.<br>
+     */
     public HomeNotLoggedController() {
         gestoreDataset = GestoreDataset.getGestoreDataset();
         filteredList = gestoreDataset.getDataSet();
         
     }
 
+    /**
+     * Metodo FXML che inizializza la scena HomeNotLoggedController.<br>
+     * Inizializza le immagini e i filtri per la visualizzazione dei ristoranti.<br>
+     */
     @FXML
     private void initialize() {
         filteredList = gestoreDataset.getDataSet();
@@ -121,6 +139,11 @@ public class HomeNotLoggedController {
         setFiltersTrue();
         fillListView(filteredList);
     }
+    /**
+     * Metodo FXML che visualizza nel dettaglio un ristorante selezionato.<br>
+     * Utilizzato per aprire la scena ViewRistorante usando il metodo setRoot della class App.<br>
+     * @throws IOException 
+     */
     @FXML
     private void visulizzaRistoranteButtonAction() throws IOException {
         String selectedItem = listViewRestaurants.getSelectionModel().getSelectedItem();
@@ -133,6 +156,10 @@ public class HomeNotLoggedController {
         App.setRoot("ViewRistorante");
     }
 
+    /**
+     * Metodo che popola il menu per la selezione delle cucine.<br>
+     * Chiama il metodo checkFilteredList per la visualizzazione dei ristoranti.<br>
+     */
     private void popolaMenuCucineConRadio() {
         ArrayList<String> tipiCucina = new ArrayList<>();
         boolean checkfirst = true;
@@ -228,6 +255,11 @@ public class HomeNotLoggedController {
             row.length > 5 && !row[5].toLowerCase().equals(selectedCucina)
         ); */
     //}
+    /**
+     * Metodo che rimuove dalla lista dei ristoranti la cucina selezionata.<br>
+     * 
+     * @param selectedCucina la cucina selezionata
+     */
     private void removeCucina(String selectedCucina) {
         ArrayList<String[]> tempList = new ArrayList<>();
         selectedCucina = selectedCucina.trim();
@@ -266,6 +298,10 @@ public class HomeNotLoggedController {
         filteredList = tempList;
     }
 
+    /**
+     * Metodo che ricerca i ristoranti in base alla cucina selezionata.<br>
+     * Chiama il metodo removeCucina per la rimozione della cucina selezionata se non è "Tutte le cucine".<br>
+     */
     private void searchingButtonActionTipiCucine() {
         //cucineFilterComboBox.getItems();
         String selectedCucina = "Tutte le cucine";
@@ -299,6 +335,9 @@ public class HomeNotLoggedController {
         }
     }
 
+    /**
+     * Metodo che imposta tutti i filtri a true.<br>
+     */
     private void setFiltersTrue() {
         price1CheckMenuItem.setSelected(true);
         price2CheckMenuItem.setSelected(true);
@@ -315,6 +354,9 @@ public class HomeNotLoggedController {
         //tutteCucine.setSelected(true);
     }
 
+    /**
+     * Metodo FXML che cambia l'immagine del login.<br>
+     */
     @FXML
     private void changeLoginImage() {
         String newPath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\user_1.png"; 
@@ -326,6 +368,15 @@ public class HomeNotLoggedController {
         }
     }
 
+    /**
+     * Metodo che riempie la listView con i ristoranti filtrati.<br>
+     * Inserisce i ristoranti se la lista non è vuota.<br>
+     * <ul>
+     * <li>Imposta i valori di consegna e prenotazione.</li>
+     * <li>Imposta la valutazione usando il metodo calcStelle.</li>
+     * </ul>
+     * @param list la lista filtrata dei ristoranti
+     */
     private void fillListView(ArrayList<String[]> list) {
         listViewRestaurants.getItems().clear();
         boolean checkfirst = true;
@@ -347,6 +398,11 @@ public class HomeNotLoggedController {
         }
     }
 
+    /**
+     * Metodo che imposta il valore di consegna o prenotazione.<br>
+     * @param value valore da impostare
+     * @return il valore impostato
+     */
     private String setDeliveryOrPrenotationValue(String value) {
         if (value.equals("1")) {
             return "Sì";
@@ -356,6 +412,10 @@ public class HomeNotLoggedController {
         return "N/A";
     }
 
+    /**
+     * Metodo che rimuove i prezzi dai filtri non selezionati.<br>
+     * Chiama il metodo removePrice per rimuovere i prezzi dai filtri.<br>
+     */
     private void pricingFilterComboBoxAction() {
         if (!price1CheckMenuItem.isSelected()) {
             removePrice(1);
@@ -371,6 +431,10 @@ public class HomeNotLoggedController {
         }
     }
 
+    /**
+     * Metodo che rimuove i prezzi dai filtri non selezionati.<br>
+     * @param num il numero di cifre del prezzo
+     */
     private void removePrice(int num) {
         ArrayList<String[]> tempList = new ArrayList<>(filteredList);
         for (String[] row : filteredList) {
@@ -382,6 +446,11 @@ public class HomeNotLoggedController {
         filteredList = tempList;
     }
 
+    /**
+     * Metodo che rimuove i tag dai filtri non selezionati.<br>
+     * @param value il valore del parametro
+     * @param id l'id del parametro
+     */
     private void removeTag(String value, int id) {
         ArrayList<String[]> tempList = new ArrayList<>(filteredList);
         for (String[] row : filteredList) {
@@ -393,6 +462,10 @@ public class HomeNotLoggedController {
         filteredList = tempList;
     }
 
+    /**
+     * Metodo FXML che rimuove i ristoranti che non soddisfano il criterio di ricerca testuale.<br>
+     * 
+     */
     @FXML 
     private void searchingButtonAction() {
         String searchText = searchTextField.getText().toLowerCase();
@@ -434,6 +507,11 @@ public class HomeNotLoggedController {
         filteredList = tempList2;
     }
 
+    /**
+     * Metodo che rimuove i ristoranti che non soddisfano il criterio di consegna.<br>
+     * Chiama il metodo removeTag per rimuovere i tag dai filtri non selezionati.<br>
+     * @throws IOException 
+     */
     private void deliveringFilterComboBoxAction2() throws IOException {
         int tag = 14;
         if (!deliveryTrueCheckMenuItem.isSelected()) {
@@ -444,6 +522,11 @@ public class HomeNotLoggedController {
         }
     }
 
+    /**
+     * Metodo che rimuove i ristoranti che non soddisfano il criterio di prenotazione.<br>
+     * Chiama il metodo removeTag per rimuovere i tag dai filtri non selezionati.<br>
+     * @throws IOException
+     */
     private void bookingFilterComboBoxAction2() throws IOException {
         int tag = 15;
         if (!prenotationTrueCheckMenuItem.isSelected()) {
@@ -454,6 +537,10 @@ public class HomeNotLoggedController {
         }
     }
 
+    /**
+     * Metodo che rimuove i ristoranti che non soddisfano il criterio di valutazione.<br>
+     * Chiama il metodo calcStelle per calcolare la valutazione.<br>
+     */
     private void starAction() {
         int tag = 13;
         double rating = ratingFilter.getRating();
@@ -484,6 +571,11 @@ public class HomeNotLoggedController {
         }
     }   
 
+    /**
+     * Metodo FXML che esegue i filtri e stampa i ristoranti filtrati.<br>
+     * 
+     * @throws IOException
+     */
     @FXML
     private void checkFilteredList() throws IOException {
         filteredList = gestoreDataset.getDataSet();
@@ -497,7 +589,9 @@ public class HomeNotLoggedController {
         fillListView(filteredList);
     }
 
-
+    /**
+     * Metodo FXML che resetta tutti i filtri e stampa tutti i ristoranti completi.<br>
+     */
     @FXML 
     private void resetButtonAction() {
         setFiltersTrue();
@@ -507,6 +601,11 @@ public class HomeNotLoggedController {
         fillListView(filteredList);
     }
 
+    /**
+     * Metodo FXML che permette di passare alla scena di login.<br>
+     * 
+     * @throws IOException
+     */
     @FXML
     private void switchToLogin() throws IOException {
         App.setRoot("Login");
