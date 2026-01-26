@@ -41,6 +41,12 @@ public class HomeNotLoggedController {
     private javafx.scene.control.MenuButton cucineFilterComboBox;
 
     @FXML
+    private javafx.scene.control.MenuButton cittaFilterComboBox;
+
+    @FXML
+    private javafx.scene.control.MenuButton statiFilterComboBox;
+
+    @FXML
     private  javafx.scene.control.CheckMenuItem price1CheckMenuItem;
 
     @FXML
@@ -87,6 +93,17 @@ public class HomeNotLoggedController {
     @FXML 
     private javafx.scene.control.RadioMenuItem tutteItem;
 
+    @FXML 
+    private javafx.scene.control.RadioMenuItem tutteItemCitta;
+
+    @FXML 
+    private javafx.scene.control.RadioMenuItem tutteItemStato;
+
+    private String selectStatoItem;
+    private ArrayList <String> dataStato;
+    private ArrayList<String> dataCitta;
+    private String selectedCittaItem = null;
+
     /**
      * Costruttore della scena HomeNotLoggedController.<br>
      * Inizializza il gestoreDataset e la filteredList per la visualizzazione dei ristoranti.<br>
@@ -94,7 +111,32 @@ public class HomeNotLoggedController {
     public HomeNotLoggedController() {
         gestoreDataset = GestoreDataset.getGestoreDataset();
         filteredList = gestoreDataset.getDataSet();
-        
+    }
+    private void setSelectedStato(String stato) {
+        selectStatoItem = (stato == null || stato.trim().isEmpty()) ? "Tutti gli stati" : stato.trim();
+
+        boolean tuttiGliStati = selectStatoItem.equalsIgnoreCase("Tutti gli stati");
+
+        if (tuttiGliStati) {
+            dataCitta = new ArrayList<>();
+            cittaFilterComboBox.setDisable(true);
+            selectedCittaItem = null;
+        } else {
+            dataCitta = gestoreDataset.getCittaByStato(selectStatoItem);
+            if (dataCitta == null) dataCitta = new ArrayList<>();
+            popolaMenuCittaConRadio();
+            
+            cittaFilterComboBox.setVisible(true);
+            cittaFilterComboBox.setDisable(false);
+            
+            selectedCittaItem = null;
+        }
+    }
+
+
+
+    private String getSelectStato() {
+        return selectStatoItem;
     }
 
     /**
@@ -105,11 +147,12 @@ public class HomeNotLoggedController {
     private void initialize() {
         filteredList = gestoreDataset.getDataSet();
         String path = System.getProperty("user.dir")
-                + "\\..\\src\\main\\java\\com\\mycompany\\theknife\\data\\user.png";
+								+ "\\..\\src/main/java/com/mycompany/theknife/data/user.png"; 
         System.out.println("Path: " + path);
         java.io.File f = new java.io.File(path);
 
         System.out.println("Esiste? " + f.exists());
+        dataStato = GestoreDataset.getDatasetStati();
         
         if (f.exists()) {
             loginImageView.setImage(
@@ -121,7 +164,7 @@ public class HomeNotLoggedController {
             System.out.println("File immagine non trovato: " + path);
         }
         String knifePath = System.getProperty("user.dir")
-                + "\\..\\src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
+                + "\\..\\src/main/java/com/mycompany/theknife/data/theknife_icon.png";   
         java.io.File knifeFile = new java.io.File(knifePath);
         if (knifeFile.exists()) {       
             knifeImageView.setImage(
@@ -130,15 +173,28 @@ public class HomeNotLoggedController {
             knifeImageView.setVisible(true);
         }
         
-
-
+        setSelectedStato("Tutti gli stati");
         ratingFilter.setRating(0);
         filteredList = gestoreDataset.getDataSet();
         popolaMenuCucineConRadio();
-
+        //popolaMenuCittaConRadio();
+        popolaMenuStatiConRadio();
+        
+        //cittaFilterComboBox.setVisible(false);
+        //cittaFilterComboBox.setDisable(true);
+        
         setFiltersTrue();
         fillListView(filteredList);
     }
+    private void updateCittaVisibility() {
+    boolean mostraCitta = (selectStatoItem != null)
+            && !selectStatoItem.trim().equalsIgnoreCase("Tutti gli stati")
+            && !selectStatoItem.trim().isEmpty();
+
+    cittaFilterComboBox.setVisible(mostraCitta);
+    cittaFilterComboBox.setDisable(!mostraCitta);
+}
+
     /**
      * Metodo FXML che visualizza nel dettaglio un ristorante selezionato.<br>
      * Utilizzato per aprire la scena ViewRistorante usando il metodo setRoot della class App.<br>
@@ -163,7 +219,6 @@ public class HomeNotLoggedController {
     private void popolaMenuCucineConRadio() {
         ArrayList<String> tipiCucina = new ArrayList<>();
         boolean checkfirst = true;
-        //for (String row : gestoreDataset.getDataSetCucina()) {
         for (String row : GestoreDataset.getDataSetCucina()) {
             if (checkfirst) {
                 checkfirst = false;
@@ -175,10 +230,8 @@ public class HomeNotLoggedController {
                 tipiCucina.add(tipoCucina);
             }
         }
-
         cucineFilterComboBox.getItems().clear();
         javafx.scene.control.ToggleGroup toggleGroup = new javafx.scene.control.ToggleGroup();
-
         tutteItem = new javafx.scene.control.RadioMenuItem("Tutte le cucine");
         tutteItem.setToggleGroup(toggleGroup);
         tutteItem.setSelected(true);
@@ -190,11 +243,8 @@ public class HomeNotLoggedController {
                 ex.printStackTrace();
             }
         });
-        //System.out.println(tutteItem.getId());
         cucineFilterComboBox.getItems().add(tutteItem);
-
         cucineFilterComboBox.getItems().add(new javafx.scene.control.SeparatorMenuItem());
-        //cucineFilterComboBox.getItems().clear();
         for (String tipo : tipiCucina) {
             javafx.scene.control.RadioMenuItem radioItem = new javafx.scene.control.RadioMenuItem(tipo);
             radioItem.setToggleGroup(toggleGroup);
@@ -207,63 +257,109 @@ public class HomeNotLoggedController {
             });
             cucineFilterComboBox.getItems().add(radioItem);
         }
-        //System.out.println(cucineFilterComboBox.getItems().get(0).getText());
+    }
+    private void popolaMenuCittaConRadio() {
+    cittaFilterComboBox.getItems().clear();
+
+    if (dataCitta == null) dataCitta = new ArrayList<>();
+
+    // Rimuovi duplicati
+    java.util.Set<String> setCitta = new java.util.LinkedHashSet<>();
+    for (String s : dataCitta) {
+        if (s != null && !s.trim().isEmpty()) {
+            setCitta.add(s.trim());
+        }
     }
 
-    /*private void removeCucina(String selectedCucina) {
-        System.out.println("DEBUG: selectedCucina = [" + selectedCucina + "]");
-        System.out.println("DEBUG: selectedCucina length = " + selectedCucina.length());
-        System.out.println("DEBUG singola: [" + filteredList.get(3)[5].trim().toLowerCase() + "] vs [" + selectedCucina.trim() + "] = " + filteredList.get(3)[5].trim().toLowerCase().equals(selectedCucina));
-        ArrayList<String[]> tempList = new ArrayList<>(filteredList);
-        boolean check;
-        selectedCucina = selectedCucina.trim();
-        for (String[] row : filteredList) {
-            check = false;
-            if (row[5].contains(",")) {
-                String[] tipiCucina = row[5].toLowerCase().split(",");
-                boolean trovata = false;
-                for (String tipoCucina : tipiCucina) {
-                    if (tipoCucina.trim().equals(selectedCucina)) {
-                        trovata = true;
-                        break;
-                    } 
-                }
-                if (!trovata) {
-                    check = true;
-                }
-            } else {
-                String tipoCucina = row[5].trim().toLowerCase();
-                if (!tipoCucina.equals(selectedCucina)) {
-                    //tempList.remove(row);
-                    check = true;
-                }
+    // "Tutte le città" -> nessun filtro città (ma mantiene filtro stato!)
+    javafx.scene.control.MenuItem tutte = new javafx.scene.control.MenuItem("Tutte le città");
+    tutte.setOnAction(e -> {
+        selectedCittaItem = null; // Nessun filtro città
+        try { 
+            checkFilteredList(); 
+        } catch (IOException ex) { 
+            ex.printStackTrace(); 
+        }
+    });
+    cittaFilterComboBox.getItems().add(tutte);
+    cittaFilterComboBox.getItems().add(new javafx.scene.control.SeparatorMenuItem());
+
+    // Aggiungi ogni città
+    for (String citta : setCitta) {
+        javafx.scene.control.MenuItem item = new javafx.scene.control.MenuItem(citta);
+        item.setOnAction(e -> {
+            selectedCittaItem = citta.trim();
+            //cittaFilterComboBox.setText(selectedCittaItem);
+            try { 
+                checkFilteredList(); 
+            } catch (IOException ex) { 
+                ex.printStackTrace(); 
             }
-            
-            if (check) {
-                tempList.remove(row);
+        });
+        cittaFilterComboBox.getItems().add(item);
+    }
+}
+
+
+
+    private void popolaMenuStatiConRadio() {
+        setSelectedStato("Tutti gli stati");
+        ArrayList<String> tipiStato = new ArrayList<>();
+        boolean checkfirst = true;
+        for (String row : dataStato) {
+            if (checkfirst) {
+                checkfirst = false;
+                //tipiCucina.add("Tutte le cucine");
+                continue;
+            }
+            String tipoStato = row;
+            if (!tipiStato.contains(tipoStato)) {
+                tipiStato.add(tipoStato);
             }
         }
-        /*for (String[] row : filteredList) {
-            String tipoCucina = row[5].toLowerCase();
-            if (!tipoCucina.equals(selectedCucina)) {
-                tempList.remove(row);
+        statiFilterComboBox.getItems().clear();
+        javafx.scene.control.ToggleGroup toggleGroup = new javafx.scene.control.ToggleGroup();
+        tutteItemStato = new javafx.scene.control.RadioMenuItem("Tutti gli stati");
+        tutteItemStato.setToggleGroup(toggleGroup);
+        tutteItemStato.setSelected(true);
+        tutteItemStato.setId("tuttiStati");
+        tutteItemStato.setOnAction(e -> {
+            try {
+                setSelectedStato("Tutti gli stati"); 
+                //popolaMenuCittaConRadio();
+                checkFilteredList();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-        } */
-        //filteredList = tempList;
-        /*
-        filteredList.removeIf(row -> 
-            row.length > 5 && !row[5].toLowerCase().equals(selectedCucina)
-        ); */
-    //}
+        });
+        statiFilterComboBox.getItems().add(tutteItemStato);
+        statiFilterComboBox.getItems().add(new javafx.scene.control.SeparatorMenuItem());
+        for (String tipo : tipiStato) {
+    javafx.scene.control.RadioMenuItem radioItem = new javafx.scene.control.RadioMenuItem(tipo);
+    radioItem.setToggleGroup(toggleGroup);
+    radioItem.setOnAction(e -> {
+        try {
+            // aggiorna la lista delle città per lo stato selezionato
+            setSelectedStato(radioItem.getText());
+            //popolaMenuCittaConRadio();
+            checkFilteredList();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    });
+    statiFilterComboBox.getItems().add(radioItem);
+}
+
+    }
     /**
-     * Metodo che rimuove dalla lista dei ristoranti la cucina selezionata.<br>
+     * Metodo che aggiunge dalla lista dei ristoranti la cucina selezionata.<br>
+     * Eliminando tutte le altre cucine.<br>
      * 
      * @param selectedCucina la cucina selezionata
      */
     private void removeCucina(String selectedCucina) {
         ArrayList<String[]> tempList = new ArrayList<>();
         selectedCucina = selectedCucina.trim();
-        
         boolean checkfirst = true;
         for (String[] row : filteredList) {
             if (checkfirst) {
@@ -271,9 +367,7 @@ public class HomeNotLoggedController {
                 tempList.add(row);
                 continue;
             }
-            
             boolean cucinaTrovata = false;
-            
             if (row[5].contains(",")) {
                 String[] tipiCucina = row[5].split(",");
                 for (String tipoCucina : tipiCucina) {
@@ -289,51 +383,92 @@ public class HomeNotLoggedController {
                     cucinaTrovata = true;
                 }
             }
-            
             if (cucinaTrovata) {
                 tempList.add(row);
             }
         }
-        
         filteredList = tempList;
     }
+    private void removeCitta(String selectedCitta) {
+    ArrayList<String[]> tempList = new ArrayList<>();
+    String target = selectedCitta.trim().toLowerCase();
+    
+    boolean checkfirst = true;
+    for (String[] row : filteredList) {
+        if (checkfirst) {
+            checkfirst = false;
+            tempList.add(row); // Mantieni header
+            continue;
+        }
+        
+        if (row[3].trim().toLowerCase().equals(target)) {
+            tempList.add(row);
+        }
+    }
+    filteredList = tempList;
+}
+    private void removeStato(String selectedStato) {
+    ArrayList<String[]> tempList = new ArrayList<>();
+    String target = selectedStato.trim().toLowerCase();
+
+    boolean checkfirst = true;
+    for (String[] row : filteredList) {
+        if (checkfirst) {
+            checkfirst = false;
+            tempList.add(row); // Mantieni header
+            continue;
+        }
+        
+        if (row[2].trim().toLowerCase().equals(target)) {
+            tempList.add(row);
+        }
+    }
+    filteredList = tempList;
+}
 
     /**
      * Metodo che ricerca i ristoranti in base alla cucina selezionata.<br>
      * Chiama il metodo removeCucina per la rimozione della cucina selezionata se non è "Tutte le cucine".<br>
      */
     private void searchingButtonActionTipiCucine() {
-        //cucineFilterComboBox.getItems();
         String selectedCucina = "Tutte le cucine";
-        
         for (javafx.scene.control.MenuItem item : cucineFilterComboBox.getItems()) {
             if (item instanceof javafx.scene.control.SeparatorMenuItem) {
                 continue;  // Salta i separatori
             }
-        
             if (item instanceof javafx.scene.control.RadioMenuItem) {
                 javafx.scene.control.RadioMenuItem radioItem = (javafx.scene.control.RadioMenuItem) item;
                 if (radioItem.isSelected()) {
-                    //if (item.isSelected()) {
-                selectedCucina = radioItem.getText();
-                break;
-                //System.out.println(selectedCucina);
-                /*if (selectedCucina.equals("Tutte le cucine")) {
-                    return;
-                } else {
-                    removeCucina(selectedCucina);
-                }*/
-                //removeCucina(selectedCucina);
+                    selectedCucina = radioItem.getText();
+                    break;
+                }
             }
         }
-        }
-
         if (selectedCucina.equals("Tutte le cucine")) {
             return;
         } else {
             removeCucina(selectedCucina.toLowerCase());
         }
     }
+    private void searchingButtonActionCitta() {
+    if (selectedCittaItem == null || selectedCittaItem.trim().isEmpty()) {
+        return; // Nessun filtro città
+    }
+    
+    // Filtra per città
+    removeCitta(selectedCittaItem.toLowerCase());
+}
+
+    private void searchingButtonActionStati() {
+    String selectedStato = getSelectStato(); // Usa il getter!
+    
+    if (selectedStato == null || selectedStato.equalsIgnoreCase("Tutti gli stati")) {
+        return; // Nessun filtro stato
+    }
+    
+    // Filtra solo per stato
+    removeStato(selectedStato.toLowerCase());
+}
 
     /**
      * Metodo che imposta tutti i filtri a true.<br>
@@ -359,7 +494,7 @@ public class HomeNotLoggedController {
      */
     @FXML
     private void changeLoginImage() {
-        String newPath = System.getProperty("user.dir") + "\\..\\src\\main\\java\\com\\mycompany\\theknife\\data\\user_1.png"; 
+        String newPath = System.getProperty("user.dir") + "\\..\\src/main/java/com/mycompany/theknife/data/user_1.png"; 
         java.io.File newFile = new java.io.File(newPath);
         if (newFile.exists()) {
             loginImageView.setImage(
@@ -382,20 +517,20 @@ public class HomeNotLoggedController {
         boolean checkfirst = true;
         String deliveryValue, prenotationValue;
         for (String[] row : list) {
-            if (checkfirst) {
-                checkfirst = false;
+            if (row[13].trim().equals("Rating")) {
+                continue;
             }else {
                 deliveryValue = setDeliveryOrPrenotationValue(row[14]);
                 prenotationValue = setDeliveryOrPrenotationValue(row[15]);
                 String valutazione = String.valueOf(gestoreDataset.calcStelle(row[13]));
                 listViewRestaurants.getItems().add("Ristorante N: "+row[16]+" - Nome: "+row[0] + " - Stato: " + row[2] + " - Città: " + row[3]+ " - Prezzo:" + row[4] + " - Tipo: " + row[5] + " - Consegna: " + deliveryValue + " - Prenotazione: " + prenotationValue + " - Valutazione: " + valutazione);
-                listViewRestaurants.refresh();
             }
         }
         if (list.isEmpty() || (list.size() == 1 && checkfirst == false)) {
             listViewRestaurants.getItems().add("Nessun ristorante trovato con i filtri selezionati.");
-            listViewRestaurants.refresh();
+            //listViewRestaurants.refresh();
         }
+        listViewRestaurants.refresh();
     }
 
     /**
@@ -577,29 +712,46 @@ public class HomeNotLoggedController {
      * @throws IOException
      */
     @FXML
-    private void checkFilteredList() throws IOException {
-        filteredList = gestoreDataset.getDataSet();
-        //prenotationFilterComboBoxAction();
-        starAction();
-        searchingButtonActionTipiCucine();
-        deliveringFilterComboBoxAction2();
-        bookingFilterComboBoxAction2();
-        pricingFilterComboBoxAction();
-        searchingButtonAction();
-        fillListView(filteredList);
-    }
+private void checkFilteredList() throws IOException {
+    filteredList = gestoreDataset.getDataSet();
+    
+    starAction();
+    searchingButtonActionTipiCucine();
+    searchingButtonActionStati();      // Filtra per stato (se selezionato)
+    searchingButtonActionCitta();      // Filtra per città (se selezionata)
+    deliveringFilterComboBoxAction2();
+    bookingFilterComboBoxAction2();
+    pricingFilterComboBoxAction();
+    searchingButtonAction();
+    
+    // RIMOSSO: tutteItemStato.setSelected(true); 
+    // NON resettare lo stato qui!
+    
+    fillListView(filteredList);
+}
 
     /**
      * Metodo FXML che resetta tutti i filtri e stampa tutti i ristoranti completi.<br>
      */
     @FXML 
-    private void resetButtonAction() {
-        setFiltersTrue();
-        ratingFilter.setRating(0);
-        searchTextField.clear();
-        filteredList = gestoreDataset.getDataSet();
-        fillListView(filteredList);
+private void resetButtonAction() {
+    // Reset tutti i filtri
+    setFiltersTrue();
+    ratingFilter.setRating(0);
+    searchTextField.clear();
+    
+    // Reset selezione stato e città
+    if (tutteItemStato != null) {
+        tutteItemStato.setSelected(true);
     }
+    setSelectedStato("Tutti gli stati"); // Nasconde menu città
+    selectedCittaItem = null;
+    
+    // Mostra tutti i ristoranti
+    filteredList = gestoreDataset.getDataSet();
+    fillListView(filteredList);
+}
+
 
     /**
      * Metodo FXML che permette di passare alla scena di login.<br>
