@@ -42,10 +42,10 @@ public class GestoreUtenti {
      * Poi li carica da un file CSV e li salva su file ad ogni modifica.
      */
     private GestoreUtenti() {
-        filePath = System.getProperty("user.dir")+"/src/main/resources/Users/users.csv"; 
-        fileUserPath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\datasetUtenti.CSV";
-        pathFavourite = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\favourite.csv";
-        personeRistorantiPath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\personeRistoranti.CSV";
+        filePath = System.getProperty("user.dir")+"\\..\\..\\src/main/resources/Users/users.csv"; 
+        fileUserPath = System.getProperty("user.dir") + "\\..\\src\\main\\java\\com\\mycompany\\theknife\\data\\datasetUtenti.CSV";
+        pathFavourite = System.getProperty("user.dir") + "\\..\\src\\main\\java\\com\\mycompany\\theknife\\data\\favourite.csv";
+        personeRistorantiPath = System.getProperty("user.dir") + "\\..\\src\\main\\java\\com\\mycompany\\theknife\\data\\personeRistoranti.CSV";
 
         this.utenti = new ArrayList<Utente>();
         this.dataSetFavourite= new ArrayList<String[]>();

@@ -34,7 +34,7 @@ public class GestoreRecensioni {
      */
     private GestoreRecensioni() {
         gestoreRecensioni = this;
-        filePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\recensioni.CSV";
+        filePath = System.getProperty("user.dir") + "\\..\\src\\main\\java\\com\\mycompany\\theknife\\data\\recensioni.CSV";
         this.recensioni = new ArrayList<Recensione>();
         inserimentoDati();
     }

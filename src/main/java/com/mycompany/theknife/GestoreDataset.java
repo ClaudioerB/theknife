@@ -33,8 +33,8 @@ public class GestoreDataset {
      * Inizializza la lista dataSet con le righe del file CSV.<br>
      */
     public GestoreDataset() {
-        filePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\datasetRistoranti.csv"; 
-        cucinePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\tipiCucine.csv";
+        filePath = System.getProperty("user.dir") + "\\..\\src\\main\\java\\com\\mycompany\\theknife\\data\\datasetRistoranti.csv"; 
+        cucinePath = System.getProperty("user.dir") + "\\..\\src\\main\\java\\com\\mycompany\\theknife\\data\\tipiCucine.csv";
 
         dataSet= new ArrayList<String[]>();
         dataSetCucina= new ArrayList<String>();

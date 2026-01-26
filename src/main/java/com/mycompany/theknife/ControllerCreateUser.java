@@ -5,7 +5,6 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -80,7 +79,7 @@ public class ControllerCreateUser {
         creationPassword2ErrorMessageLabel.setVisible(false);
         creationEmailError2MessageLabel.setVisible(false);
         String knifePath = System.getProperty("user.dir")
-                + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
+                + ".\\..\\src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
         java.io.File knifeFile = new java.io.File(knifePath);
         if (knifeFile.exists()) {       
             knifeImageView.setImage(

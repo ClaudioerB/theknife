@@ -20,7 +20,7 @@ public class GestoreRicerche {
     /**
      * Costruttore della classe GestoreRicerche che inizializza il dataset delle ricerche e il dataset dei ristoranti.<br>
      */
-    public GestoreRicerche() {
+    private GestoreRicerche() {
         this.gestoreDataset = gestoreDataset.getGestoreDataset();
         this.gestoreRicerche = this; 
     }

@@ -105,7 +105,7 @@ public class HomeNotLoggedController {
     private void initialize() {
         filteredList = gestoreDataset.getDataSet();
         String path = System.getProperty("user.dir")
-                + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\user.png";
+                + "\\..\\src\\main\\java\\com\\mycompany\\theknife\\data\\user.png";
         System.out.println("Path: " + path);
         java.io.File f = new java.io.File(path);
 
@@ -121,7 +121,7 @@ public class HomeNotLoggedController {
             System.out.println("File immagine non trovato: " + path);
         }
         String knifePath = System.getProperty("user.dir")
-                + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
+                + "\\..\\src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
         java.io.File knifeFile = new java.io.File(knifePath);
         if (knifeFile.exists()) {       
             knifeImageView.setImage(
@@ -359,7 +359,7 @@ public class HomeNotLoggedController {
      */
     @FXML
     private void changeLoginImage() {
-        String newPath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\mycompany\\theknife\\data\\user_1.png"; 
+        String newPath = System.getProperty("user.dir") + "\\..\\src\\main\\java\\com\\mycompany\\theknife\\data\\user_1.png"; 
         java.io.File newFile = new java.io.File(newPath);
         if (newFile.exists()) {
             loginImageView.setImage(

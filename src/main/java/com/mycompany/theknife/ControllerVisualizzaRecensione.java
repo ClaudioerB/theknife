@@ -1,15 +1,9 @@
 package com.mycompany.theknife;
 
-import java.io.IOException;
-import java.lang.ModuleLayer.Controller;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import org.controlsfx.control.Rating;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -81,7 +75,7 @@ public class ControllerVisualizzaRecensione {
      */
     public void theKnifeImageViewSet() {
         String knifePath = System.getProperty("user.dir")
-                + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
+                + "\\..\\src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
         java.io.File knifeFile = new java.io.File(knifePath);
         if (knifeFile.exists()) {       
             theKnifeImageView.setImage(

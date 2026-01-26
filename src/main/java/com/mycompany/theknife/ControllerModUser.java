@@ -131,7 +131,7 @@ public class ControllerModUser {
    @FXML
    private void initialize() {
       String knifePath = System.getProperty("user.dir")
-               + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
+               + "\\..\\src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
       java.io.File knifeFile = new java.io.File(knifePath);
       if (knifeFile.exists()) {       
          knifeImageView.setImage(
@@ -140,7 +140,7 @@ public class ControllerModUser {
          knifeImageView.setVisible(true);
       }
       String changePath = System.getProperty("user.dir")
-               + "/src/main/java/com/mycompany/theknife/data/refresh.png";  
+               + "\\..\\src/main/java/com/mycompany/theknife/data/refresh.png";  
       java.io.File changeFile = new java.io.File(changePath);
       if (changeFile.exists()) {       
          changeIdNome.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));

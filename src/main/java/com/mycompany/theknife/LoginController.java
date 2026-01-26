@@ -46,7 +46,7 @@ public class LoginController {
     private void initialize() {
         loginErrorMessageLabel.setVisible(false);
         String knifePath = System.getProperty("user.dir")
-                + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
+                + "\\..\\src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
         java.io.File knifeFile = new java.io.File(knifePath);
         if (knifeFile.exists()) {       
             knifeImageView.setImage(
