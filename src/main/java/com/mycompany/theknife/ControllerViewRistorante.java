@@ -195,22 +195,29 @@ public class ControllerViewRistorante {
         setPrezzo();
         isEditable();
         theKnifeImageViewSet();
-        if(isLogged() && !Modifica ){
-            isInPreferiti();
-            if(isProprietario()&&!recensioni.isEmpty()){
+        rispondiButton.setDisable(true);
+        rispondiButton.setVisible(false);
+        if(isLogged()&&isProprietario()&&!recensioni.isEmpty()){
                 rispondiButton.setDisable(false);
                 rispondiButton.setVisible(true);
-            }
-            rispondiButton.setDisable(true);
-            rispondiButton.setVisible(false);
-        } else {
+        }
+        if(isLogged()&&!Modifica  ){
+            isInPreferiti();
+        }
+        else {
             aggiungiPreferitiButton.setDisable(true);
             rimuoviPreferitiButton.setDisable(true);
             aggiungiPreferitiButton.setVisible(false);
             rimuoviPreferitiButton.setVisible(false);
-			rispondiButton.setDisable(true);
+            rispondiButton.setDisable(true);
             rispondiButton.setVisible(false);
+        } 
+        try {
+            toHome();
+        } catch (Exception e) {
+           System.out.println("errore sull'utente");
         }
+        
     }
     
     /**

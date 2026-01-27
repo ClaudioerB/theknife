@@ -422,7 +422,7 @@ public class GestoreDataset {
     
     for (int i = 0; i < datasetStatiCitta.size(); i++) {
         if (datasetStatiCitta.get(i)[0].trim().equals(stato)) {
-            String current = datasetStatiCitta.get(i)[1];ù
+            String current = datasetStatiCitta.get(i)[1];
             boolean esiste = false;
             if (current != null && !current.isEmpty()) {
                 String[] cittaEsistenti = current.split(",");
