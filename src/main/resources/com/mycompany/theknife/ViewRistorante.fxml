@@ -1,191 +1,182 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.CheckMenuItem?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import org.controlsfx.control.Rating?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.controlsfx.control.*?>
 
-<VBox alignment="CENTER" prefHeight="1080.0" prefWidth="1920.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.ControllerViewRistorante">
+<VBox alignment="CENTER" prefHeight="880.0" prefWidth="1720.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.ControllerViewRistorante">
   <children>
     <AnchorPane prefHeight="1059.0" prefWidth="1880.0">
       <children>
         <Label layoutX="30.0" layoutY="100.0" prefHeight="25.0" prefWidth="51.0" text="Home">
           <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
           </font>
         </Label>
         <ImageView fx:id="theKnifeImageView" fitHeight="103.0" fitWidth="109.0" layoutX="1.0" onMouseClicked="#toHome" pickOnBounds="true" preserveRatio="true">
           <image>
-            <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png"/>
+            <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png" />
           </image>
         </ImageView>
         <Label alignment="CENTER" layoutX="106.0" layoutY="176.0" prefHeight="35.0" prefWidth="86.0" text="Nome" textAlignment="CENTER">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Label>
-        <TextField fx:id="nomeRistoranteField" layoutX="75.0" layoutY="224.0"/>
-        <Label alignment="CENTER" layoutX="469.0" layoutY="417.0" prefHeight="35.0" prefWidth="109.0" text="Indirizzo" textAlignment="CENTER">
+        <TextField fx:id="nomeRistoranteField" layoutX="75.0" layoutY="224.0" />
+        <Label alignment="CENTER" layoutX="397.0" layoutY="417.0" prefHeight="35.0" prefWidth="109.0" text="Indirizzo" textAlignment="CENTER">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Label>
-        <TextField fx:id="indirizzoRistoranteField" layoutX="449.0" layoutY="463.0"/>
-        <Label alignment="CENTER" layoutX="469.0" layoutY="176.0" prefHeight="35.0" prefWidth="109.0" text="Stato" textAlignment="CENTER">
+        <TextField fx:id="indirizzoRistoranteField" layoutX="377.0" layoutY="463.0" />
+        <Label alignment="CENTER" layoutX="397.0" layoutY="176.0" prefHeight="35.0" prefWidth="109.0" text="Stato" textAlignment="CENTER">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Label>
-        <TextField fx:id="statoRistoranteField" layoutX="449.0" layoutY="225.0"/>
-        <Label alignment="CENTER" layoutX="472.0" layoutY="291.0" prefHeight="35.0" prefWidth="109.0" text="Città" textAlignment="CENTER">
+        <TextField fx:id="statoRistoranteField" layoutX="377.0" layoutY="225.0" />
+        <Label alignment="CENTER" layoutX="400.0" layoutY="291.0" prefHeight="35.0" prefWidth="109.0" text="Città" textAlignment="CENTER">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Label>
-        <TextField fx:id="cittaRistoranteField" layoutX="449.0" layoutY="340.0"/>
-        <Label alignment="CENTER" layoutX="1541.0" layoutY="149.0" prefHeight="35.0" prefWidth="149.0" text="Tipi di cucina" textAlignment="CENTER">
+        <TextField fx:id="cittaRistoranteField" layoutX="377.0" layoutY="340.0" />
+        <Label alignment="CENTER" layoutX="1385.0" layoutY="51.0" prefHeight="35.0" prefWidth="149.0" text="Tipi di cucina" textAlignment="CENTER">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Label>
-        <ListView fx:id="tipoCucinaRistoranteListView" layoutX="1515.0" layoutY="193.0" prefHeight="313.0" prefWidth="200.0"/>
-        <CheckBox fx:id="prenotazioniCheckBox" layoutX="426.0" layoutY="695.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="224.0" text="Accetta prenotazioni">
+        <ListView fx:id="tipoCucinaRistoranteListView" layoutX="1359.0" layoutY="95.0" prefHeight="313.0" prefWidth="200.0" />
+        <CheckBox fx:id="prenotazioniCheckBox" layoutX="354.0" layoutY="695.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="224.0" text="Accetta prenotazioni">
           <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
           </font>
         </CheckBox>
         <CheckBox fx:id="consegnaCheckBox" layoutX="106.0" layoutY="695.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="100.0" text="Delivery">
           <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
           </font>
         </CheckBox>
-        <Rating fx:id="ratingRistorante" layoutX="234.0" layoutY="840.0"/>
-        <Label alignment="CENTER" layoutX="406.0" layoutY="540.0" prefHeight="35.0" prefWidth="237.0" text="Numero di telefono" textAlignment="CENTER">
+        <Rating fx:id="ratingRistorante" layoutX="173.0" layoutY="845.0" />
+        <Label alignment="CENTER" layoutX="324.0" layoutY="527.0" prefHeight="35.0" prefWidth="237.0" text="Numero di telefono" textAlignment="CENTER">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Label>
-        <TextField fx:id="telefonoRistoranteField" layoutX="431.0" layoutY="584.0" prefHeight="25.0" prefWidth="193.0"/>
+        <TextField fx:id="telefonoRistoranteField" layoutX="359.0" layoutY="584.0" prefHeight="25.0" prefWidth="193.0" />
         <Label alignment="CENTER" layoutX="69.0" layoutY="540.0" prefHeight="35.0" prefWidth="165.0" text="Sito" textAlignment="CENTER">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Label>
-        <TextField fx:id="sitoWebRistoranteField" layoutX="31.0" layoutY="584.0" prefHeight="25.0" prefWidth="237.0"/>
+        <TextField fx:id="sitoWebRistoranteField" layoutX="31.0" layoutY="584.0" prefHeight="25.0" prefWidth="237.0" />
         <Label alignment="CENTER" layoutX="31.0" layoutY="417.0" prefHeight="35.0" prefWidth="237.0" text="Award" textAlignment="CENTER">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Label>
-        <TextField fx:id="awardField" layoutX="75.0" layoutY="465.0"/>
-        <Label alignment="CENTER" layoutX="1561.0" layoutY="561.0" prefHeight="35.0" prefWidth="109.0" text="Servizi" textAlignment="CENTER">
+        <TextField fx:id="awardField" layoutX="75.0" layoutY="465.0" />
+        <Label alignment="CENTER" layoutX="1405.0" layoutY="463.0" prefHeight="35.0" prefWidth="109.0" text="Servizi" textAlignment="CENTER">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Label>
-        <ListView fx:id="serviziRistoranteListView" layoutX="1515.0" layoutY="605.0" prefHeight="313.0" prefWidth="200.0"/>
-        <Label alignment="CENTER" layoutX="1096.0" layoutY="561.0" prefHeight="35.0" prefWidth="122.0" text="Recensioni" textAlignment="CENTER">
+        <ListView fx:id="serviziRistoranteListView" layoutX="1359.0" layoutY="507.0" prefHeight="313.0" prefWidth="200.0" />
+        <Label alignment="CENTER" layoutX="940.0" layoutY="463.0" prefHeight="35.0" prefWidth="122.0" text="Recensioni" textAlignment="CENTER">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Label>
-        <ListView fx:id="recensioniRistoranteListView" layoutX="908.0" layoutY="605.0" prefHeight="313.0" prefWidth="498.0"/>
-        <TextArea fx:id="descrizioneRistoranteTextArea" layoutX="908.0" layoutY="190.0" prefHeight="313.0" prefWidth="498.0" wrapText="true"/>
-        <Label alignment="CENTER" layoutX="1096.0" layoutY="146.0" prefHeight="35.0" prefWidth="122.0" text="Descrizione" textAlignment="CENTER">
+        <ListView fx:id="recensioniRistoranteListView" layoutX="752.0" layoutY="507.0" prefHeight="313.0" prefWidth="498.0" />
+        <TextArea fx:id="descrizioneRistoranteTextArea" layoutX="752.0" layoutY="92.0" prefHeight="313.0" prefWidth="498.0" wrapText="true" />
+        <Label alignment="CENTER" layoutX="940.0" layoutY="48.0" prefHeight="35.0" prefWidth="122.0" text="Descrizione" textAlignment="CENTER">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Label>
-        <Label alignment="CENTER" layoutX="204.0" layoutY="795.0" prefHeight="35.0" prefWidth="237.0" text="Valutazione media" textAlignment="CENTER">
+        <Label alignment="CENTER" layoutX="143.0" layoutY="800.0" prefHeight="35.0" prefWidth="237.0" text="Valutazione media" textAlignment="CENTER">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Label>
-        <Button fx:id="visualizzaRecensioneButton" layoutX="1107.0" layoutY="946.0" mnemonicParsing="false" onAction="#visualizzaRecensione" text="Visualizza">
+        <Button fx:id="visualizzaRecensioneButton" layoutX="936.0" layoutY="848.0" mnemonicParsing="false" onAction="#visualizzaRecensione" text="Visualizza">
           <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
           </font>
         </Button>
         <MenuButton fx:id="prezzoMenuButton" alignment="CENTER" layoutX="63.0" layoutY="320.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="186.0" text="fascia prezzo">
           <items>
-            <CheckMenuItem fx:id="prezzo1CheckMenuItem" mnemonicParsing="false" onAction="#handlePrezzo1" text="€"/>
-            <CheckMenuItem fx:id="prezzo2CheckMenuItem" mnemonicParsing="false" onAction="#handlePrezzo2" text="€€"/>
-            <CheckMenuItem fx:id="prezzo3CheckMenuItem" mnemonicParsing="false" onAction="#handlePrezzo3" text="€€€"/>
-            <CheckMenuItem fx:id="prezzo4CheckMenuItem" mnemonicParsing="false" onAction="#handlePrezzo4" text="€€€€"/>
+            <CheckMenuItem fx:id="prezzo1CheckMenuItem" mnemonicParsing="false" onAction="#handlePrezzo1" text="€" />
+            <CheckMenuItem fx:id="prezzo2CheckMenuItem" mnemonicParsing="false" onAction="#handlePrezzo2" text="€€" />
+            <CheckMenuItem fx:id="prezzo3CheckMenuItem" mnemonicParsing="false" onAction="#handlePrezzo3" text="€€€" />
+            <CheckMenuItem fx:id="prezzo4CheckMenuItem" mnemonicParsing="false" onAction="#handlePrezzo4" text="€€€€" />
           </items>
           <font>
-            <Font size="19.0"/>
+            <Font size="19.0" />
           </font>
         </MenuButton>
-        <Button fx:id="aggiungiRecensioneButton" layoutX="696.0" layoutY="742.0" mnemonicParsing="false" onAction="#aggiungiRecensione" text="Aggiungi recensione">
+        <Button fx:id="aggiungiRecensioneButton" layoutX="540.0" layoutY="644.0" mnemonicParsing="false" onAction="#aggiungiRecensione" text="Aggiungi recensione">
           <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
           </font>
         </Button>
-        <Button fx:id="modificaServiziButton" layoutX="1750.0" layoutY="742.0" mnemonicParsing="false" onAction="#addServizio" text="Aggiungi">
+        <Button fx:id="modificaServiziButton" layoutX="1594.0" layoutY="644.0" mnemonicParsing="false" onAction="#addServizio" text="Aggiungi">
           <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
           </font>
         </Button>
         <Button fx:id="aggiungiPreferitiButton" layoutX="55.0" layoutY="922.0" mnemonicParsing="false" onAction="#toPreferiti" text="Aggiungi ai preferiti">
           <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
           </font>
         </Button>
-        <Button fx:id="rimuoviPreferitiButton" layoutX="406.0" layoutY="922.0" mnemonicParsing="false" onAction="#removePreferiti" text="Rimuovi dai preferiti">
+        <Button fx:id="rimuoviPreferitiButton" layoutX="334.0" layoutY="922.0" mnemonicParsing="false" onAction="#removePreferiti" text="Rimuovi dai preferiti">
           <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
           </font>
         </Button>
-        <Button fx:id="salvaButton" layoutX="833.0" layoutY="973.0" mnemonicParsing="false" onAction="#salvaData" prefHeight="53.0" prefWidth="193.0" text="Salva Modifiche">
+        <Button fx:id="salvaButton" layoutX="677.0" layoutY="875.0" mnemonicParsing="false" onAction="#salvaData" prefHeight="53.0" prefWidth="193.0" text="Salva Modifiche">
           <font>
-            <Font name="System Bold" size="20.0"/>
+            <Font name="System Bold" size="20.0" />
           </font>
         </Button>
-        <Button fx:id="rimuoviServiziButton" layoutX="1754.0" layoutY="817.0" mnemonicParsing="false" onAction="#rimuoviServizio" text="Rimuovi">
+        <Button fx:id="rimuoviServiziButton" layoutX="1598.0" layoutY="719.0" mnemonicParsing="false" onAction="#rimuoviServizio" text="Rimuovi">
           <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
           </font>
         </Button>
-        <TextField fx:id="serviziTextField" layoutX="1729.0" layoutY="679.0" prefHeight="25.0" prefWidth="140.0"/>
-        <Button fx:id="rispondiButton" layoutX="743.0" layoutY="821.0" mnemonicParsing="false" onAction="#rispondiButtonAction" text="Rispondi">
+        <TextField fx:id="serviziTextField" layoutX="1573.0" layoutY="581.0" prefHeight="25.0" prefWidth="140.0" />
+        <Button fx:id="rispondiButton" layoutX="587.0" layoutY="723.0" mnemonicParsing="false" onAction="#rispondiButtonAction" text="Rispondi">
           <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
           </font>
         </Button>
-        <MenuButton fx:id="cucineFilterComboBox" alignment="CENTER" layoutX="1729.0" layoutY="259.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="165.0" text="tipo di cucina">
+        <MenuButton fx:id="cucineFilterComboBox" alignment="CENTER" layoutX="1573.0" layoutY="161.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="165.0" text="tipo di cucina">
           <items>
-            <CheckMenuItem mnemonicParsing="false" text="Unspecified Action"/>
+            <CheckMenuItem mnemonicParsing="false" text="Unspecified Action" />
           </items>
           <font>
-            <Font size="19.0"/>
+            <Font size="19.0" />
           </font>
         </MenuButton>
-        <Button fx:id="rimuoviCucineButton" layoutX="1767.0" layoutY="346.0" mnemonicParsing="false" onAction="#rimuoviCucina" text="Rimuovi">
+        <Button fx:id="rimuoviCucineButton" layoutX="1611.0" layoutY="248.0" mnemonicParsing="false" onAction="#rimuoviCucina" text="Rimuovi">
           <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
           </font>
         </Button>
-        <Label fx:id="errorFieldcampiVuotiLabel" alignment="CENTER" layoutX="783.0" layoutY="931.0" prefHeight="35.0" prefWidth="293.0" text="non possono esistere campi vuoti" textAlignment="CENTER" textFill="#f20a0a">
+        <Label fx:id="errorFieldcampiVuotiLabel" alignment="CENTER" layoutX="627.0" layoutY="833.0" prefHeight="35.0" prefWidth="293.0" text="non possono esistere campi vuoti" textAlignment="CENTER" textFill="#f20a0a">
           <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
           </font>
         </Label>
       </children>
     </AnchorPane>
   </children>
   <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
 </VBox>

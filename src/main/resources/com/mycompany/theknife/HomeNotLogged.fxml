@@ -1,113 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckMenuItem?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import org.controlsfx.control.Rating?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.controlsfx.control.*?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.HomeNotLoggedController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="880.0" prefWidth="1720.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.HomeNotLoggedController">
   <children>
-    <AnchorPane onDragEntered="#changeLoginImage" onDragExited="#initialize" VBox.vgrow="ALWAYS">
+    <AnchorPane onDragEntered="#changeLoginImage" onDragExited="#initialize" prefHeight="1044.0" prefWidth="1657.0" VBox.vgrow="ALWAYS">
       <children>
-        <ListView fx:id="listViewRestaurants" layoutX="298.4" layoutY="513.0" prefHeight="302.0" prefWidth="1323.0" AnchorPane.bottomAnchor="227.0" AnchorPane.leftAnchor="298.0" AnchorPane.rightAnchor="259.0" AnchorPane.topAnchor="513.0"/>
-        <Button fx:id="searchButton" layoutX="978.0" layoutY="183.0" onAction="#checkFilteredList" prefHeight="42.0" prefWidth="38.0" text="🔍" AnchorPane.bottomAnchor="815.1999999999999" AnchorPane.leftAnchor="978.0" AnchorPane.rightAnchor="863.2" AnchorPane.topAnchor="183.0"/>
-        <ImageView fx:id="knifeImageView" fitHeight="122.0" fitWidth="113.0" layoutX="11.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" visible="true" AnchorPane.bottomAnchor="932.52490234375" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="1755.8" AnchorPane.topAnchor="5.0">
+        <ListView fx:id="listViewRestaurants" layoutX="298.4" layoutY="513.0" prefHeight="302.0" prefWidth="1323.0" AnchorPane.bottomAnchor="227.0" AnchorPane.leftAnchor="298.0" AnchorPane.rightAnchor="259.0" AnchorPane.topAnchor="513.0" />
+        <Button fx:id="searchButton" layoutX="978.0" layoutY="183.0" onAction="#checkFilteredList" prefHeight="42.0" prefWidth="38.0" text="🔍" AnchorPane.bottomAnchor="815.1999999999999" AnchorPane.leftAnchor="978.0" AnchorPane.rightAnchor="863.2" AnchorPane.topAnchor="183.0" />
+        <ImageView fx:id="knifeImageView" fitHeight="122.0" fitWidth="113.0" layoutX="129.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true" visible="true" AnchorPane.bottomAnchor="846.52490234375" AnchorPane.leftAnchor="129.0" AnchorPane.rightAnchor="1644.0" AnchorPane.topAnchor="95.0">
           <image>
-            <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png"/>
+            <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png" />
           </image>
         </ImageView>
         <MenuButton fx:id="cucineFilterComboBox" alignment="CENTER" layoutX="185.0" layoutY="340.0" mnemonicParsing="false" onAction="#checkFilteredList" prefHeight="41.0" prefWidth="186.0" text="tipo di cucina" AnchorPane.bottomAnchor="658.0" AnchorPane.topAnchor="340.0">
           <items>
-            <CheckMenuItem mnemonicParsing="false" text="Unspecified Action"/>
+            <CheckMenuItem mnemonicParsing="false" text="Unspecified Action" />
           </items>
           <font>
-            <Font size="19.0"/>
+            <Font size="19.0" />
           </font>
         </MenuButton>
-        <TextField fx:id="searchTextField" layoutX="778.0" layoutY="183.0" prefHeight="42.0" prefWidth="200.0" AnchorPane.bottomAnchor="815.1999999999999" AnchorPane.leftAnchor="778.0" AnchorPane.rightAnchor="901.5999999999999" AnchorPane.topAnchor="183.0"/>
-        <ImageView fx:id="loginImageView" fitHeight="62.0" fitWidth="68.0" layoutX="1774.0" layoutY="40.0" onMouseClicked="#switchToLogin" pickOnBounds="true" preserveRatio="true" visible="true" AnchorPane.bottomAnchor="938.0" AnchorPane.leftAnchor="1774.0" AnchorPane.rightAnchor="43.59999999999991" AnchorPane.topAnchor="40.0">
+        <TextField fx:id="searchTextField" layoutX="778.0" layoutY="183.0" prefHeight="42.0" prefWidth="200.0" AnchorPane.bottomAnchor="815.1999999999999" AnchorPane.leftAnchor="778.0" AnchorPane.rightAnchor="901.5999999999999" AnchorPane.topAnchor="183.0" />
+        <ImageView fx:id="loginImageView" fitHeight="62.0" fitWidth="68.0" layoutX="1690.0" layoutY="110.0" onMouseClicked="#switchToLogin" pickOnBounds="true" preserveRatio="true" visible="true" AnchorPane.bottomAnchor="874.0" AnchorPane.leftAnchor="1690.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="110.0">
           <!--<image>
             <Image url="@../../../../java/com/mycompany/theknife/data/user.png" />
           </image>-->
         </ImageView>
-        <Label layoutX="1781.0" layoutY="112.0" prefHeight="27.0" prefWidth="47.0" text="Login" AnchorPane.bottomAnchor="901.5999999999999" AnchorPane.leftAnchor="1781.0" AnchorPane.rightAnchor="52.00000000000004" AnchorPane.topAnchor="112.0">
+        <Label layoutX="1697.0" layoutY="182.0" prefHeight="27.0" prefWidth="47.0" text="Login" AnchorPane.bottomAnchor="832.0" AnchorPane.leftAnchor="1697.0" AnchorPane.rightAnchor="136.0" AnchorPane.topAnchor="182.0">
           <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
           </font>
         </Label>
         <Label alignment="CENTER" layoutX="822.0" layoutY="136.0" prefHeight="47.0" prefWidth="113.0" text="Ricerca" AnchorPane.bottomAnchor="859.0" AnchorPane.leftAnchor="822.0" AnchorPane.rightAnchor="945.0" AnchorPane.topAnchor="136.0">
           <font>
-            <Font size="30.0"/>
+            <Font size="30.0" />
           </font>
         </Label>
         <MenuButton fx:id="priceFilterComboBox" alignment="CENTER" layoutX="822.0" layoutY="340.0" mnemonicParsing="false" onAction="#checkFilteredList" prefHeight="41.0" prefWidth="186.0" text="fascia prezzo" AnchorPane.bottomAnchor="658.0" AnchorPane.topAnchor="340.0">
           <items>
-            <CheckMenuItem fx:id="price1CheckMenuItem" mnemonicParsing="false" onAction="#checkFilteredList" onMenuValidation="#checkFilteredList" text="€"/>
-            <CheckMenuItem fx:id="price2CheckMenuItem" mnemonicParsing="false" onAction="#checkFilteredList" text="€€"/>
-            <CheckMenuItem fx:id="price3CheckMenuItem" mnemonicParsing="false" onAction="#checkFilteredList" text="€€€"/>
-            <CheckMenuItem fx:id="price4CheckMenuItem" mnemonicParsing="false" onAction="#checkFilteredList" onMenuValidation="#checkFilteredList" text="€€€€"/>
+            <CheckMenuItem fx:id="price1CheckMenuItem" mnemonicParsing="false" onAction="#checkFilteredList" onMenuValidation="#checkFilteredList" text="€" />
+            <CheckMenuItem fx:id="price2CheckMenuItem" mnemonicParsing="false" onAction="#checkFilteredList" text="€€" />
+            <CheckMenuItem fx:id="price3CheckMenuItem" mnemonicParsing="false" onAction="#checkFilteredList" text="€€€" />
+            <CheckMenuItem fx:id="price4CheckMenuItem" mnemonicParsing="false" onAction="#checkFilteredList" onMenuValidation="#checkFilteredList" text="€€€€" />
           </items>
           <font>
-            <Font size="19.0"/>
+            <Font size="19.0" />
           </font>
         </MenuButton>
         <MenuButton fx:id="deliveryFilterComboBox" alignment="CENTER" layoutX="1062.0" layoutY="340.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="176.0" text="delivery" AnchorPane.bottomAnchor="658.0" AnchorPane.leftAnchor="1062.0" AnchorPane.rightAnchor="642.0" AnchorPane.topAnchor="340.0">
           <items>
-            <CheckMenuItem fx:id="deliveryTrueCheckMenuItem" mnemonicParsing="false" onAction="#checkFilteredList" text="Yes"/>
-            <CheckMenuItem fx:id="deliveryFalseCheckMenuItem" mnemonicParsing="false" onAction="#checkFilteredList" text="No"/>
+            <CheckMenuItem fx:id="deliveryTrueCheckMenuItem" mnemonicParsing="false" onAction="#checkFilteredList" text="Yes" />
+            <CheckMenuItem fx:id="deliveryFalseCheckMenuItem" mnemonicParsing="false" onAction="#checkFilteredList" text="No" />
           </items>
           <font>
-            <Font size="19.0"/>
+            <Font size="19.0" />
           </font>
         </MenuButton>
         <MenuButton fx:id="prenotationFilterComboBox" alignment="CENTER" layoutX="1297.0" layoutY="340.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="186.0" text="prenotazione" AnchorPane.bottomAnchor="658.0" AnchorPane.leftAnchor="1297.0" AnchorPane.rightAnchor="396.0" AnchorPane.topAnchor="340.0">
           <items>
-            <CheckMenuItem fx:id="prenotationTrueCheckMenuItem" mnemonicParsing="false" onAction="#checkFilteredList" text="Yes"/>
-            <CheckMenuItem fx:id="prenotationFalseCheckMenuItem" mnemonicParsing="false" onAction="#checkFilteredList" text="No"/>
+            <CheckMenuItem fx:id="prenotationTrueCheckMenuItem" mnemonicParsing="false" onAction="#checkFilteredList" text="Yes" />
+            <CheckMenuItem fx:id="prenotationFalseCheckMenuItem" mnemonicParsing="false" onAction="#checkFilteredList" text="No" />
           </items>
           <font>
-            <Font size="19.0"/>
+            <Font size="19.0" />
           </font>
         </MenuButton>
-        <Rating fx:id="ratingFilter" layoutX="1542.0" layoutY="345.0" onMouseClicked="#checkFilteredList" AnchorPane.bottomAnchor="663.0" AnchorPane.leftAnchor="1542.0" AnchorPane.rightAnchor="162.0" AnchorPane.topAnchor="345.0"/>
-        <Button fx:id="resetButton" layoutX="645.0" layoutY="184.0" mnemonicParsing="false" onAction="#resetButtonAction" prefHeight="34.0" prefWidth="91.0" text="Reset"/>
+        <Rating fx:id="ratingFilter" layoutX="1542.0" layoutY="345.0" onMouseClicked="#checkFilteredList" AnchorPane.bottomAnchor="663.0" AnchorPane.leftAnchor="1542.0" AnchorPane.rightAnchor="162.0" AnchorPane.topAnchor="345.0" />
+        <Button fx:id="resetButton" layoutX="645.0" layoutY="184.0" mnemonicParsing="false" onAction="#resetButtonAction" prefHeight="34.0" prefWidth="91.0" text="Reset" />
         <Button fx:id="viewButton" layoutX="893.0" layoutY="871.0" mnemonicParsing="false" onAction="#visulizzaRistoranteButtonAction" prefHeight="44.0" prefWidth="101.0" text="Visualizza">
           <font>
-            <Font size="14.0"/>
+            <Font size="14.0" />
           </font>
         </Button>
         <MenuButton fx:id="cittaFilterComboBox" alignment="CENTER" layoutX="617.0" layoutY="342.0" mnemonicParsing="false" onAction="#checkFilteredList" prefHeight="41.0" prefWidth="147.0" text="città">
           <items>
-            <CheckMenuItem mnemonicParsing="false" text="Unspecified Action"/>
+            <CheckMenuItem mnemonicParsing="false" text="Unspecified Action" />
           </items>
           <font>
-            <Font size="19.0"/>
+            <Font size="19.0" />
           </font>
         </MenuButton>
         <MenuButton fx:id="statiFilterComboBox" alignment="CENTER" layoutX="426.0" layoutY="342.0" mnemonicParsing="false" onAction="#checkFilteredList" prefHeight="41.0" prefWidth="131.0" text="stati">
           <items>
-            <CheckMenuItem mnemonicParsing="false" text="Unspecified Action"/>
+            <CheckMenuItem mnemonicParsing="false" text="Unspecified Action" />
           </items>
           <font>
-            <Font size="19.0"/>
+            <Font size="19.0" />
           </font>
         </MenuButton>
       </children>
       <VBox.margin>
-        <Insets/>
+        <Insets />
       </VBox.margin>
     </AnchorPane>
   </children>
   <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
 </VBox>

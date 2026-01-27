@@ -26,7 +26,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         gestore = Gestore.getGestore();
-        scene = new Scene(loadFXML("HomeNotLogged"), 1920, 1080);
+        scene = new Scene(loadFXML("HomeNotLogged"), 1720, 880);
         stage.setScene(scene);
         stage.show();
     // stage.setFullScreen(true);  // ← AGGIUNGI QUESTA RIGA

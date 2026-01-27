@@ -1,76 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="1080.0" prefWidth="1920.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.ControllerModRistoratore">
+<VBox alignment="CENTER" prefHeight="880.0" prefWidth="1720.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.ControllerModRistoratore">
   <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
   <children>
-    <AnchorPane prefHeight="1090.0" prefWidth="1880.0">
+    <AnchorPane prefHeight="880.0" prefWidth="1720.0">
       <children>
-        <Label layoutX="43.0" layoutY="115.0" text="Home">
+        <Label layoutX="203.0" layoutY="128.0" text="Home">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Label>
-        <ImageView fx:id="knifeImageView" fitHeight="142.0" fitWidth="134.0" layoutX="8.0" onMouseClicked="#switchToHome" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="knifeImageView" fitHeight="142.0" fitWidth="134.0" layoutX="168.0" layoutY="13.0" onMouseClicked="#switchToHome" pickOnBounds="true" preserveRatio="true">
           <image>
-            <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png"/>
+            <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png" />
           </image>
         </ImageView>
-        <Text fx:id="textTitle" layoutX="777.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surname" textAlignment="CENTER" wrappingWidth="326.1181640625">
+        <Text fx:id="textTitle" layoutX="674.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surname" textAlignment="CENTER" wrappingWidth="326.1181640625">
           <font>
-            <Font name="System Bold" size="30.0"/>
+            <Font name="System Bold" size="30.0" />
           </font>
         </Text>
-        <Button fx:id="modifyRistoranti" layoutX="774.0" layoutY="830.0" mnemonicParsing="false" onAction="#modifyRistorante" text="Modifica" textAlignment="CENTER">
+        <Button fx:id="modifyRistoranti" layoutX="671.0" layoutY="767.0" mnemonicParsing="false" onAction="#modifyRistorante" text="Modifica" textAlignment="CENTER">
           <font>
-            <Font size="23.0"/>
+            <Font size="23.0" />
           </font>
         </Button>
-        <Label layoutX="832.0" layoutY="209.0" prefHeight="40.0" prefWidth="213.0" text="I propri ristoranti">
+        <Label layoutX="729.0" layoutY="146.0" prefHeight="40.0" prefWidth="213.0" text="I propri ristoranti">
           <font>
-            <Font size="28.0"/>
+            <Font size="28.0" />
           </font>
         </Label>
-        <Button fx:id="viewRestaurant" layoutX="566.0" layoutY="830.0" mnemonicParsing="false" onAction="#visualizzaRistoranteButtonAction" text="Visualizza">
+        <Button fx:id="viewRestaurant" layoutX="463.0" layoutY="767.0" mnemonicParsing="false" onAction="#visualizzaRistoranteButtonAction" text="Visualizza">
           <font>
-            <Font size="23.0"/>
+            <Font size="23.0" />
           </font>
         </Button>
-        <Button fx:id="addRistoranti" layoutX="984.0" layoutY="830.0" mnemonicParsing="false" onAction="#addRistorante" text="Aggiungi">
+        <Button fx:id="addRistoranti" layoutX="881.0" layoutY="767.0" mnemonicParsing="false" onAction="#addRistorante" text="Aggiungi">
           <font>
-            <Font size="23.0"/>
+            <Font size="23.0" />
           </font>
         </Button>
-        <ListView fx:id="listRestaurants" layoutX="279.0" layoutY="436.0" prefHeight="342.0" prefWidth="1323.0"/>
-        <Button fx:id="indietroButton" layoutX="1716.0" layoutY="61.0" mnemonicParsing="false" onAction="#switchIndietro" text="Indietro">
+        <ListView fx:id="listRestaurants" layoutX="176.0" layoutY="373.0" prefHeight="342.0" prefWidth="1323.0" />
+        <Button fx:id="indietroButton" layoutX="1411.0" layoutY="39.0" mnemonicParsing="false" onAction="#switchIndietro" text="Indietro">
           <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
           </font>
         </Button>
-        <Button fx:id="searchButton" layoutX="1096.0" layoutY="337.0" onAction="#checkFilteredList" prefHeight="42.0" prefWidth="38.0" text="🔍"/>
-        <TextField fx:id="searchTextField" layoutX="895.0" layoutY="337.0" prefHeight="42.0" prefWidth="200.0"/>
-        <Label alignment="CENTER" layoutX="882.0" layoutY="276.0" prefHeight="47.0" prefWidth="113.0" text="Ricerca">
+        <Button fx:id="searchButton" layoutX="993.0" layoutY="274.0" onAction="#checkFilteredList" prefHeight="42.0" prefWidth="38.0" text="🔍" />
+        <TextField fx:id="searchTextField" layoutX="792.0" layoutY="274.0" prefHeight="42.0" prefWidth="200.0" />
+        <Label alignment="CENTER" layoutX="779.0" layoutY="213.0" prefHeight="47.0" prefWidth="113.0" text="Ricerca">
           <font>
-            <Font size="22.0"/>
+            <Font size="22.0" />
           </font>
         </Label>
-        <Button fx:id="resetButton" layoutX="748.0" layoutY="341.0" mnemonicParsing="false" onAction="#resetButtonAction" prefHeight="34.0" prefWidth="91.0" text="Reset"/>
-        <Button fx:id="rimuoviRistoranti" layoutX="1182.0" layoutY="830.0" mnemonicParsing="false" onAction="#rimuoviRistorante" text="Rimuovi">
+        <Button fx:id="resetButton" layoutX="645.0" layoutY="278.0" mnemonicParsing="false" onAction="#resetButtonAction" prefHeight="34.0" prefWidth="91.0" text="Reset" />
+        <Button fx:id="rimuoviRistoranti" layoutX="1079.0" layoutY="767.0" mnemonicParsing="false" onAction="#rimuoviRistorante" text="Rimuovi">
           <font>
-            <Font size="23.0"/>
+            <Font size="23.0" />
           </font>
         </Button>
       </children>
