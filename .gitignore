@@ -13,3 +13,4 @@ target/theknife-1.0-SNAPSHOT.jar
 target/classes/com/theknife/GestoreDataset.class
 .vscode/settings.json
 bit
+/bin/javafx-sdk-25.0.2
