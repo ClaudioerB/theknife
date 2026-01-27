@@ -7,9 +7,9 @@
 <?import javafx.scene.text.*?>
 <?import org.controlsfx.control.*?>
 
-<VBox alignment="CENTER" prefHeight="880.0" prefWidth="1720.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.HomeLoggedController">
+<VBox alignment="CENTER" maxHeight="880.0" maxWidth="1720.0" prefHeight="880.0" prefWidth="1720.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.HomeLoggedController">
   <children>
-    <AnchorPane onDragEntered="#changeLoginImage" onDragExited="#initialize" prefHeight="880.0" prefWidth="1720.0" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="1080.0" maxWidth="1720.0" onDragEntered="#changeLoginImage" onDragExited="#initialize" prefHeight="880.0" prefWidth="1720.0" VBox.vgrow="ALWAYS">
       <children>
         <ListView fx:id="listViewRestaurants" layoutX="298.4" layoutY="513.0" prefHeight="302.0" prefWidth="1323.0" AnchorPane.bottomAnchor="227.0" AnchorPane.leftAnchor="298.0" AnchorPane.rightAnchor="259.0" AnchorPane.topAnchor="513.0" />
         <Button fx:id="searchButton" layoutX="978.0" layoutY="183.0" onAction="#checkFilteredList" prefHeight="42.0" prefWidth="38.0" text="🔍" AnchorPane.bottomAnchor="815.1999999999999" AnchorPane.leftAnchor="978.0" AnchorPane.rightAnchor="863.2" AnchorPane.topAnchor="183.0" />
