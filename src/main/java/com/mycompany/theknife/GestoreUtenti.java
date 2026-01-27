@@ -42,11 +42,26 @@ public class GestoreUtenti {
      * Poi li carica da un file CSV e li salva su file ad ogni modifica.
      */
     private GestoreUtenti() {
-        filePath = System.getProperty("user.dir")+"\\..\\..\\src/main/resources/Users/users.csv"; 
-        fileUserPath = System.getProperty("user.dir") + "\\..\\src\\main\\java\\com\\mycompany\\theknife\\data\\datasetUtenti.CSV";
-        pathFavourite = System.getProperty("user.dir") + "\\..\\src\\main\\java\\com\\mycompany\\theknife\\data\\favourite.csv";
-        personeRistorantiPath = System.getProperty("user.dir") + "\\..\\src\\main\\java\\com\\mycompany\\theknife\\data\\personeRistoranti.CSV";
-
+        filePath = System.getProperty("user.dir")+"/src/main/resources/Users/users.csv"; 
+        fileUserPath = System.getProperty("user.dir") + "/src/main/java/com/mycompany/theknife/data/datasetUtenti.CSV";
+        pathFavourite = System.getProperty("user.dir") + "/src/main/java/com/mycompany/theknife/data/favourite.csv";
+        personeRistorantiPath = System.getProperty("user.dir") + "/src/main/java/com/mycompany/theknife/data/personeRistoranti.CSV";
+        if (!new File(filePath).exists()) {
+            filePath = System.getProperty("user.dir")
+                + "/../src/main/java/com/mycompany/theknife/data/datasetRistoranti.csv";
+        }
+         if (!new File(pathFavourite).exists()) {
+            pathFavourite = System.getProperty("user.dir")
+                + "/../src/main/java/com/mycompany/theknife/data/favourite.csv";
+        }
+         if (!new File(personeRistorantiPath).exists()) {
+            personeRistorantiPath = System.getProperty("user.dir")
+                + "/../src/main/java/com/mycompany/theknife/data/personeRistoranti.CSV";
+        }
+        if (!new File(fileUserPath).exists()) {
+            fileUserPath = System.getProperty("user.dir")
+                + "/../src/main/java/com/mycompany/theknife/data/datasetUtenti.CSV";
+        }
         this.utenti = new ArrayList<Utente>();
         this.dataSetFavourite= new ArrayList<String[]>();
         personeRistoranti= new ArrayList<String[]>();
@@ -608,7 +623,7 @@ public class GestoreUtenti {
     public boolean controlloPassword(String password) {
         // Implementa qui la logica per controllare la validità della password
         // Ad esempio, puoi verificare la lunghezza minima, la presenza di caratteri speciali, ecc.
-        if (password.length() >= 8 && password.matches(".*[A-Z].*") && password.matches(".*[a-z].*") && password.matches(".*\\d.*")) {
+        if (password.length() >= 8 && password.matches(".*[A-Z].*") && password.matches(".*[a-z].*") && password.matches(".*/d.*")) {
             return true; // Password valida
         } else {
             return false; // Password non valida

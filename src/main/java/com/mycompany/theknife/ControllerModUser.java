@@ -131,16 +131,26 @@ public class ControllerModUser {
    @FXML
    private void initialize() {
       String knifePath = System.getProperty("user.dir")
-               + "\\..\\src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
+               + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
       java.io.File knifeFile = new java.io.File(knifePath);
       if (knifeFile.exists()) {       
          knifeImageView.setImage(
             new javafx.scene.image.Image(knifeFile.toURI().toString())
          );
          knifeImageView.setVisible(true);
-      }
+      }else{
+            knifePath=System.getProperty("user.dir")+ "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
+            knifeFile = new java.io.File(knifePath);
+            if (knifeFile.exists()) {       
+                knifeImageView.setImage(
+                        new javafx.scene.image.Image(knifeFile.toURI().toString())
+                );
+                
+                knifeImageView.setVisible(true); 
+            }
+        }
       String changePath = System.getProperty("user.dir")
-               + "\\..\\src/main/java/com/mycompany/theknife/data/refresh.png";  
+               + "/src/main/java/com/mycompany/theknife/data/refresh.png";  
       java.io.File changeFile = new java.io.File(changePath);
       if (changeFile.exists()) {       
          changeIdNome.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
@@ -157,7 +167,26 @@ public class ControllerModUser {
          changeIdStato.setVisible(true);
          changeIdEmail.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
          changeIdEmail.setVisible(true);
-      }
+      }else{
+            changePath=System.getProperty("user.dir")+ "/../src/main/java/com/mycompany/theknife/data/refresh.png"; 
+            changeFile = new java.io.File(changePath);
+            if (changeFile.exists()) {       
+                changeIdNome.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
+                changeIdNome.setVisible(true);
+                changeIdCognome.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
+                changeIdCognome.setVisible(true);
+                changeIdCitta.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
+                changeIdCitta.setVisible(true);
+                changeIdPassword.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
+                changeIdPassword.setVisible(true);
+                changeIdIndirizzo.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
+                changeIdIndirizzo.setVisible(true);
+                changeIdStato.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
+                changeIdStato.setVisible(true);
+                changeIdEmail.setImage(new javafx.scene.image.Image(changeFile.toURI().toString()));
+                changeIdEmail.setVisible(true);
+            }
+        }
 
       //gestoreDataset = new GestoreDataset();
       gestoreDataset = GestoreDataset.getGestoreDataset();

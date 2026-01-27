@@ -1,6 +1,7 @@
 package com.mycompany.theknife;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -34,7 +35,11 @@ public class GestoreRecensioni {
      */
     private GestoreRecensioni() {
         gestoreRecensioni = this;
-        filePath = System.getProperty("user.dir") + "\\..\\src\\main\\java\\com\\mycompany\\theknife\\data\\recensioni.CSV";
+        filePath = System.getProperty("user.dir") + "/src/main/java/com/mycompany/theknife/data/recensioni.CSV";
+        if (!new File(filePath).exists()) {
+            filePath = System.getProperty("user.dir")
+                + "/../src/main/java/com/mycompany/theknife/data/recensioni.csv";
+        }
         this.recensioni = new ArrayList<Recensione>();
         inserimentoDati();
     }

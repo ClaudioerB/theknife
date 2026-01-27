@@ -43,12 +43,23 @@ public class GestoreDataset {
      */
     public GestoreDataset() {
         filePath = System.getProperty("user.dir")
-                + "\\..\\src\\main\\java\\com\\mycompany\\theknife\\data\\datasetRistoranti.csv";
+                + "/src/main/java/com/mycompany/theknife/data/datasetRistoranti.csv";
         cucinePath = System.getProperty("user.dir")
-                + "\\..\\src\\main\\java\\com\\mycompany\\theknife\\data\\tipiCucine.csv";
+                + "/src/main/java/com/mycompany/theknife/data/tipiCucine.csv";
         statiCittaPath = System.getProperty("user.dir")
-                + "\\..\\src\\main\\java\\com\\mycompany\\theknife\\data\\statiCitta.csv";
-
+                + "/src/main/java/com/mycompany/theknife/data/statiCitta.csv";
+        if (!new File(cucinePath).exists()) {
+            cucinePath = System.getProperty("user.dir")
+                + "/../src/main/java/com/mycompany/theknife/data/tipiCucine.csv";
+        }
+        if (!new File(statiCittaPath).exists()) {
+            statiCittaPath = System.getProperty("user.dir")
+                + "/../src/main/java/com/mycompany/theknife/data/statiCitta.csv";
+        }
+        if (!new File(filePath).exists()) {
+            filePath = System.getProperty("user.dir")
+                + "/../src/main/java/com/mycompany/theknife/data/datasetRistoranti.csv";
+        }
         dataSet = new ArrayList<String[]>();
         dataSetCucina = new ArrayList<String>();
         datasetStatiCitta = new ArrayList<String[]>();

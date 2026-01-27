@@ -75,13 +75,23 @@ public class ControllerVisualizzaRecensione {
      */
     public void theKnifeImageViewSet() {
         String knifePath = System.getProperty("user.dir")
-                + "\\..\\src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
+                + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
         java.io.File knifeFile = new java.io.File(knifePath);
         if (knifeFile.exists()) {       
             theKnifeImageView.setImage(
                     new javafx.scene.image.Image(knifeFile.toURI().toString())
             );
             theKnifeImageView.setVisible(true);
+        }else{
+            knifePath=System.getProperty("user.dir")+ "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
+            knifeFile = new java.io.File(knifePath);
+            if (knifeFile.exists()) {       
+                theKnifeImageView.setImage(
+                        new javafx.scene.image.Image(knifeFile.toURI().toString())
+                );
+                
+                theKnifeImageView.setVisible(true); 
+            }
         }
     }
 
