@@ -99,6 +99,9 @@ public class ControllerViewRistorante {
     private javafx.scene.control.MenuButton cucineFilterComboBox;
     @FXML
     private javafx.scene.control.Label errorFieldcampiVuotiLabel;
+
+    @FXML
+    private javafx.scene.control.Label errorStatoCittaLabel;
     
     private static String[] ristorante;
     private ArrayList<Recensione> recensioni;
@@ -147,13 +150,13 @@ public class ControllerViewRistorante {
      * Mostra possibilmente anche i filtri per la modifica del ristorante.<br>
      */
     public void initialize() {
-        
         gestoreRecensioni= GestoreRecensioni.getGestoreRecensioni();
         recensioni = gestoreRecensioni.getRecensioniRistorante(ristorante[16]);
         gestoreDataset = GestoreDataset.getGestoreDataset();
         setServizi(); 
         setTipiCucina();
         errorFieldcampiVuotiLabel.setVisible(false);
+        errorStatoCittaLabel.setVisible(false);
         nomeRistoranteField.setText(ristorante[0]);
         indirizzoRistoranteField.setText(ristorante[1]);
         telefonoRistoranteField.setText(ristorante[8]); 
@@ -164,7 +167,7 @@ public class ControllerViewRistorante {
         fillServiziListView();
         descrizioneRistoranteTextArea.setText(ristorante[12]);
         cucineArrayList=new ArrayList<String>();
-        //checkMenuItemsList=new ArrayList<javafx.scene.control.CheckMenuItem>();
+        
         for (String cucina : tipiCucina) {
             if (!cucina.trim().isEmpty()) {
                 cucineArrayList.add(cucina.trim());
@@ -181,7 +184,7 @@ public class ControllerViewRistorante {
         fillListView(recensioni);
         prz = ristorante[4];
         ratingRistorante.setRating(gestoreDataset.calcStelle(ristorante[13]));
-        //ratingRistorante.setRating(Double.parseDouble(ristorante[13]));
+        
         if(ristorante[15].equals("1")) {
             prenotazioniCheckBox.setSelected(true);
         } else {
@@ -195,29 +198,27 @@ public class ControllerViewRistorante {
         setPrezzo();
         isEditable();
         theKnifeImageViewSet();
-        rispondiButton.setDisable(true);
-        rispondiButton.setVisible(false);
-        if(isLogged()&&isProprietario()&&!recensioni.isEmpty()){
+        if(isLogged() && !Modifica ){
+            isInPreferiti();
+            if(isProprietario()&&!recensioni.isEmpty()){
                 rispondiButton.setDisable(false);
                 rispondiButton.setVisible(true);
-        }
-        if(isLogged()&&!Modifica  ){
-            isInPreferiti();
-        }
-        else {
+            }
+            rispondiButton.setDisable(true);
+            rispondiButton.setVisible(false);
+        } else {
             aggiungiPreferitiButton.setDisable(true);
             rimuoviPreferitiButton.setDisable(true);
             aggiungiPreferitiButton.setVisible(false);
             rimuoviPreferitiButton.setVisible(false);
-            rispondiButton.setDisable(true);
+						rispondiButton.setDisable(true);
             rispondiButton.setVisible(false);
-        } 
-        try {
+        }
+				try {
             toHome();
         } catch (Exception e) {
-           System.out.println("errore sull'utente");
+						System.out.println("errore sull'utente");
         }
-        
     }
     
     /**
@@ -296,7 +297,6 @@ public class ControllerViewRistorante {
      */
     private void fillServiziListView() {
         serviziRistoranteListView.getItems().clear();
-        
         if (servizi == null || servizi.length == 0 || (servizi.length == 1 && servizi[0].trim().isEmpty())) {
             serviziRistoranteListView.getItems().add("Non è presente alcun servizio");
         } else {
@@ -340,7 +340,7 @@ public class ControllerViewRistorante {
             ArrayList<String[]> preferitiUtente = utenteLoggato.getPreferiti();
             for (String[] strings : preferitiUtente) {
                 
-                 if(preferitiUtente!=null && strings[16].equals(ristorante[16])) {
+                if(preferitiUtente!=null && strings[16].equals(ristorante[16])) {
                     GestoreUtenti gestoreUtenti = GestoreUtenti.getGestoreUtenti();
                     gestoreUtenti.printPreferitiUtente();
                     aggiungiPreferitiButton.setDisable(true);
@@ -480,6 +480,7 @@ public class ControllerViewRistorante {
         setServizi(); 
         setTipiCucina();
         errorFieldcampiVuotiLabel.setVisible(false);
+        errorStatoCittaLabel.setVisible(false);
         nomeRistoranteField.setText(ristorante[0]);
         indirizzoRistoranteField.setText(ristorante[1]);
         telefonoRistoranteField.setText(ristorante[8]); 
@@ -521,14 +522,39 @@ public class ControllerViewRistorante {
         String idRistorante = this.ristorante[16];
         int idRow = gestoreDataset.getId(idRistorante);
         errorFieldcampiVuotiLabel.setVisible(false);
+        errorStatoCittaLabel.setVisible(false);
+        
         if (modificaText() && modificaCucina()) {
+            int validazione = gestoreDataset.validaStatoCitta(cittaRistoranteField.getText(), statoRistoranteField.getText());
+            if (validazione == 1) {
+                String statoEsistente = gestoreDataset.findStatoByCitta(cittaRistoranteField.getText());
+                errorStatoCittaLabel.setText("Errore: " + cittaRistoranteField.getText() + " esiste già in " + statoEsistente);
+                errorStatoCittaLabel.setVisible(true);
+                return;
+            }
+            
             modificaChekbox();
             gestoreDataset.setRiga(idRow, ristorante);
-            //initialize();
             refreshData();
+            verificaECreaStatoCitta(cittaRistoranteField.getText(), statoRistoranteField.getText());
             System.out.println("Dati salvati con successo!");
         } else {
             errorFieldcampiVuotiLabel.setVisible(true);
+        }
+    }
+    /**
+     * Metodo per verificare e creare il stato e la citta' del ristorante.<br>
+     * @param citta citta' del ristorante
+     * @param stato stato del ristorante
+     */
+    private void verificaECreaStatoCitta(String citta, String stato) {
+        if (citta.isEmpty()) {
+            return;
+        }
+        String statoTrovato = gestoreDataset.findStatoByCitta(citta);
+        if (statoTrovato == null || statoTrovato.isEmpty()) {
+            gestoreDataset.addNewStato(stato);
+            gestoreDataset.addNewCitta(stato, citta);
         }
     }
 
@@ -769,7 +795,7 @@ public class ControllerViewRistorante {
      */
     public void fillListView(ArrayList<Recensione> list) {
         recensioniRistoranteListView.getItems().clear();
-        //gestoreDataset.addStelle(stella, ristorante[16]);
+        
         for (Recensione row : list) {
             if (row != null) {
                 String appoggio ="Titolo: "+row.titolo+" - By: "+row.utenteRecensione + " - Voto: ";
@@ -839,9 +865,9 @@ public class ControllerViewRistorante {
         Stage stage = new Stage();
         stage.setTitle("Recensisci ristorante");
         stage.setScene(new Scene(root));
-        stage.initModality(Modality.APPLICATION_MODAL); // se vuoi bloccare la finestra principale
-        stage.show(); // o showAndWait() se ti serve aspettare la chiusura
-        //gestoreDataset.controllaDatasetRecensioniById(ristorante[16]);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+        
         setRating();
     }
     /**
@@ -858,13 +884,23 @@ public class ControllerViewRistorante {
     public void theKnifeImageViewSet() {
         
         String knifePath = System.getProperty("user.dir")
-                + "\\src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
+                + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
         java.io.File knifeFile = new java.io.File(knifePath);
         if (knifeFile.exists()) {       
             theKnifeImageView.setImage(
                     new javafx.scene.image.Image(knifeFile.toURI().toString())
             );
             theKnifeImageView.setVisible(true);
+        } else {
+            knifePath=System.getProperty("user.dir")+ "../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
+            knifeFile = new java.io.File(knifePath);
+            if (knifeFile.exists()) {       
+                theKnifeImageView.setImage(
+                        new javafx.scene.image.Image(knifeFile.toURI().toString())
+                );
+                
+                theKnifeImageView.setVisible(true); 
+            }
         }
     }
     /**

@@ -50,11 +50,11 @@ public class GestoreUtenti {
             filePath = System.getProperty("user.dir")
                 + "/../src/main/java/com/mycompany/theknife/data/datasetRistoranti.csv";
         }
-         if (!new File(pathFavourite).exists()) {
+        if (!new File(pathFavourite).exists()) {
             pathFavourite = System.getProperty("user.dir")
                 + "/../src/main/java/com/mycompany/theknife/data/favourite.csv";
         }
-         if (!new File(personeRistorantiPath).exists()) {
+        if (!new File(personeRistorantiPath).exists()) {
             personeRistorantiPath = System.getProperty("user.dir")
                 + "/../src/main/java/com/mycompany/theknife/data/personeRistoranti.CSV";
         }
@@ -62,6 +62,7 @@ public class GestoreUtenti {
             fileUserPath = System.getProperty("user.dir")
                 + "/../src/main/java/com/mycompany/theknife/data/datasetUtenti.CSV";
         }
+
         this.utenti = new ArrayList<Utente>();
         this.dataSetFavourite= new ArrayList<String[]>();
         personeRistoranti= new ArrayList<String[]>();
@@ -72,13 +73,13 @@ public class GestoreUtenti {
         //createFavouriteDataSet();
         inserimentoFavouriteDati();
         aggiungiRigheFavourite();
-        scriviFavouriteFile();
+        //scriviFavouriteFile();
         //inserimentoFavouriteDati();
 
         //createPersoneRistorantiDataSet();
         inserimentoPersoneRistorantiDati();
         aggiungiRighePersoneRistoranti();
-        scriviPersoneRistorantiFile();
+        //scriviPersoneRistorantiFile();
     }
     /**
      * Metodo che restituisce l'istanza unica della classe GestoreUtenti.<br>
@@ -163,15 +164,6 @@ public class GestoreUtenti {
             System.out.println(utente.getNome()+" "+utente.getCognome()+" "+utente.getUsername()+" "+utente.getPasswordHash()+" "+utente.getCittà()+" "+utente.getIndirizzo());
         }
     }
-
-    /*public boolean checkFavourite(String username) {
-        for (String[] fav : dataSetFavourite) {
-            if (fav[1] != null && !fav[1].isEmpty()) {
-                return true; // Esiste almeno un favorito
-            }
-        }
-        return false; // Nessun favorito trovato
-    }*/
     /**
      * Restituisce i preferiti dell'utente con lo username specificato.<br>
      * @param username lo username dell'utente
@@ -221,15 +213,6 @@ public class GestoreUtenti {
         }
         scriviPersoneRistorantiFile();
     }
-    /*public void addPersoneRistorantiByIdUtente(String idUtente, String idRistorante) {
-        for (int i = 0; i < personeRistoranti.size(); i++)
-            if (fav[1].equals(idUtente)) {
-                if (!fav[0].isEmpty() || fav[0] != "") {
-                    
-                }
-            }
-        }
-    }*/
     /**
      * Aggiunge un nuovo ristorante al dataset.<br>
      * Chiama il metodo scriviPersoneRistorantiFile per scrivere il file CSV con il ristorante aggiunto.<br>
@@ -238,8 +221,6 @@ public class GestoreUtenti {
      */
     public void addNewPersoneRistoranti(String idU, String idR) {
         String[] rowNew = {idR,idU};
-        //personeRistoranti.add(rowNew);
-        
         for (int i = 0; i < personeRistoranti.size(); i++) {
             if (personeRistoranti.get(i)[0].equals(idR)) {
                 String currentFavs = personeRistoranti.get(i)[1];
@@ -250,7 +231,6 @@ public class GestoreUtenti {
                 return;
             }
         }
-
         personeRistoranti.add(rowNew);
         scriviPersoneRistorantiFile();
     }
@@ -260,7 +240,6 @@ public class GestoreUtenti {
      * @param newFav Indice del nuovo ristorante preferito
      */
     public void addNewFavourite(String username, String newFav) {
-        //addNewFavourite(utenteLoggato.getUsername(), ristoranteFav);
         for (int i = 0; i < dataSetFavourite.size(); i++) {
             if (dataSetFavourite.get(i)[0].equals(username)) {
                 String currentFavs = dataSetFavourite.get(i)[1];
@@ -293,12 +272,10 @@ public class GestoreUtenti {
                     break;
                 }
             }
-            // Aggiungi solo se non esiste
             if (!esisteGià) {
                 dataSetFavourite.add(new String[]{username, ""});
             }
         }
-        //System.out.println("Favourite caricato");
         scriviFavouriteFile();
     }
     /**
@@ -320,16 +297,15 @@ public class GestoreUtenti {
                     break;
                 }
             }
-            // Aggiungi solo se non esiste
             if (!esisteGià) {
                 dataSetFavourite.add(new String[]{id, ""});
             }
         }
-        //System.out.println("Favourite caricato");
         scriviPersoneRistorantiFile();
     }
     /**
      * Crea il file dei preferiti.<br>
+     * Utilizza FileWriter per la creazione del file CSV.<br>
      */
     public static void createFavouriteDataSet() {
         try {
@@ -349,9 +325,8 @@ public class GestoreUtenti {
      * Utilizza OpenCSV per la scrittura del file CSV.<br>
      */
     private void scriviFavouriteFile() {
-        //createFavouriteDataSet();
         try (CSVWriter writer = new CSVWriter(new FileWriter(pathFavourite),
-        ';',       // separatore personalizzato
+        ';',   
         CSVWriter.NO_QUOTE_CHARACTER,
         CSVWriter.DEFAULT_ESCAPE_CHARACTER,
         CSVWriter.DEFAULT_LINE_END)) {
@@ -362,9 +337,8 @@ public class GestoreUtenti {
             writer.writeNext(riga);
         }
         writer.flush();
-        //System.out.println("CSV scritto con successo!");
         } catch (IOException e) {
-        e.printStackTrace();
+            e.printStackTrace();
         }
     }
     /**
@@ -372,9 +346,8 @@ public class GestoreUtenti {
      * Utilizza la libreria CSVWriter per scrivere il file CSV.<br>
      */
     private void scriviPersoneRistorantiFile() {
-        //createFavouriteDataSet();
         try (CSVWriter writer = new CSVWriter(new FileWriter(personeRistorantiPath),
-        ';',       // separatore personalizzato
+        ';',   
         CSVWriter.NO_QUOTE_CHARACTER,
         CSVWriter.DEFAULT_ESCAPE_CHARACTER,
         CSVWriter.DEFAULT_LINE_END)) {
@@ -385,7 +358,6 @@ public class GestoreUtenti {
             writer.writeNext(riga);
         }
         writer.flush();
-        //System.out.println("CSV scritto con successo!");
         } catch (IOException e) {
         e.printStackTrace();
         }
@@ -395,10 +367,8 @@ public class GestoreUtenti {
      * Utilizza la libreria CSVWriter per scrivere il file CSV.<br>
      */
     private void scriviNewFile() {
-        
-    
         try (CSVWriter writer = new CSVWriter(new FileWriter(fileUserPath),
-        ';',       // separatore personalizzato
+        ';',      
         CSVWriter.NO_QUOTE_CHARACTER,
         CSVWriter.DEFAULT_ESCAPE_CHARACTER,
         CSVWriter.DEFAULT_LINE_END)) {
@@ -419,12 +389,9 @@ public class GestoreUtenti {
                 riga[9] = "0";
             }
             writer.writeNext(riga);
-        
         }
         writer.flush();
-
         System.out.println("CSV scritto con successo!");
-
         } catch (IOException e) {
         e.printStackTrace();
         }
@@ -452,7 +419,6 @@ public class GestoreUtenti {
     private void inserimentoNewDati() {
         String[] appoggio;
         int iRow = 0;
-        String idAppoggio;
         try (BufferedReader reader = new BufferedReader(new FileReader(fileUserPath))) {
             String line;
             
@@ -474,9 +440,7 @@ public class GestoreUtenti {
                     } else {
                         utenti.get(iRow).setRistoratore(false);
                     }
-
                 }
-                
                 iRow++;
             }
         } catch (IOException e) {
@@ -489,27 +453,18 @@ public class GestoreUtenti {
      */
     private void inserimentoFavouriteDati() {
         int iRow = 0;
-        
         try (BufferedReader reader = new BufferedReader(new FileReader(pathFavourite))) {
             String line;
-            
             while ((line = reader.readLine()) != null) {
-                // Salta righe vuote
                 if (line.trim().isEmpty()) {
                     continue;
                 }
-                
                 String[] appoggio = line.split(";", -1);
-                
-                // Verifica lunghezza e aggiungi
                 if (appoggio.length >= 2) {
-                    // Caso normale: username;favourites
                     dataSetFavourite.add(new String[]{appoggio[0], appoggio[1]});
                 } else if (appoggio.length == 1) {
-                    // Caso con solo username (nessun favourite)
                     dataSetFavourite.add(new String[]{appoggio[0], ""});
                 } else {
-                    // Riga malformata, salta
                     System.out.println("Riga malformata ignorata: " + line);
                     continue;
                 }
@@ -529,30 +484,21 @@ public class GestoreUtenti {
         
         try (BufferedReader reader = new BufferedReader(new FileReader(personeRistorantiPath))) {
             String line;
-            
             while ((line = reader.readLine()) != null) {
-                // Salta righe vuote
                 if (line.trim().isEmpty()) {
                     continue;
                 }
-                
                 String[] appoggio = line.split(";", -1);
-                
-                // Verifica lunghezza e aggiungi
                 if (appoggio.length >= 2) {
-                    // Caso normale: username;favourites
                     personeRistoranti.add(new String[]{appoggio[0], appoggio[1]});
                 } else if (appoggio.length == 1) {
-                    // Caso con solo username (nessun favourite)
                     personeRistoranti.add(new String[]{appoggio[0], ""});
                 } else {
-                    // Riga malformata, salta
                     System.out.println("Riga malformata ignorata: " + line);
                     continue;
                 }
                 iRow++;
             }
-            //System.out.println("Caricati " + iRow + " favourites dal file");
         } catch (IOException e) {
             System.out.println("File favourite non trovato - verrà creato.");
         }
@@ -563,16 +509,11 @@ public class GestoreUtenti {
      * @return numero di righe
      */
     public int numeroRighe() {
-        
-        
         int righe = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            
-            
             while ((reader.readLine()) != null) {
                 righe++;
             }
-            
         } catch (IOException e) {
             System.out.println("File non trovato.");
         }
@@ -589,16 +530,7 @@ public class GestoreUtenti {
             if (utente.getUsername().equals(username) && utente.getPasswordHash().equals(password)) {
                 return true; // Credenziali valide
             }
-            /*if (utente.getUsername() != null) {
-                System.out.println("Username scorretto");
-            }*/
         }
-        /*for (String[] user : users) {
-            //System.out.println(user[2]);
-            if (user[1].equals(username) && user[2].equals(password)) {
-                return true; // Credenziali valide
-            }
-        }*/
         return false; // Credenziali non valide
     }
     /**
@@ -621,9 +553,7 @@ public class GestoreUtenti {
      * @return true se la password e' valida, altrimenti false
      */
     public boolean controlloPassword(String password) {
-        // Implementa qui la logica per controllare la validità della password
-        // Ad esempio, puoi verificare la lunghezza minima, la presenza di caratteri speciali, ecc.
-        if (password.length() >= 8 && password.matches(".*[A-Z].*") && password.matches(".*[a-z].*") && password.matches(".*/d.*")) {
+        if (password.length() >= 8 && password.matches(".*[A-Z].*") && password.matches(".*[a-z].*") && password.matches(".*\\d.*")) {
             return true; // Password valida
         } else {
             return false; // Password non valida
@@ -662,9 +592,19 @@ public class GestoreUtenti {
             if(!nuovoUtente.getEmail().contains("@"))
                 return 4; // Email senza @
         }
-        // Aggiungi il nuovo utente alla lista
         aggiungiUtente(nuovoUtente);
         return 0; // Utente creato con successo
+    }
+    /**
+     * Metodo che aggiunge un utente ai preferiti.<br>
+     * @param nuovoUtente l'utente da aggiungere
+     */
+    private void aggiungiUtentePreferiti(Utente nuovoUtente) {
+        String[] preferiti = new String[2];
+        preferiti[0] = nuovoUtente.getUsername();
+        preferiti[1] = "";
+        dataSetFavourite.add(preferiti);
+        scriviFavouriteFile();
     }
     /**
      * Metodo che stampa l'elenco dei preferiti dell'utente con lo username specificato.<br>
@@ -679,7 +619,6 @@ public class GestoreUtenti {
                     if (!preferito.isEmpty()) {
                         GestoreRicerche gestoreRicerche=GestoreRicerche.getGestoreRicerche();
                         preferitiUtente.add(gestoreRicerche.trovaRistorantiID(preferito));
-                        
                     }
                 }
                 printPreferitiUtente();
@@ -766,22 +705,18 @@ public class GestoreUtenti {
                     for (String string : appoggio) {
                         
                         if(!string.equals(ristoranteString)){
-                            //favorite=favorite+string;
                             if (favorite=="") {
                                 favorite=string;
                             } else {
                                 favorite=favorite+","+string;
                             }
                         }
-                        
                     }
                     fav[1]=favorite;
                 }
-                
                 scriviFavouriteFile();
                 return;
             }
         }
     }
-    
 }

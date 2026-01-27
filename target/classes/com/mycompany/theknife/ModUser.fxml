@@ -1,194 +1,189 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="1080.0" prefWidth="1920.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.ControllerModUser">
+<VBox alignment="CENTER" prefHeight="880.0" prefWidth="1720.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.ControllerModUser">
   <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
   <children>
     <AnchorPane prefHeight="1090.0" prefWidth="1880.0">
       <children>
         <Label layoutX="43.0" layoutY="115.0" text="Home">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Label>
         <ImageView fx:id="knifeImageView" fitHeight="142.0" fitWidth="134.0" layoutX="8.0" onMouseClicked="#switchToHome" pickOnBounds="true" preserveRatio="true">
           <image>
-            <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png"/>
+            <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png" />
           </image>
         </ImageView>
         <Label layoutX="382.0" layoutY="322.0" text="Password">
           <font>
-            <Font name="System Bold" size="24.0"/>
+            <Font name="System Bold" size="24.0" />
           </font>
         </Label>
         <Label layoutX="126.0" layoutY="322.0" text="Nome" textAlignment="CENTER">
           <font>
-            <Font name="System Bold" size="24.0"/>
+            <Font name="System Bold" size="24.0" />
           </font>
         </Label>
         <Label layoutX="107.0" layoutY="528.0" text="Cognome">
           <font>
-            <Font name="System Bold" size="24.0"/>
+            <Font name="System Bold" size="24.0" />
           </font>
         </Label>
         <Label layoutX="416.0" layoutY="528.0" text="Via" textAlignment="CENTER">
           <font>
-            <Font name="System Bold" size="24.0"/>
+            <Font name="System Bold" size="24.0" />
           </font>
         </Label>
         <Label layoutX="135.0" layoutY="739.0" text="Città">
           <font>
-            <Font name="System Bold" size="24.0"/>
+            <Font name="System Bold" size="24.0" />
           </font>
         </Label>
         <Label layoutX="405.0" layoutY="739.0" prefHeight="35.0" prefWidth="65.0" text="Stato" textAlignment="CENTER">
           <font>
-            <Font name="System Bold" size="24.0"/>
+            <Font name="System Bold" size="24.0" />
           </font>
         </Label>
         <ImageView fx:id="changeIdNome" fitHeight="30.0" fitWidth="24.0" layoutX="255.0" layoutY="345.0" onMouseClicked="#changeNomeData" opacity="0.29" pickOnBounds="true" preserveRatio="true">
           <image>
-            <Image url="@../../../../java/com/mycompany/theknife/data/refresh.png"/>
+            <Image url="@../../../../java/com/mycompany/theknife/data/refresh.png" />
           </image>
         </ImageView>
         <Text fx:id="nomeText" layoutX="75.0" layoutY="404.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="168.09461975097656">
           <font>
-            <Font size="23.0"/>
+            <Font size="23.0" />
           </font>
         </Text>
         <ImageView fx:id="changeIdCognome" fitHeight="30.0" fitWidth="24.0" layoutX="255.0" layoutY="551.0" onMouseClicked="#changeCognomeData" opacity="0.29" pickOnBounds="true" preserveRatio="true">
           <image>
-            <Image url="@../../../../java/com/mycompany/theknife/data/refresh.png"/>
+            <Image url="@../../../../java/com/mycompany/theknife/data/refresh.png" />
           </image>
         </ImageView>
         <ImageView fx:id="changeIdCitta" fitHeight="30.0" fitWidth="24.0" layoutX="255.0" layoutY="757.0" onMouseClicked="#changeCittaData" opacity="0.29" pickOnBounds="true" preserveRatio="true">
           <image>
-            <Image url="@../../../../java/com/mycompany/theknife/data/refresh.png"/>
+            <Image url="@../../../../java/com/mycompany/theknife/data/refresh.png" />
           </image>
         </ImageView>
         <ImageView fx:id="changeIdPassword" fitHeight="30.0" fitWidth="24.0" layoutX="531.0" layoutY="345.0" onMouseClicked="#changePasswordData" opacity="0.29" pickOnBounds="true" preserveRatio="true">
           <image>
-            <Image url="@../../../../java/com/mycompany/theknife/data/refresh.png"/>
+            <Image url="@../../../../java/com/mycompany/theknife/data/refresh.png" />
           </image>
         </ImageView>
         <ImageView fx:id="changeIdIndirizzo" fitHeight="30.0" fitWidth="24.0" layoutX="531.0" layoutY="551.0" onMouseClicked="#changeIndirizzoData" opacity="0.29" pickOnBounds="true" preserveRatio="true">
           <image>
-            <Image url="@../../../../java/com/mycompany/theknife/data/refresh.png"/>
+            <Image url="@../../../../java/com/mycompany/theknife/data/refresh.png" />
           </image>
         </ImageView>
         <ImageView fx:id="changeIdStato" fitHeight="30.0" fitWidth="24.0" layoutX="531.0" layoutY="757.0" onMouseClicked="#changeStatoData" opacity="0.29" pickOnBounds="true" preserveRatio="true">
           <image>
-            <Image url="@../../../../java/com/mycompany/theknife/data/refresh.png"/>
+            <Image url="@../../../../java/com/mycompany/theknife/data/refresh.png" />
           </image>
         </ImageView>
         <Text fx:id="textTitle" layoutX="148.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surname" textAlignment="CENTER" wrappingWidth="326.1181640625">
           <font>
-            <Font size="25.0"/>
-            <Font name="System Bold" size="24.0"/>
+            <Font size="25.0" />
+            <Font name="System Bold" size="24.0" />
           </font>
         </Text>
         <Text fx:id="passwordText" layoutX="351.0" layoutY="404.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="168.09461975097656">
           <font>
-            <Font size="23.0"/>
+            <Font size="23.0" />
           </font>
         </Text>
         <Text fx:id="cognomeText" layoutX="75.0" layoutY="611.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="168.09461975097656">
           <font>
-            <Font size="23.0"/>
+            <Font size="23.0" />
           </font>
         </Text>
         <Text fx:id="indirizzoText" layoutX="351.0" layoutY="611.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="168.09461975097656">
           <font>
-            <Font size="23.0"/>
+            <Font size="23.0" />
           </font>
         </Text>
         <Text fx:id="cittaText" layoutX="76.0" layoutY="826.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="168.09461975097656">
           <font>
-            <Font size="23.0"/>
+            <Font size="23.0" />
           </font>
         </Text>
         <Text fx:id="statoText" layoutX="353.0" layoutY="826.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="168.09461975097656">
           <font>
-            <Font size="23.0"/>
+            <Font size="23.0" />
           </font>
         </Text>
         <Button fx:id="logoutButton" layoutX="883.0" layoutY="921.0" mnemonicParsing="false" onAction="#switchHomeNotLogged" text="Log out" textAlignment="CENTER">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Button>
-        <ListView fx:id="listFavourite" layoutX="798.0" layoutY="150.0" prefHeight="200.0" prefWidth="955.0"/>
+        <ListView fx:id="listFavourite" layoutX="798.0" layoutY="150.0" prefHeight="200.0" prefWidth="955.0" />
         <Label layoutX="1177.0" layoutY="81.0" prefHeight="34.0" prefWidth="196.0" text="Ristoranti preferiti">
           <font>
-            <Font size="23.0"/>
+            <Font size="23.0" />
           </font>
         </Label>
         <Button fx:id="viewRestaurant" layoutX="1017.0" layoutY="385.0" mnemonicParsing="false" onAction="#visualizzaRistoranteButtonAction" text="Visualizza Ristorante">
           <font>
-            <Font size="20.0"/>
+            <Font size="20.0" />
           </font>
         </Button>
         <Button fx:id="logoutButton2" layoutX="769.0" layoutY="921.0" mnemonicParsing="false" onAction="#switchHomeNotLogged" text="Log out" textAlignment="CENTER">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Button>
         <Button fx:id="propriRistoranti" layoutX="997.0" layoutY="921.0" mnemonicParsing="false" onAction="#switchRistoratore" text="Ristoranti" textAlignment="CENTER">
           <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
           </font>
         </Button>
-        <ListView fx:id="listRecensioni" layoutX="797.0" layoutY="551.0" prefHeight="200.0" prefWidth="955.0"/>
+        <ListView fx:id="listRecensioni" layoutX="797.0" layoutY="551.0" prefHeight="200.0" prefWidth="955.0" />
         <Label layoutX="1168.0" layoutY="494.0" prefHeight="34.0" prefWidth="213.0" text="Le proprie recensioni">
           <font>
-            <Font size="23.0"/>
+            <Font size="23.0" />
           </font>
         </Label>
         <Button fx:id="viewRecensione" layoutX="1172.0" layoutY="783.0" mnemonicParsing="false" onAction="#visualizzaRecensioneButtonAction" text="Visualizza Recensione">
           <font>
-            <Font size="20.0"/>
+            <Font size="20.0" />
           </font>
         </Button>
         <Button fx:id="goToRestaurant" layoutX="1435.0" layoutY="783.0" mnemonicParsing="false" onAction="#switchToRistorante" text="Vai al ristorante">
           <font>
-            <Font size="20.0"/>
+            <Font size="20.0" />
           </font>
         </Button>
         <Button fx:id="removePreferito" layoutX="1316.0" layoutY="385.0" mnemonicParsing="false" onAction="#rimuoviPreferito" text="Rimuovi Preferito">
           <font>
-            <Font size="20.0"/>
+            <Font size="20.0" />
           </font>
         </Button>
         <Button fx:id="removeRecensione" layoutX="926.0" layoutY="783.0" mnemonicParsing="false" onAction="#rimuoviRecensione" text="Rimuovi Recensione">
           <font>
-            <Font size="20.0"/>
+            <Font size="20.0" />
           </font>
         </Button>
         <Label layoutX="280.0" layoutY="887.0" text="Email">
           <font>
-            <Font name="System Bold" size="24.0"/>
+            <Font name="System Bold" size="24.0" />
           </font>
         </Label>
         <ImageView fx:id="changeIdEmail" fitHeight="30.0" fitWidth="24.0" layoutX="440.0" layoutY="892.0" onMouseClicked="#changeEamilData" opacity="0.29" pickOnBounds="true" preserveRatio="true">
           <image>
-            <Image url="@../../../../java/com/mycompany/theknife/data/refresh.png"/>
+            <Image url="@../../../../java/com/mycompany/theknife/data/refresh.png" />
           </image>
         </ImageView>
         <Text fx:id="emailText" layoutX="58.0" layoutY="958.0" strokeType="OUTSIDE" strokeWidth="0.0" text="email" textAlignment="CENTER" wrappingWidth="505.09461975097656">
           <font>
-            <Font size="23.0"/>
+            <Font size="23.0" />
           </font>
         </Text>
       </children>

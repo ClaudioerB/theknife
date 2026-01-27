@@ -1,108 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<!--grafica-->
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <VBox alignment="CENTER" prefHeight="1080.0" prefWidth="1920.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.ControllerCreateUser">
-    <children>
-      <AnchorPane prefHeight="1090.0" prefWidth="1880.0">
-         <children>
-              <Label layoutX="43.0" layoutY="115.0" text="Home">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="knifeImageView" fitHeight="142.0" fitWidth="134.0" layoutX="8.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="1285.0" layoutY="254.0" text="Username" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <PasswordField fx:id="passwordField" layoutX="873.0" layoutY="501.0" />
-            <TextField fx:id="usernameTextField" layoutX="1264.0" layoutY="303.0" />
-            <Label layoutX="895.0" layoutY="450.0" text="Password">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Button fx:id="createUserButton" layoutX="893.0" layoutY="963.0" mnemonicParsing="false" onAction="#createUser" text="Crea">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Label layoutX="524.0" layoutY="254.0" text="Nome" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="nomeTextField" layoutX="483.0" layoutY="302.0" />
-            <Label layoutX="114.0" layoutY="452.0" text="Cognome">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="1672.0" layoutY="450.0" text="Via" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="indirizzoTextField" layoutX="1614.0" layoutY="495.0" />
-            <TextField fx:id="cognomeTextField" layoutX="92.0" layoutY="500.0" />
-            <Label layoutX="886.0" layoutY="769.0" text="Cosa sei?">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <CheckBox fx:id="clienteCheckBox" layoutX="801.0" layoutY="839.0" mnemonicParsing="false" onAction="#CheckBoxes1Checker" prefHeight="43.0" prefWidth="85.0" text="Cliente">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </CheckBox>
-            <CheckBox fx:id="ristoratoreCheckBox" layoutX="983.0" layoutY="839.0" mnemonicParsing="false" onAction="#CheckBoxes2Checker" prefHeight="43.0" prefWidth="98.0" text="Ristoratore">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </CheckBox>
-            <Label layoutX="138.0" layoutY="615.0" text="Stato">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="1663.0" layoutY="615.0" text="Città" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="cittaTextField" layoutX="1614.0" layoutY="663.0" />
-            <TextField fx:id="statoTextField" layoutX="92.0" layoutY="668.0" />
-            <Label layoutX="919.0" layoutY="628.0" text="Email">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="creationUsernameErrorMessageLabel" alignment="CENTER" layoutX="1272.0" layoutY="339.0" prefHeight="25.0" prefWidth="134.0" text="Username già esistente" textFill="#f80808" />
-            <Label fx:id="creationEmailErrorMessageLabel" alignment="CENTER" layoutX="881.0" layoutY="711.0" prefHeight="25.0" prefWidth="134.0" text="Email già usata" textFill="#f80808" />
-            <Label fx:id="creationPassword1ErrorMessageLabel" alignment="CENTER" layoutX="565.0" layoutY="538.0" prefHeight="25.0" prefWidth="766.0" text="La password deve essere di almeno 8 caratteri e deve contenere almeno:" textFill="#f80808" />
-            <Label fx:id="creationPassword2ErrorMessageLabel" alignment="CENTER" layoutX="565.0" layoutY="563.0" prefHeight="25.0" prefWidth="766.0" text=" 1 carattere maiuscolo, 1 minuscolo, 1 numero e 1 carattere speciale" textFill="#f80808" />
-            <Label fx:id="creationEmailError2MessageLabel" alignment="CENTER" layoutX="847.0" layoutY="711.0" prefHeight="25.0" prefWidth="197.0" text="Le Email devono contenere una @" textFill="#f80808" />
-            <TextField fx:id="emailTextField" layoutX="874.0" layoutY="676.0" />
-         </children>
-      </AnchorPane>
-    </children>
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
+  <children>
+    <AnchorPane prefHeight="1090.0" prefWidth="1880.0">
+      <children>
+        <Label layoutX="43.0" layoutY="115.0" text="Home">
+          <font>
+            <Font size="24.0"/>
+          </font>
+        </Label>
+        <ImageView fx:id="knifeImageView" fitHeight="142.0" fitWidth="134.0" layoutX="8.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png"/>
+          </image>
+        </ImageView>
+        <Label layoutX="1285.0" layoutY="254.0" text="Username" textAlignment="CENTER">
+          <font>
+            <Font size="24.0"/>
+          </font>
+        </Label>
+        <PasswordField fx:id="passwordField" layoutX="873.0" layoutY="501.0"/>
+        <TextField fx:id="usernameTextField" layoutX="1264.0" layoutY="303.0"/>
+        <Label layoutX="895.0" layoutY="450.0" text="Password">
+          <font>
+            <Font size="24.0"/>
+          </font>
+        </Label>
+        <Button fx:id="createUserButton" layoutX="893.0" layoutY="963.0" mnemonicParsing="false" onAction="#createUser" text="Crea">
+          <font>
+            <Font size="24.0"/>
+          </font>
+        </Button>
+        <Label layoutX="524.0" layoutY="254.0" text="Nome" textAlignment="CENTER">
+          <font>
+            <Font size="24.0"/>
+          </font>
+        </Label>
+        <TextField fx:id="nomeTextField" layoutX="483.0" layoutY="302.0"/>
+        <Label layoutX="114.0" layoutY="452.0" text="Cognome">
+          <font>
+            <Font size="24.0"/>
+          </font>
+        </Label>
+        <Label layoutX="1672.0" layoutY="450.0" text="Via" textAlignment="CENTER">
+          <font>
+            <Font size="24.0"/>
+          </font>
+        </Label>
+        <TextField fx:id="indirizzoTextField" layoutX="1614.0" layoutY="495.0"/>
+        <TextField fx:id="cognomeTextField" layoutX="92.0" layoutY="500.0"/>
+        <Label layoutX="886.0" layoutY="769.0" text="Cosa sei?">
+          <font>
+            <Font size="24.0"/>
+          </font>
+        </Label>
+        <CheckBox fx:id="clienteCheckBox" layoutX="801.0" layoutY="839.0" mnemonicParsing="false" onAction="#CheckBoxes1Checker" prefHeight="43.0" prefWidth="85.0" text="Cliente">
+          <font>
+            <Font size="14.0"/>
+          </font>
+        </CheckBox>
+        <CheckBox fx:id="ristoratoreCheckBox" layoutX="983.0" layoutY="839.0" mnemonicParsing="false" onAction="#CheckBoxes2Checker" prefHeight="43.0" prefWidth="98.0" text="Ristoratore">
+          <font>
+            <Font size="14.0"/>
+          </font>
+        </CheckBox>
+        <Label layoutX="138.0" layoutY="615.0" text="Stato">
+          <font>
+            <Font size="24.0"/>
+          </font>
+        </Label>
+        <Label layoutX="1663.0" layoutY="615.0" text="Città" textAlignment="CENTER">
+          <font>
+            <Font size="24.0"/>
+          </font>
+        </Label>
+        <TextField fx:id="cittaTextField" layoutX="1614.0" layoutY="663.0"/>
+        <TextField fx:id="statoTextField" layoutX="92.0" layoutY="668.0"/>
+        <Label layoutX="919.0" layoutY="628.0" text="Email">
+          <font>
+            <Font size="24.0"/>
+          </font>
+        </Label>
+        <Label fx:id="creationUsernameErrorMessageLabel" alignment="CENTER" layoutX="1272.0" layoutY="339.0" prefHeight="25.0" prefWidth="134.0" text="Username già esistente" textFill="#f80808"/>
+        <Label fx:id="creationEmailErrorMessageLabel" alignment="CENTER" layoutX="881.0" layoutY="711.0" prefHeight="25.0" prefWidth="134.0" text="Email già usata" textFill="#f80808"/>
+        <Label fx:id="creationPassword1ErrorMessageLabel" alignment="CENTER" layoutX="565.0" layoutY="538.0" prefHeight="25.0" prefWidth="766.0" text="La password deve essere di almeno 8 caratteri e deve contenere almeno:" textFill="#f80808"/>
+        <Label fx:id="creationPassword2ErrorMessageLabel" alignment="CENTER" layoutX="565.0" layoutY="563.0" prefHeight="25.0" prefWidth="766.0" text="1 carattere maiuscolo, 1 minuscolo, 1 numero e 1 carattere speciale" textFill="#f80808"/>
+        <Label fx:id="creationEmailError2MessageLabel" alignment="CENTER" layoutX="847.0" layoutY="711.0" prefHeight="25.0" prefWidth="197.0" text="Le Email devono contenere una @" textFill="#f80808"/>
+        <TextField fx:id="emailTextField" layoutX="874.0" layoutY="676.0"/>
+        <Label fx:id="creationStatoErrorMessageLabel" alignment="CENTER" layoutX="61.0" layoutY="711.0" prefHeight="25.0" prefWidth="210.0" text="Stato non possibile con città inserita" textFill="#f80808"/>
+      </children>
+    </AnchorPane>
+  </children>
+  <padding>
+    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+  </padding>
 </VBox>

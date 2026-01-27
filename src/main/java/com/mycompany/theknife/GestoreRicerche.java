@@ -44,14 +44,12 @@ public class GestoreRicerche {
      */
     public ArrayList<String[]> trovaRistorantiVicini(double latitudine, double longitudine, double raggioKm, GestoreDataset dataset) {
         ArrayList<String[]> ristorantiVicini = new ArrayList<>();
-
         for (String[] ristorante : dataset.getDataSet()) {
             double distanza = calcolaDistanza(latitudine, longitudine,Double.parseDouble(ristorante[6]),Double.parseDouble(ristorante[7]));
             if (distanza <= 10) {
                 ristorantiVicini.add(ristorante);
             }
         }
-
         return ristorantiVicini;
     }
     /**
@@ -74,18 +72,6 @@ public class GestoreRicerche {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c;
     }
-    /*
-    public ArrayList<String[]> trovaRistorantiDelivery() {
-        ArrayList<String[]> ristorantiTrovati = new ArrayList<>();
-
-        for (String[] ristorante : gestoreDataset.getDataSet()) {
-            if (ristorante[0].toLowerCase().contains(nome.toLowerCase())) {
-                ristorantiTrovati.add(ristorante);
-            }
-        }
-
-        return ristorantiTrovati;
-    }*/
     /**
      * Metodo che trova i ristoranti con un costo specifico<br>
      * @param costo costo del ristorante in valore String
@@ -107,36 +93,26 @@ public class GestoreRicerche {
      * @param citta citta in cui cercare i ristoranti
      */
     public void trovaRistorantiCitta(String citta) {
-
         ArrayList<String[]> ristoranti = new ArrayList<>();
         citta = citta.toLowerCase();
-
         for (String[] ristorante : gestoreDataset.getDataSet()) {
             System.out.println(ristorante[0].toLowerCase());
-
             if (ristorante[3].toLowerCase().equals(citta)) {
                 ristoranti.add(ristorante);
-                // System.out.println(ristorante[3]);
             }
         }
-
-        // return ristoranti; ArrayList<String[]>
     }
+
     /**
      * Metodo che trova i ristoranti con un id specifico<br>
      * @param id id del ristorante
      * @return ristorante con id specifico
      */
     public String[] trovaRistorantiID(String id) {
-        
         id = id.toLowerCase();
-
         for (String[] ristorante : gestoreDataset.getDataSet()) {
-            // System.out.println(ristorante[0].toLowerCase());
-
             if (ristorante[16].toLowerCase().equals(id)) {
                 return ristorante;
-                // System.out.println(ristorante[0]);
             }
         }
         return null;
@@ -147,20 +123,13 @@ public class GestoreRicerche {
      * @return ArrayList di ristoranti con nome specifico
      */
     public ArrayList<String[]> trovaRistorantiNome(String nome) {
-
         ArrayList<String[]> ristoranti = new ArrayList<>();
         nome = nome.toLowerCase();
-
         for (String[] ristorante : gestoreDataset.getDataSet()) {
-            // System.out.println(ristorante[0].toLowerCase());
-
             if (ristorante[0].toLowerCase().equals(nome)) {
                 ristoranti.add(ristorante);
-                // System.out.println(ristorante[0]);
             }
         }
-
-
         return ristoranti;
     }
     /**
@@ -171,11 +140,8 @@ public class GestoreRicerche {
      * @return ArrayList di ristoranti con delivery specifico
      */
     public ArrayList<String[]> trovaRistorantiDelivery(boolean deliveryY,boolean deliveryN, ArrayList<String[]> ristorantiTrovati) {
-        
-
         for (String[] ristorante : gestoreDataset.getDataSet()) {
             if (ristorante[11].toLowerCase().equals("yes") && deliveryY) {
-
                 ristorantiTrovati.add(ristorante);
             }
             else{
@@ -183,20 +149,15 @@ public class GestoreRicerche {
                     ristorantiTrovati.remove(ristorante);
                 }
             }
-            
             if (ristorante[11].toLowerCase().equals("no") && deliveryN) {
-
                 ristorantiTrovati.add(ristorante);
             }
             else{
                 if(ristorante[11].toLowerCase().equals("no") && !deliveryN){
                     ristorantiTrovati.remove(ristorante);
                 }
-
             }
-
         }
-
         return ristorantiTrovati;
     }
     /**
@@ -207,32 +168,24 @@ public class GestoreRicerche {
      * @return ArrayList di ristoranti con prenotation specifico
      */
     public ArrayList<String[]> trovaRistorantiPrenotation(boolean deliveryY,boolean deliveryN, ArrayList<String[]> ristorantiTrovati) {
-        
-
         for (String[] ristorante : gestoreDataset.getDataSet()) {
             if (ristorante[15].toLowerCase().equals("1") && deliveryY) {
-
-                
+                // System.out.println(ristorante[15]);
             }
             else{
                 if(ristorante[15].toLowerCase().equals("1") && !deliveryY){
                     ristorantiTrovati.remove(ristorante);
                 }
             }
-            
             if (ristorante[15].toLowerCase().equals("0") && deliveryN) {
-
-                
+                // System.out.println(ristorante[15]);
             }
             else{
                 if(ristorante[15].toLowerCase().equals("0") && !deliveryN){
                     ristorantiTrovati.remove(ristorante);
                 }
-
             }
-
         }
-
         return ristorantiTrovati;
     }
     /**
@@ -242,19 +195,15 @@ public class GestoreRicerche {
      * @return ArrayList di ristoranti con rating specifico
      */
     public ArrayList<String[]> trovaRistorantiRating(double rating, ArrayList<String[]> ristorantiTrovati) {
-        
-
         for (String[] ristorante : ristorantiTrovati) {
-            if(!ristorante[13].equals("Rating"))
+            if(!ristorante[13].equals("Rating")) {
                 if (Double.parseDouble(ristorante[13])>=rating) {
-
                 }
                 else{
                     ristorantiTrovati.remove(ristorante);
                 }
-
+            }
         }
-
         return ristorantiTrovati;
     }
     /**

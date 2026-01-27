@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -13,29 +14,34 @@
       <children>
         <Text fx:id="textTitle" layoutX="107.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cambia " textAlignment="CENTER" wrappingWidth="219.89453125">
           <font>
-            <Font size="25.0"/>
+            <Font size="25.0" />
           </font>
         </Text>
-        <TextField fx:id="textField" layoutX="97.0" layoutY="216.0" prefHeight="44.0" prefWidth="239.0">
+        <TextField fx:id="textField" layoutX="97.0" layoutY="208.0" prefHeight="44.0" prefWidth="239.0">
           <font>
-            <Font size="17.0"/>
+            <Font size="17.0" />
           </font>
         </TextField>
         <Text fx:id="textInserire" layoutX="107.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserire" textAlignment="CENTER" wrappingWidth="219.89453125">
           <font>
-            <Font size="17.0"/>
+            <Font size="17.0" />
           </font>
         </Text>
-        <Button fx:id="saveButton" layoutX="171.0" layoutY="303.0" mnemonicParsing="false" onAction="#saveData" prefHeight="44.0" prefWidth="91.0" text="Save">
+        <Button fx:id="saveButton" layoutX="171.0" layoutY="313.0" mnemonicParsing="false" onAction="#saveData" prefHeight="44.0" prefWidth="91.0" text="Save">
           <font>
-            <Font size="20.0"/>
+            <Font size="20.0" />
           </font>
         </Button>
-        <Button fx:id="indietroButton" layoutX="164.0" layoutY="381.0" mnemonicParsing="false" onAction="#indietro" prefHeight="44.0" prefWidth="106.0" text="Indietro">
+        <Button fx:id="indietroButton" layoutX="164.0" layoutY="385.0" mnemonicParsing="false" onAction="#indietro" prefHeight="44.0" prefWidth="106.0" text="Indietro">
           <font>
-            <Font size="20.0"/>
+            <Font size="20.0" />
           </font>
         </Button>
+            <Label fx:id="errorLabel" layoutX="91.0" layoutY="268.0" prefHeight="30.0" prefWidth="252.0" text="Impossibile salvare il campo" textAlignment="CENTER" textFill="RED">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
       </children>
     </AnchorPane>
   </children>

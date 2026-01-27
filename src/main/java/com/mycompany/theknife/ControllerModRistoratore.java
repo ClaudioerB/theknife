@@ -73,13 +73,13 @@ public class ControllerModRistoratore {
             knifePath=System.getProperty("user.dir")+ "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
             knifeFile = new java.io.File(knifePath);
             if (knifeFile.exists()) {       
-                knifeImageView.setImage(
+               knifeImageView.setImage(
                         new javafx.scene.image.Image(knifeFile.toURI().toString())
-                );
-                
-                knifeImageView.setVisible(true); 
+               );
+               
+               knifeImageView.setVisible(true); 
             }
-        }
+      }
       filteredList = GestoreDataset.getDataSet();
       gestore = Gestore.getGestore();
       gestoreUtenti = GestoreUtenti.getGestoreUtenti();
@@ -99,18 +99,6 @@ public class ControllerModRistoratore {
       ArrayList<String[]> appoggio = new ArrayList<>();
       boolean checkfirst = true;
       String idRistoranti;
-
-      /*for (String[] row : filteredList) {
-         if (checkfirst) {
-            checkfirst = false;
-         } else {
-            idRistoranti = gestoreUtenti.getPersoneRistorantiByIdUtente(utenteLoggato.getId());
-            //System.out.println(idRistoranti);
-            if (idRistoranti.contains(row[16])) {
-               appoggio.add(row);
-            }
-         }
-      }*/
       String idUtente;
       for (String[] row : filteredList) {
          if (checkfirst) {
@@ -165,7 +153,8 @@ public class ControllerModRistoratore {
 
    /**
     * Metodo che riempie la ListView con i ristoranti.<br>
-    * Se il ristorante è vujoto viene mostrato il messaggio "Nessun ristorante trovato".<br>
+    * Non visualizza la riga del ristorante se è l'intestazione.<br>
+    * Se il ristorante è vuoto viene mostrato il messaggio "Nessun ristorante trovato".<br>
     * @param list lista di ristoranti
     */
    private void fillListView(ArrayList<String[]> list) {
@@ -217,7 +206,6 @@ public class ControllerModRistoratore {
    private void visualizzaRistoranteButtonAction() throws IOException {
       String selectedItem = listRestaurants.getSelectionModel().getSelectedItem();
       if (selectedItem == null || selectedItem.startsWith("Nessun ristorante trovato")) {
-         // Nessun elemento selezionato o messaggio di nessun ristorante trovato
          return;
       }
       String idRistorante = selectedItem.split(" - ")[0].replace("Ristorante N: ", "").trim();
@@ -284,13 +272,9 @@ public class ControllerModRistoratore {
    private void rimuovi() throws IOException {
       String selectedItem = listRestaurants.getSelectionModel().getSelectedItem();
       if (selectedItem == null || selectedItem.startsWith("Nessun ristorante trovato")) {
-         // Nessun elemento selezionato o messaggio di nessun ristorante trovato
          return;
       }
       String idRistorante = selectedItem.split(" - ")[0].replace("Ristorante N: ", "").trim();
-      
-      //String[] ristorante = GestoreRicerche.getGestoreRicerche().trovaRistorantiID(idRistorante);
-      //gestoreUtenti.rimuoviPreferitoUtente(utenteLoggato.getUsername(),ristorante);
 
       gestoreDataset.removeRistoranteById(idRistorante);
       gestoreUtenti.removePersoneRistorantiByIdRistorante(idRistorante, utenteLoggato.getId());
@@ -307,7 +291,6 @@ public class ControllerModRistoratore {
    private void modifyRistorante() throws IOException {
       String selectedItem = listRestaurants.getSelectionModel().getSelectedItem();
       if (selectedItem == null || selectedItem.startsWith("Nessun ristorante trovato")) {
-         // Nessun elemento selezionato o messaggio di nessun ristorante trovato
          return;
       }
       String idRistorante = selectedItem.split(" - ")[0].replace("Ristorante N: ", "").trim();

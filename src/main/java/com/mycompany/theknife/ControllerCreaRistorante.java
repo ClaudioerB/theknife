@@ -80,10 +80,13 @@ public class ControllerCreaRistorante {
     private javafx.scene.control.Label errorFieldServiziVuotoLabel;
     @FXML
     private javafx.scene.control.Label errorFieldcampiVuotiLabel;
+    @FXML
+    private javafx.scene.control.Label errorFieldStatiVuotiLabel;
     ArrayList<String> cucineArrayList;
     ArrayList<String> serviziArrayList;
     ArrayList<javafx.scene.control.CheckMenuItem> checkMenuItemsList;
     private Utente utenteLoggato;
+    private GestoreDataset gestoreDataset;
     /**
      * Costruttore di ControllerCreaRistorante.<br>
      */
@@ -98,9 +101,11 @@ public class ControllerCreaRistorante {
         cucineArrayList=new ArrayList<String>();
         serviziArrayList=new ArrayList<String>();
         checkMenuItemsList=new ArrayList<javafx.scene.control.CheckMenuItem>();
+        gestoreDataset = GestoreDataset.getGestoreDataset();
         popolaMenuCucineConRadio();
         errorFieldServiziVuotoLabel.setVisible(false);
         errorFieldcampiVuotiLabel.setVisible(false);
+        errorFieldStatiVuotiLabel.setVisible(false);
         theKnifeImageViewSet();
         fillServiziListView();
         fillCucineListView();
@@ -110,66 +115,111 @@ public class ControllerCreaRistorante {
     /**
      * Metodo FXML per creare un nuovo ristorante.<br>
      * Esegue il controllo che tutti i campi siano compilati e se sono compilati esegue la creazione del nuovo ristorante.<br>
+     * Chiama il metodo setRating per aggiornare la valutazione del ristorante.<br>
+     * Chiama il metodo verificaECreaRistorante per verificare se il ristorante e' gia' presente nel dataset.
+     * Infine chiama anche il metodo addRistorante per aggiungere il ristoratore come proprietario del ristorante.<br>
+     * 
      */
     @FXML
-    private void creaRistoranteButtonAction() throws IOException{
-        if(!nomeRistoranteField.getText().isEmpty()&&!indirizzoRistoranteField.getText().isEmpty()&&!statoRistoranteField.getText().isEmpty()&&!cittaRistoranteField.getText().isEmpty()
-            &&(prezzo1CheckMenuItem.isSelected()||prezzo2CheckMenuItem.isSelected()||prezzo3CheckMenuItem.isSelected()||prezzo4CheckMenuItem.isSelected())&&!cucineArrayList.isEmpty()
-            &&!longitudineRistoranteField.getText().isEmpty()&&!latitudineRistoranteField.getText().isEmpty()&&!telefonoRistoranteField.getText().isEmpty()&&!sitoWebRistoranteField.getText().isEmpty()
-            &&!awardField.getText().isEmpty()&&!serviziArrayList.isEmpty()&&!descrizioneRistoranteTextArea.getText().isEmpty()){
+    private void creaRistoranteButtonAction() throws IOException {
+        errorFieldcampiVuotiLabel.setVisible(false);
+        errorFieldStatiVuotiLabel.setVisible(false);
+        
+        if (!nomeRistoranteField.getText().isEmpty() && !indirizzoRistoranteField.getText().isEmpty() && 
+            !statoRistoranteField.getText().isEmpty() && !cittaRistoranteField.getText().isEmpty() &&
+            (prezzo1CheckMenuItem.isSelected() || prezzo2CheckMenuItem.isSelected() || 
+            prezzo3CheckMenuItem.isSelected() || prezzo4CheckMenuItem.isSelected()) && 
+            !cucineArrayList.isEmpty() && !longitudineRistoranteField.getText().isEmpty() && 
+            !latitudineRistoranteField.getText().isEmpty() && !telefonoRistoranteField.getText().isEmpty() && 
+            !sitoWebRistoranteField.getText().isEmpty() && !awardField.getText().isEmpty() && 
+            !serviziArrayList.isEmpty() && !descrizioneRistoranteTextArea.getText().isEmpty()) {
+            
             GestoreDataset gestoreDataset = GestoreDataset.getGestoreDataset();
-            String[] ristorante =new String[17];
-            ristorante[0]=nomeRistoranteField.getText();
-            ristorante[1]=indirizzoRistoranteField.getText();
-            ristorante[2]=statoRistoranteField.getText();
-            ristorante[3]=cittaRistoranteField.getText();
-            if(prezzo1CheckMenuItem.isSelected())
-                ristorante[4]="€";
-            if(prezzo2CheckMenuItem.isSelected())
-                ristorante[4]="€€";
-            if(prezzo3CheckMenuItem.isSelected())
-                ristorante[4]="€€€";
-            if(prezzo4CheckMenuItem.isSelected())
-                ristorante[4]="€€€€";
-            String cucina="";
-            boolean checkFirst=true;
-            for(String string : cucineArrayList){
-                if(checkFirst){
-                    cucina=cucina+string;
-                    checkFirst=false;
-                }
-                else
-                    cucina=cucina+","+string;
+            
+            int validazione = gestoreDataset.validaStatoCitta(cittaRistoranteField.getText(),statoRistoranteField.getText());
+            if (validazione == 1) {
+                String statoEsistente = gestoreDataset.findStatoByCitta(cittaRistoranteField.getText());
+                errorFieldStatiVuotiLabel.setText("Errore: " + cittaRistoranteField.getText() + " esiste già in " + statoEsistente);
+                errorFieldStatiVuotiLabel.setVisible(true);
+                return;
             }
-            ristorante[5]=cucina;
-            ristorante[6]=latitudineRistoranteField.getText();
-            ristorante[7]=longitudineRistoranteField.getText();
-            ristorante[8]=telefonoRistoranteField.getText();
-            ristorante[9]=sitoWebRistoranteField.getText();
-            ristorante[10]=awardField.getText();
-            String servizi="";
-            for(String string : serviziArrayList){
-                servizi=servizi+","+string;
+            
+            String[] ristorante = new String[17];
+            ristorante[0] = nomeRistoranteField.getText();
+            ristorante[1] = indirizzoRistoranteField.getText();
+            ristorante[2] = statoRistoranteField.getText();
+            ristorante[3] = cittaRistoranteField.getText();
+            
+            if (prezzo1CheckMenuItem.isSelected())
+                ristorante[4] = "€";
+            if (prezzo2CheckMenuItem.isSelected())
+                ristorante[4] = "€€";
+            if (prezzo3CheckMenuItem.isSelected())
+                ristorante[4] = "€€€";
+            if (prezzo4CheckMenuItem.isSelected())
+                ristorante[4] = "€€€€";
+            
+            String cucina = "";
+            boolean checkFirst = true;
+            for (String string : cucineArrayList) {
+                if (checkFirst) {
+                    cucina = cucina + string;
+                    checkFirst = false;
+                } else
+                    cucina = cucina + "," + string;
             }
-            ristorante[11]=servizi;
-            ristorante[12]=descrizioneRistoranteTextArea.getText();
-            ristorante[13]="0.0";
-            if(consegnaCheckBox.isSelected())
-                ristorante[14]="1";
+            ristorante[5] = cucina;
+            ristorante[6] = latitudineRistoranteField.getText();
+            ristorante[7] = longitudineRistoranteField.getText();
+            ristorante[8] = telefonoRistoranteField.getText();
+            ristorante[9] = sitoWebRistoranteField.getText();
+            ristorante[10] = awardField.getText();
+            
+            String servizi = "";
+            for (String string : serviziArrayList) {
+                servizi = servizi + "," + string;
+            }
+            ristorante[11] = servizi;
+            ristorante[12] = descrizioneRistoranteTextArea.getText();
+            ristorante[13] = "0.0";
+            
+            if (consegnaCheckBox.isSelected())
+                ristorante[14] = "1";
             else
-                ristorante[14]="0";
-            if(prenotazioniCheckBox.isSelected())
-                ristorante[15]="1";
+                ristorante[14] = "0";
+            
+            if (prenotazioniCheckBox.isSelected())
+                ristorante[15] = "1";
             else
-                ristorante[15]="0";
-            ristorante[16]=gestoreDataset.LastId()+"";
+                ristorante[15] = "0";
+            
+            ristorante[16] = gestoreDataset.LastId() + "";
             gestoreDataset.aggiungiRiga(ristorante);
+            
             GestoreUtenti gestoreUtenti = GestoreUtenti.getGestoreUtenti();
-            gestoreUtenti.addNewPersoneRistoranti(utenteLoggato.getId(),ristorante[16]);
+            gestoreUtenti.addNewPersoneRistoranti(utenteLoggato.getId(), ristorante[16]);
+            
+            verificaECreaStatoCitta(cittaRistoranteField.getText(), statoRistoranteField.getText());
             App.setRoot("ModRistoratore");
-        }
-        else{
+        } else {
             errorFieldcampiVuotiLabel.setVisible(true);
+        }
+    }
+
+    /**
+     * Metodo per verificare e creare lo stato e la città nel dataset.<br>
+     * 
+     * @param citta Città del ristorante
+     * @param stato Stato del ristorante
+     */
+    private void verificaECreaStatoCitta(String citta, String stato) {
+        if (citta.isEmpty()) {
+            return;
+        }
+        String statoTrovato = gestoreDataset.findStatoByCitta(citta);
+        if (statoTrovato == null || statoTrovato.isEmpty()) {
+            gestoreDataset.addNewStato(stato);
+            gestoreDataset.addNewCitta(stato, citta);
         }
     }
 
@@ -215,7 +265,6 @@ public class ControllerCreaRistorante {
             theKnifeImageView.setImage(
                     new javafx.scene.image.Image(knifeFile.toURI().toString())
             );
-            
             theKnifeImageView.setVisible(true);
         }else{
             knifePath=System.getProperty("user.dir")+ "../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
@@ -253,10 +302,8 @@ public class ControllerCreaRistorante {
         tipoCucinaRistoranteListView.getItems().clear();
         boolean checkfirst = true;
         for (String row : cucineArrayList) {
-            
             tipoCucinaRistoranteListView.getItems().add(row);
             tipoCucinaRistoranteListView.refresh();
-        
         }
         if (cucineArrayList.isEmpty() || (cucineArrayList.size() == 1 && checkfirst == false)) {
             tipoCucinaRistoranteListView.getItems().add("Nessuna cucina aggiunta");
@@ -298,10 +345,8 @@ public class ControllerCreaRistorante {
     private void fillServiziListView() {
         serviziRistoranteListView.getItems().clear();
         for (String row : serviziArrayList) {
-        
             serviziRistoranteListView.getItems().add(row);
             serviziRistoranteListView.refresh();
-        
         }
         if (serviziArrayList.isEmpty()) {
             serviziRistoranteListView.getItems().add("Nessun servizio aggiunto");

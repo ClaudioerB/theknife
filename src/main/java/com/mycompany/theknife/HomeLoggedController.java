@@ -20,7 +20,7 @@ import javafx.scene.text.Text;
  * @version 1.0
  */
 public class HomeLoggedController {
-   @FXML
+    @FXML
     private ImageView loginImageView;
 
     @FXML
@@ -119,6 +119,7 @@ public class HomeLoggedController {
     /**
      * Metodo che inizializza la scena HomeLogged.<br>
      * Viene caricata le immagini e i filtri per la visualizzazione dei ristoranti.<br>
+     * Viene impostato il nome dell'utente loggato.
      */
     @FXML
     private void initialize() {
@@ -135,10 +136,18 @@ public class HomeLoggedController {
                     new javafx.scene.image.Image(f.toURI().toString())
             );
             loginImageView.setVisible(true);
+        }else{
+            path=System.getProperty("user.dir")+ "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
+            f = new java.io.File(path);
+            if (f.exists()) {      
+                loginImageView.setImage(
+                        new javafx.scene.image.Image(f.toURI().toString())
+                );
+                
+                loginImageView.setVisible(true); 
+            }
         }
-        else {
-            System.out.println("File immagine non trovato: " + path);
-        }
+
         String knifePath = System.getProperty("user.dir")
                 + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
         java.io.File knifeFile = new java.io.File(knifePath);
@@ -147,6 +156,15 @@ public class HomeLoggedController {
                     new javafx.scene.image.Image(knifeFile.toURI().toString())
             );
             knifeImageView.setVisible(true);
+        }else{
+            knifePath=System.getProperty("user.dir")+ "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
+            knifeFile = new java.io.File(knifePath);
+            if (knifeFile.exists()) {       
+                knifeImageView.setImage(
+                        new javafx.scene.image.Image(knifeFile.toURI().toString())
+                );
+                knifeImageView.setVisible(true); 
+            }
         }
 
         utenteLoggato = Gestore.getGestore().getUtenteLoggato();
@@ -171,7 +189,6 @@ public class HomeLoggedController {
         int len = 13;
         if (utenteLoggato != null) {
             textUsername.setText(utenteLoggato.getUsername());
-
             if (utenteLoggato.getUsername().length() >= len) {
                 textUsername.fontProperty().set(Font.font(16));
             }
@@ -180,6 +197,8 @@ public class HomeLoggedController {
 
     /**
      * Metodo per popolare il menu di cucine con radio.<br>
+     * Utilizza ArrayList tipiCucina per la gestione dei tipi di cucina.<br>
+     * Utilizza ToggleGroup per la gestione dei radio button.<br>
      */
     private void popolaMenuCucineConRadio() {
         ArrayList<String> tipiCucina = new ArrayList<>();
@@ -232,46 +251,49 @@ public class HomeLoggedController {
     }
 
     /**
-     * Metodo per rimuovere un ristorante con la cucina non è selezionata.<br>
+     * Metodo per rimuovere un ristorante con la cucina non selezionata.<br>
      * @param selectedCucina La cucina selezionata
      */
     private void removeCucina(String selectedCucina) {
+        if (selectedCucina == null) return;
         ArrayList<String[]> tempList = new ArrayList<>();
-        selectedCucina = selectedCucina.trim();
-        
+        selectedCucina = selectedCucina.trim().toLowerCase();
+
         boolean checkfirst = true;
         for (String[] row : filteredList) {
+            if (row == null) continue;
             if (checkfirst) {
                 checkfirst = false;
                 tempList.add(row);
                 continue;
             }
-            
+
             boolean cucinaTrovata = false;
-            
-            if (row[5].contains(",")) {
-                String[] tipiCucina = row[5].split(",");
+            String cucinaField = (row.length > 5 && row[5] != null) ? row[5] : "";
+
+            if (cucinaField.contains(",")) {
+                String[] tipiCucina = cucinaField.split(",");
                 for (String tipoCucina : tipiCucina) {
-                    String cucinaPulita = tipoCucina.trim().toLowerCase();
+                    String cucinaPulita = tipoCucina == null ? "" : tipoCucina.trim().toLowerCase();
                     if (cucinaPulita.equals(selectedCucina)) {
                         cucinaTrovata = true;
                         break;
                     }
                 }
             } else {
-                String cucinaPulita = row[5].trim().toLowerCase();
+                String cucinaPulita = cucinaField.trim().toLowerCase();
                 if (cucinaPulita.equals(selectedCucina)) {
                     cucinaTrovata = true;
                 }
             }
-            
             if (cucinaTrovata) {
                 tempList.add(row);
             }
         }
-        
         filteredList = tempList;
     }
+
+
 
     /**
      * Metodo per rimuovere i tipi di cucina dai filtri non selezionati.<br>
@@ -285,22 +307,13 @@ public class HomeLoggedController {
             if (item instanceof javafx.scene.control.SeparatorMenuItem) {
                 continue;  // Salta i separatori
             }
-        
             if (item instanceof javafx.scene.control.RadioMenuItem) {
                 javafx.scene.control.RadioMenuItem radioItem = (javafx.scene.control.RadioMenuItem) item;
                 if (radioItem.isSelected()) {
-                    //if (item.isSelected()) {
-                selectedCucina = radioItem.getText();
-                break;
-                //System.out.println(selectedCucina);
-                /*if (selectedCucina.equals("Tutte le cucine")) {
-                    return;
-                } else {
-                    removeCucina(selectedCucina);
-                }*/
-                //removeCucina(selectedCucina);
+                    selectedCucina = radioItem.getText();
+                    break;
+                }
             }
-        }
         }
 
         if (selectedCucina.equals("Tutte le cucine")) {
@@ -334,7 +347,7 @@ public class HomeLoggedController {
      */
     @FXML
     private void changeLoginImage() {
-        String newPath = System.getProperty("user.dir") + "/src/main/java/com/mycompany/theknife/data/user_1.png"; 
+        String newPath = System.getProperty("user.dir") + "/src/main/java/com/mycompany/theknife/data/user_1.png";
         java.io.File newFile = new java.io.File(newPath);
         if (newFile.exists()) {
             loginImageView.setImage(
@@ -366,8 +379,8 @@ public class HomeLoggedController {
         
         String deliveryValue, prenotationValue;
         for (String[] row : list) {
+            if (row == null) continue;
             if (!row[0].equals("Name")&&!row[2].equals("State")) {
-                
                 deliveryValue = setDeliveryOrPrenotationValue(row[14]);
                 prenotationValue = setDeliveryOrPrenotationValue(row[15]);
                 String valutazione = String.valueOf(gestoreDataset.calcStelle(row[13]));
@@ -552,6 +565,10 @@ public class HomeLoggedController {
         }
     }     
 
+    /**
+     * Metodo FXML che rifà partire tutti i filtri e stampa i ristoranti con i filtri selezionati.<br>
+     * @throws IOException
+     */
     @FXML
     private void checkFilteredList() throws IOException {
         filteredList = gestoreDataset.getDataSet();

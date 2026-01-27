@@ -24,7 +24,7 @@ import com.opencsv.CSVWriter;
  *         ogni ristorante.<br>
  *         <br>
  *         Note: Alcuni metodi di test sono inclusi solo per scopi di debug.<br>
- * @version 1.0 java -jar theknife-1.0-SNAPSHOT.jar
+ * @version 1.0
  */
 public class GestoreDataset {
 
@@ -48,6 +48,7 @@ public class GestoreDataset {
                 + "/src/main/java/com/mycompany/theknife/data/tipiCucine.csv";
         statiCittaPath = System.getProperty("user.dir")
                 + "/src/main/java/com/mycompany/theknife/data/statiCitta.csv";
+
         if (!new File(cucinePath).exists()) {
             cucinePath = System.getProperty("user.dir")
                 + "/../src/main/java/com/mycompany/theknife/data/tipiCucine.csv";
@@ -66,83 +67,68 @@ public class GestoreDataset {
         inserimentoDati();
         inserimentoDatiCucina();
         controllaDatasetRecensioni();
-
         createStatoCittaDataset();
-    
         aggiungiRigheStato();
-    
         inserimentoDatiStatoCitta();
-
         gestoreDataset = this;
     }
 
     /**
-     * Metodo che aggiunge le righe del file CSV al dataset.<br>
+     * Metodo che aggiunge le righe al dataset dei stati e delle citta.<br>
+     * Utilizza HashMap per raggruppare le righe per stato e citta.<br>
+     * Chiama il metodo scriviFileStatoCitta per scrivere il file CSV con le righe.
      */
-    private void aggiungiRigheCucina() {
-        dataSetCucina.clear();
+    private void aggiungiRigheStato() {
+        datasetStatiCitta.clear();
+        java.util.HashMap<String, java.util.HashSet<String>> statiCittaMap = new java.util.HashMap<>();
+        
         boolean checkfirst = true;
         for (String[] row : this.dataSet) {
             if (checkfirst) {
                 checkfirst = false;
                 continue;
             }
-            if (row[5].contains(",")) {
-                String[] tipiCucina = row[5].split(",");
-                for (String tipoCucina : tipiCucina) {
-                    String cucinaPulita = tipoCucina.trim();
-                    if (!cucinaPulita.isEmpty() && !dataSetCucina.contains(cucinaPulita)) {
-                        dataSetCucina.add(cucinaPulita);
-                    }
-                }
-            } else {
-                String cucinaPulita = row[5].trim();
-                if (!cucinaPulita.isEmpty() && !dataSetCucina.contains(cucinaPulita)) {
-                    dataSetCucina.add(cucinaPulita);
-                }
+            String statoPulito = row[2].trim();
+            String cittaPulita = row[3].trim();
+            if (!statiCittaMap.containsKey(statoPulito)) {
+                statiCittaMap.put(statoPulito, new java.util.HashSet<>());
+            }
+            if (!cittaPulita.isEmpty()) {
+                statiCittaMap.get(statoPulito).add(cittaPulita);
             }
         }
-        scriviFileCucina();
+        for (java.util.Map.Entry<String, java.util.HashSet<String>> entry : statiCittaMap.entrySet()) {
+            String stato = entry.getKey();
+            String cittaConcat = String.join(",", entry.getValue());
+            datasetStatiCitta.add(new String[] { stato, cittaConcat });
+        }
+        scriviFileStatoCitta();
     }
 
-    private void aggiungiRigheStato() {
-    datasetStatiCitta.clear();
-    
-    // HashMap per raggruppare le città per stato (più efficiente)
-    java.util.HashMap<String, java.util.HashSet<String>> statiCittaMap = new java.util.HashMap<>();
-    
-    boolean checkfirst = true;
-    for (String[] row : this.dataSet) {
-        if (checkfirst) {
-            checkfirst = false;
-            continue;
+    /**
+     * Verifica se città e stato sono compatibili
+     * @param citta città da verificare
+     * @param stato stato da verificare
+     * @return 0 = OK, 1 = città esiste in stato diverso, 2 = città vuota
+     */
+    public int validaStatoCitta(String citta, String stato) {
+        if (citta == null || citta.trim().isEmpty()) {
+            return 2;
         }
-        
-        String statoPulito = row[2].trim();
-        String cittaPulita = row[3].trim();
-        
-        // Se lo stato non esiste nella mappa, crealo
-        if (!statiCittaMap.containsKey(statoPulito)) {
-            statiCittaMap.put(statoPulito, new java.util.HashSet<>());
+        String statoTrovato = findStatoByCitta(citta.trim());
+        if (statoTrovato == null || statoTrovato.isEmpty()) {
+            return 0;
         }
-        
-        // Aggiungi la città al set (HashSet evita automaticamente i duplicati)
-        if (!cittaPulita.isEmpty()) {
-            statiCittaMap.get(statoPulito).add(cittaPulita);
+        if (statoTrovato.equalsIgnoreCase(stato.trim())) {
+            return 0;
         }
+        return 1;
     }
-    
-    // Converti la mappa in ArrayList<String[]>
-    for (java.util.Map.Entry<String, java.util.HashSet<String>> entry : statiCittaMap.entrySet()) {
-        String stato = entry.getKey();
-        String cittaConcat = String.join(",", entry.getValue());
-        datasetStatiCitta.add(new String[] { stato, cittaConcat });
-    }
-    
-    // Scrivi il file UNA SOLA VOLTA
-    scriviFileStatoCitta();
-}
 
+    /**
+     * Metodo che aggiunge le citta al dataset dei stati e delle citta.<br>
+     * Chiama il metodo scriviFileStatoCitta per scrivere il file CSV con le righe.
+     */
     private void aggiungiRigheCitta() {
         boolean checkfirst = true;
         for (String[] stato : this.datasetStatiCitta) {
@@ -152,7 +138,7 @@ public class GestoreDataset {
             }
             String statoPulito = stato[0].trim();
             for (String[] row : this.dataSet) {
-                if (row[2].equals(statoPulito)) {
+                if (row[2].equalsIgnoreCase(statoPulito)) {
                     String cittaPulita = row[3].trim();
                     if (!stato[1].contains(cittaPulita)) {
                         addNewCitta(statoPulito, cittaPulita);
@@ -180,6 +166,10 @@ public class GestoreDataset {
         }
     }
 
+    /**
+     * Metodo che crea il file CSV per il dataset dei stati e delle citta.<br>
+     * Utilizza FileReader e FileWriter per la scrittura del file CSV.<br>
+     */
     public static void createStatoCittaDataset() {
         try {
             File myObj = new File(statiCittaPath);
@@ -261,10 +251,12 @@ public class GestoreDataset {
     public void addStelle(String stella, String idR) {
         int id = getId(idR);
         String[] row = getRiga(id);
-        if (!(row[13].isEmpty() || row[13] == null)) {
-            row[13] = row[13] + "," + stella;
+        if (row == null) return;
+        String current = row[13];
+        if (current == null || current.trim().isEmpty() || current.equals("0.0")) {
+            row[13] = stella.trim();
         } else {
-            row[13] = stella;
+            row[13] = current + "," + stella.trim();
         }
         setRiga(id, row);
     }
@@ -284,11 +276,15 @@ public class GestoreDataset {
     public void changeStelle(String stellaNew, String stellaOld, String idR) {
         int id = getId(idR);
         String[] row = getRiga(id);
-        if (!(row[13].isEmpty() || row[13] == null) && row[13].contains(stellaOld)) {
-            row[13].replaceFirst(stellaOld, stellaNew);
-        } else {
+        if (row == null) return;
+        String current = row[13];
+        if (current == null || current.trim().isEmpty()) {
             System.out.println("Non è presente nessuna stella");
+            return;
         }
+
+        String updated = current.replaceFirst(java.util.regex.Pattern.quote(stellaOld), stellaNew);
+        row[13] = updated;
         setRiga(id, row);
     }
 
@@ -302,25 +298,35 @@ public class GestoreDataset {
      * @param stella valutazione da rimuovere in formato String
      * @param idR    ID del ristorante in formato String
      */
+
     public void removeStelle(String stella, String idR) {
+        stella = stella == null ? "" : stella.trim();
         int id = getId(idR);
         String[] row = getRiga(id);
-        if (!(row[13].isEmpty() || row[13] == null) && row[13].contains(stella)) {
-            if (row[13].contains(",")) {
-                row[13] = row[13].replaceFirst(stella + ",", "");
-            } else {
-                row[13] = "0";
-            }
-        } else {
+        if (row == null) return;
+        String current = row[13];
+        if (current == null || current.trim().isEmpty() || current.equals("0.0")) {
             System.out.println("Non è presente nessuna stella");
+            return;
+        }
+        if (current.contains(",")) {
+            String updated = current.replaceFirst(java.util.regex.Pattern.quote(stella) + ",", "");
+            updated = updated.replaceFirst("," + java.util.regex.Pattern.quote(stella), "");
+            updated = updated.trim();
+            if (updated.isEmpty()) updated = "0.0";
+            row[13] = updated;
+        } else {
+            row[13] = "0.0";
         }
         setRiga(id, row);
     }
+
 
     /**
      * Metodo che calcola il valore medio delle stelle di un ristorante.<br>
      * Riceve in input il valore delle stelle da calcolare in formato String e
      * ritorna il valore medio delle stelle.<br>
+     * Attiva i filtri per verificare che il ristorante o che le valutazioni siano valide.<br>
      * 
      * @param stelle valutazioni in formato String
      * @return valore medio delle stelle in numero decimale
@@ -334,18 +340,17 @@ public class GestoreDataset {
             return 0.0;
         }
         String s = stelle.trim();
-        if (s.equalsIgnoreCase("stelle") || s.matches(".*[A-Za-z].*")) {
+        if (s.equalsIgnoreCase("stelle") || s.equalsIgnoreCase("rating") || s.matches(".*[A-Za-z].*")) {
             return 0.0;
         }
         if (s.contains(",")) {
             stars = s.split(",");
-
             for (String row : stars) {
                 if (row == null) continue;
                 String token = row.trim();
                 if (token.isEmpty()) continue;
                 try {
-                    value += Double.parseDouble(token);
+                    value = value + Double.parseDouble(token);
                     count++;
                 } catch (NumberFormatException ex) {
                     // ignora token non numerici e continua
@@ -355,8 +360,8 @@ public class GestoreDataset {
             tot = value / (double) count;
         } else {
             try {
+                count++;
                 value = Double.parseDouble(s);
-                count = 1;
                 tot = value / (double) count;
             } catch (NumberFormatException ex) {
                 return 0.0;
@@ -364,8 +369,6 @@ public class GestoreDataset {
         }
         return Math.round(tot);
     }
-
-
 
 
     /**
@@ -379,27 +382,18 @@ public class GestoreDataset {
         this.dataSetCucina.add(riga);
         scriviFileCucina();
     }
-    /*
-     * public void aggiungiRigaStatoCitta(String riga) {
-     * boolean check = true;
-     * riga = riga.trim();
-     * for (String row : datasetStatiCitta) {
-     * if (row.trim().equals(riga)) {
-     * check = false;
-     * break;
-     * }
-     * }
-     * if (check) {
-     * this.datasetStatiCitta.add(riga);
-     * scriviFileStatoCitta();
-     * }
-     * }
-     */
 
+    /**
+     * Metodo che restituisce una lista di citta corrispondenti a un stato.<br>
+     * 
+     * @param stato stato in formato String
+     * @return lista di citta in formato ArrayList
+     */
     public ArrayList<String> getCittaByStato(String stato) {
+        stato = stato.trim();
         ArrayList<String> citta = new ArrayList<>();
         for (String[] row : datasetStatiCitta) {
-            if (row[0] != null && row[0].trim().equalsIgnoreCase(stato.trim())) {
+            if (row[0] != null && row[0].trim().equalsIgnoreCase(stato)) {
                 if (row[1].contains(",")) {
                     String[] cittaSplit = row[1].split(",");
                     for (String each : cittaSplit) {
@@ -413,70 +407,98 @@ public class GestoreDataset {
         }
         return citta;
     }
+    /**
+     * Metodo che aggiunge un nuovo stato al dataset dei stati e delle città.<br>
+     * Chiama il metodo scriviFileStatoCitta per scrivere il file CSV con la
+     * nuova riga.<br>
+     * 
+     * @param stato stato da aggiungere al dataset
+     */
     public void addNewStato(String stato) {
-        stato = stato.trim();
+        String s = stato == null ? "" : stato.trim();
         boolean check = true;
         for (String[] row : datasetStatiCitta) {
-            if (row[0].trim().equals(stato)) {
+            if (row[0] != null && row[0].trim().equalsIgnoreCase(s)) {
                 check = false;
                 break;
             }
         }
         if (check) {
-            datasetStatiCitta.add(new String[] {stato, ""});
+            datasetStatiCitta.add(new String[] { s, "" });
             scriviFileStatoCitta();
         }
     }
+
+    /**
+     * Metodo che aggiunge una nuova citta al dataset degli stati e città.<br>
+     * Chiama il metodo scriviFileStatoCitta per scrivere il file CSV con la
+     * nuova città da aggiungere a uno stato specifico.<br>
+     * 
+     * @param stato stato al quale si vuole aggiungere la città
+     * @param newCitta citta da aggiungere al dataset
+     */
     public void addNewCitta(String stato, String newCitta) {
-    stato = stato.trim();
-    newCitta = newCitta.trim();
-    
-    for (int i = 0; i < datasetStatiCitta.size(); i++) {
-        if (datasetStatiCitta.get(i)[0].trim().equals(stato)) {
-            String current = datasetStatiCitta.get(i)[1];
-            boolean esiste = false;
-            if (current != null && !current.isEmpty()) {
-                String[] cittaEsistenti = current.split(",");
-                for (String citta : cittaEsistenti) {
-                    if (citta.trim().equals(newCitta)) {
-                        esiste = true;
-                        break;
+        String s = stato == null ? "" : stato.trim();
+        String c = newCitta == null ? "" : newCitta.trim();
+        for (int i = 0; i < datasetStatiCitta.size(); i++) {
+            if (datasetStatiCitta.get(i)[0].trim().equalsIgnoreCase(s)) {
+                String current = datasetStatiCitta.get(i)[1];
+                boolean esiste = false;
+                if (current != null && !current.isEmpty()) {
+                    String[] cittaEsistenti = current.split(",");
+                    for (String ci : cittaEsistenti) {
+                        if (ci.trim().equalsIgnoreCase(c)) {
+                            esiste = true;
+                            break;
+                        }
                     }
                 }
-            }
-            if (!esiste) {
-                if (current == null || current.isEmpty()) {
-                    datasetStatiCitta.get(i)[1] = newCitta;
-                } else {
-                    datasetStatiCitta.get(i)[1] = current + "," + newCitta;
+                if (!esiste) {
+                    if (current == null || current.isEmpty()) {
+                        datasetStatiCitta.get(i)[1] = c;
+                    } else {
+                        datasetStatiCitta.get(i)[1] = current + "," + c;
+                    }
+                    scriviFileStatoCitta();
                 }
-                scriviFileStatoCitta();
+                return;
             }
-            return;
         }
+        addNewStato(s);
+        addNewCitta(s, c);
     }
-    addNewStato(stato);
-    addNewCitta(stato, newCitta);
-}
 
+    /**
+     * Metodo che verifica se una citta esiste nel dataset.<br>
+     * 
+     * @param citta citta da cercare nel dataset
+     * @return true se la citta esiste nel dataset
+     */
     public boolean findAnyCitta(String citta){
         citta = citta.trim();
         for (String[] row : datasetStatiCitta) {
             String[] split = row[1].split(",");
             for (String rowSplit : split) {
-                if (rowSplit.trim().equals(citta)) {
+                if (rowSplit.trim().equalsIgnoreCase(citta)) {
                     return true;
                 }
             }
         }
         return false;
     }
+
+    /**
+     * Metodo che restituisce lo stato corrispondente a una citta.<br>
+     * 
+     * @param citta citta da cercare nel dataset
+     * @return stato in formato String
+     */
     public String findStatoByCitta(String citta){
         citta = citta.trim();
         for (String[] row : datasetStatiCitta) {
             String[] split = row[1].split(",");
             for (String rowSplit : split) {
-                if (rowSplit.trim().equals(citta)) {
+                if (rowSplit.trim().equalsIgnoreCase(citta)) {
                     return row[0].trim();
                 }
             }
@@ -506,11 +528,16 @@ public class GestoreDataset {
         }
     }
 
+    /**
+     * Metodo che scrive il file CSV con le righe del dataset degli stati e delle
+     * città.<br>
+     * Utilizza CSVWriter per la scrittura del file CSV.<br>
+     */
     private void scriviFileStatoCitta() {
         if (dataSet == null || datasetStatiCitta.isEmpty())
             return;
         try (CSVWriter writer = new CSVWriter(new FileWriter(statiCittaPath),
-                ';', // separatore personalizzato
+                ';',
                 CSVWriter.NO_QUOTE_CHARACTER,
                 CSVWriter.DEFAULT_ESCAPE_CHARACTER,
                 CSVWriter.DEFAULT_LINE_END)) {
@@ -542,6 +569,11 @@ public class GestoreDataset {
         }
     }
 
+    /**
+     * Metodo che carica il dataset degli stati e delle città dal file CSV nella
+     * variabile datasetStatiCitta.<br>
+     * Utilizza BufferedReader per la lettura del file CSV.<br>
+     */
     private void inserimentoDatiStatoCitta() {
         int iRow = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(statiCittaPath))) {
@@ -597,10 +629,20 @@ public class GestoreDataset {
         return dataSetCucina;
     }
 
+    /**
+     * Metodo che restituisce il dataset degli stati e delle città.<br>
+     * 
+     * @return dataset degli stati e delle città
+     */
     public static ArrayList<String[]> getDatasetStatoCitta() {
         return datasetStatiCitta;
     }
 
+    /**
+     * Metodo che restituisce il dataset degli stati.<br>
+     * 
+     * @return dataset degli stati
+     */
     public static ArrayList<String> getDatasetStati() {
         ArrayList<String> stati = new ArrayList<>();
         for (String[] riga : datasetStatiCitta) {
@@ -612,6 +654,11 @@ public class GestoreDataset {
         return stati;
     }
 
+    /**
+     * Metodo che restituisce il dataset delle città.<br>
+     * 
+     * @return dataset delle città
+     */
     public static ArrayList<String> getDatasetCitta() {
         ArrayList<String> citta = new ArrayList<>();
         for (String[] riga : datasetStatiCitta) {
@@ -840,9 +887,13 @@ public class GestoreDataset {
             String line;
             while ((line = reader.readLine()) != null) {
                 dataSet.add(new String[17]);
-                appoggio = line.split(";");
+                appoggio = line.split(";", -1);
                 for (int i = 0; i < 17; i++) {
-                    dataSet.get(iRow)[i] = appoggio[i];
+                    String value = "";
+                    if (i < appoggio.length && appoggio[i] != null) {
+                        value = appoggio[i].trim();
+                    }
+                    dataSet.get(iRow)[i] = value;
                 }
                 iRow++;
             }

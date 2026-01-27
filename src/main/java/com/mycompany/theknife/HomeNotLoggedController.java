@@ -112,6 +112,11 @@ public class HomeNotLoggedController {
         gestoreDataset = GestoreDataset.getGestoreDataset();
         filteredList = gestoreDataset.getDataSet();
     }
+    /**
+     * Metodo che imposta lo stato selezionato.<br>
+     * Indica inoltre se l'ospite può selezionare la città.<br>
+     * @param stato stato selezionato dal menu
+     */
     private void setSelectedStato(String stato) {
         selectStatoItem = (stato == null || stato.trim().isEmpty()) ? "Tutti gli stati" : stato.trim();
 
@@ -133,8 +138,10 @@ public class HomeNotLoggedController {
         }
     }
 
-
-
+    /**
+     * Metodo che restituisce lo stato selezionato dal menu.<br>
+     * @return stato selezionato
+     */
     private String getSelectStato() {
         return selectStatoItem;
     }
@@ -147,19 +154,21 @@ public class HomeNotLoggedController {
     private void initialize() {
         filteredList = gestoreDataset.getDataSet();
         String path = System.getProperty("user.dir")
-								+ "/src/main/java/com/mycompany/theknife/data/user.png"; 
+								+ "/src/main/java/com/mycompany/theknife/data/user.png";  
         System.out.println("Path: " + path);
         java.io.File f = new java.io.File(path);
+
+        System.out.println("Esiste? " + f.exists());
+        dataStato = GestoreDataset.getDatasetStati();
+        
         if (f.exists()) {       
             System.out.println("Esiste? " + f.exists());
             loginImageView.setImage(
                     new javafx.scene.image.Image(f.toURI().toString())
             );
             loginImageView.setVisible(true);
-            System.out.println("fcgcfgcfgcgfcfgcfg");
         }
         else{
-            System.out.println("fcgcfgcfgcgfcfgcfg");
             path = System.getProperty("user.dir")
                     + "/../src/main/java/com/mycompany/theknife/data/user.png";
                     System.out.println("Path: " + path);
@@ -173,13 +182,8 @@ public class HomeNotLoggedController {
             }
         }
 
-        System.out.println("Esiste? " + f.exists());
-
-        dataStato = GestoreDataset.getDatasetStati();
-        
-        
         String knifePath = System.getProperty("user.dir")
-                + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";   
+                + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
         java.io.File knifeFile = new java.io.File(knifePath);
         if (knifeFile.exists()) {       
             knifeImageView.setImage(
@@ -211,14 +215,6 @@ public class HomeNotLoggedController {
         setFiltersTrue();
         fillListView(filteredList);
     }
-    private void updateCittaVisibility() {
-    boolean mostraCitta = (selectStatoItem != null)
-            && !selectStatoItem.trim().equalsIgnoreCase("Tutti gli stati")
-            && !selectStatoItem.trim().isEmpty();
-
-    cittaFilterComboBox.setVisible(mostraCitta);
-    cittaFilterComboBox.setDisable(!mostraCitta);
-}
 
     /**
      * Metodo FXML che visualizza nel dettaglio un ristorante selezionato.<br>
@@ -243,13 +239,7 @@ public class HomeNotLoggedController {
      */
     private void popolaMenuCucineConRadio() {
         ArrayList<String> tipiCucina = new ArrayList<>();
-        boolean checkfirst = true;
         for (String row : GestoreDataset.getDataSetCucina()) {
-            if (checkfirst) {
-                checkfirst = false;
-                //tipiCucina.add("Tutte le cucine");
-                continue;
-            }
             String tipoCucina = row;
             if (!tipiCucina.contains(tipoCucina)) {
                 tipiCucina.add(tipoCucina);
@@ -283,60 +273,62 @@ public class HomeNotLoggedController {
             cucineFilterComboBox.getItems().add(radioItem);
         }
     }
+
+    /**
+     * Metodo che popola il menu per la selezione delle città.<br>
+     * Utilizza LinkedHashSet per rimuovere duplicati dal dataset.<br>
+     * Tilizza inoltre MenuItem per la selezione delle città.<br>
+     * Chiama il metodo checkFilteredList per la visualizzazione dei ristoranti.<br>
+     */
     private void popolaMenuCittaConRadio() {
-    cittaFilterComboBox.getItems().clear();
+        cittaFilterComboBox.getItems().clear();
 
-    if (dataCitta == null) dataCitta = new ArrayList<>();
+        if (dataCitta == null) dataCitta = new ArrayList<>();
 
-    // Rimuovi duplicati
-    java.util.Set<String> setCitta = new java.util.LinkedHashSet<>();
-    for (String s : dataCitta) {
-        if (s != null && !s.trim().isEmpty()) {
-            setCitta.add(s.trim());
+        // Rimuovi duplicati
+        java.util.Set<String> setCitta = new java.util.LinkedHashSet<>();
+        for (String s : dataCitta) {
+            if (s != null && !s.trim().isEmpty()) {
+                setCitta.add(s.trim());
+            }
         }
-    }
 
-    // "Tutte le città" -> nessun filtro città (ma mantiene filtro stato!)
-    javafx.scene.control.MenuItem tutte = new javafx.scene.control.MenuItem("Tutte le città");
-    tutte.setOnAction(e -> {
-        selectedCittaItem = null; // Nessun filtro città
-        try { 
-            checkFilteredList(); 
-        } catch (IOException ex) { 
-            ex.printStackTrace(); 
-        }
-    });
-    cittaFilterComboBox.getItems().add(tutte);
-    cittaFilterComboBox.getItems().add(new javafx.scene.control.SeparatorMenuItem());
-
-    // Aggiungi ogni città
-    for (String citta : setCitta) {
-        javafx.scene.control.MenuItem item = new javafx.scene.control.MenuItem(citta);
-        item.setOnAction(e -> {
-            selectedCittaItem = citta.trim();
-            //cittaFilterComboBox.setText(selectedCittaItem);
+        // "Tutte le città" -> nessun filtro città (ma mantiene filtro stato!)
+        javafx.scene.control.MenuItem tutte = new javafx.scene.control.MenuItem("Tutte le città");
+        tutte.setOnAction(e -> {
+            selectedCittaItem = null; // Nessun filtro città
             try { 
                 checkFilteredList(); 
             } catch (IOException ex) { 
                 ex.printStackTrace(); 
             }
         });
-        cittaFilterComboBox.getItems().add(item);
+        cittaFilterComboBox.getItems().add(tutte);
+        cittaFilterComboBox.getItems().add(new javafx.scene.control.SeparatorMenuItem());
+        for (String citta : setCitta) {
+            javafx.scene.control.MenuItem item = new javafx.scene.control.MenuItem(citta);
+            item.setOnAction(e -> {
+                selectedCittaItem = citta.trim();
+                try { 
+                    checkFilteredList(); 
+                } catch (IOException ex) { 
+                    ex.printStackTrace(); 
+                }
+            });
+            cittaFilterComboBox.getItems().add(item);
+        }
     }
-}
 
-
-
+    /**
+     * Metodo che popola il menu per la selezione degli stati.<br>
+     * Utilizza ToggleGroup per la gestione dei radio button.<br>
+     * Utilizza inoltre RadioMenuItem per la selezione degli stati.<br>
+     * Chiama il metodo checkFilteredList per la visualizzazione dei ristoranti.<br>
+     */
     private void popolaMenuStatiConRadio() {
         setSelectedStato("Tutti gli stati");
         ArrayList<String> tipiStato = new ArrayList<>();
-        boolean checkfirst = true;
         for (String row : dataStato) {
-            if (checkfirst) {
-                checkfirst = false;
-                //tipiCucina.add("Tutte le cucine");
-                continue;
-            }
             String tipoStato = row;
             if (!tipiStato.contains(tipoStato)) {
                 tipiStato.add(tipoStato);
@@ -360,21 +352,20 @@ public class HomeNotLoggedController {
         statiFilterComboBox.getItems().add(tutteItemStato);
         statiFilterComboBox.getItems().add(new javafx.scene.control.SeparatorMenuItem());
         for (String tipo : tipiStato) {
-    javafx.scene.control.RadioMenuItem radioItem = new javafx.scene.control.RadioMenuItem(tipo);
-    radioItem.setToggleGroup(toggleGroup);
-    radioItem.setOnAction(e -> {
-        try {
-            // aggiorna la lista delle città per lo stato selezionato
-            setSelectedStato(radioItem.getText());
-            //popolaMenuCittaConRadio();
-            checkFilteredList();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            javafx.scene.control.RadioMenuItem radioItem = new javafx.scene.control.RadioMenuItem(tipo);
+            radioItem.setToggleGroup(toggleGroup);
+            radioItem.setOnAction(e -> {
+                try {
+                    // aggiorna la lista delle città per lo stato selezionato
+                    setSelectedStato(radioItem.getText());
+                    //popolaMenuCittaConRadio();
+                    checkFilteredList();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
+            statiFilterComboBox.getItems().add(radioItem);
         }
-    });
-    statiFilterComboBox.getItems().add(radioItem);
-}
-
     }
     /**
      * Metodo che aggiunge dalla lista dei ristoranti la cucina selezionata.<br>
@@ -385,13 +376,7 @@ public class HomeNotLoggedController {
     private void removeCucina(String selectedCucina) {
         ArrayList<String[]> tempList = new ArrayList<>();
         selectedCucina = selectedCucina.trim();
-        boolean checkfirst = true;
         for (String[] row : filteredList) {
-            if (checkfirst) {
-                checkfirst = false;
-                tempList.add(row);
-                continue;
-            }
             boolean cucinaTrovata = false;
             if (row[5].contains(",")) {
                 String[] tipiCucina = row[5].split(",");
@@ -414,42 +399,77 @@ public class HomeNotLoggedController {
         }
         filteredList = tempList;
     }
-    private void removeCitta(String selectedCitta) {
-    ArrayList<String[]> tempList = new ArrayList<>();
-    String target = selectedCitta.trim().toLowerCase();
-    
-    boolean checkfirst = true;
-    for (String[] row : filteredList) {
-        if (checkfirst) {
-            checkfirst = false;
-            tempList.add(row); // Mantieni header
-            continue;
-        }
-        
-        if (row[3].trim().toLowerCase().equals(target)) {
-            tempList.add(row);
-        }
-    }
-    filteredList = tempList;
-}
-    private void removeStato(String selectedStato) {
-    ArrayList<String[]> tempList = new ArrayList<>();
-    String target = selectedStato.trim().toLowerCase();
 
-    boolean checkfirst = true;
-    for (String[] row : filteredList) {
-        if (checkfirst) {
-            checkfirst = false;
-            tempList.add(row); // Mantieni header
-            continue;
+    /**
+     * Metodo che rimuove dalla lista dei ristoranti la città selezionata.<br>
+     * @param selectedCitta la città selezionata
+     */
+    private void removeCitta(String selectedCitta) {
+        if (selectedCitta == null || selectedCitta.trim().isEmpty()) return;
+        String target = selectedCitta.trim().toLowerCase();
+
+        ArrayList<String[]> tempList = new ArrayList<>();
+        boolean checkfirst = true;
+
+        for (String[] row : filteredList) {
+            // protezione righe malformate
+            if (row == null || row.length < 4) {
+                continue;
+            }
+
+            String col0 = row[0] == null ? "" : row[0].trim();
+            String col2 = row[2] == null ? "" : row[2].trim();
+
+            // mantieni header 
+            if (col0.equalsIgnoreCase("Name") || col2.equalsIgnoreCase("State")) {
+                checkfirst = false;
+                tempList.add(row);
+                continue;
+            }
+
+            String city = row[3] == null ? "" : row[3].trim().toLowerCase();
+            if (city.equals(target)) {
+                tempList.add(row);
+            }
         }
-        
-        if (row[2].trim().toLowerCase().equals(target)) {
-            tempList.add(row);
-        }
+        filteredList = tempList;
     }
-    filteredList = tempList;
-}
+
+    /**
+     * Metodo che rimuove dalla lista dei ristoranti lo stato selezionato.<br>
+     * @param selectedStato lo stato selezionato
+     */
+    private void removeStato(String selectedStato) {
+    if (selectedStato == null || selectedStato.trim().isEmpty()) return;
+        String target = selectedStato.trim().toLowerCase();
+
+        ArrayList<String[]> tempList = new ArrayList<>();
+        boolean checkfirst = true;
+
+        for (String[] row : filteredList) {
+            // protezione righe malformate
+            if (row == null || row.length < 3) {
+                continue;
+            }
+
+            String col0 = row[0] == null ? "" : row[0].trim();
+            String col2 = row[2] == null ? "" : row[2].trim();
+
+            // mantieni header 
+            if (col0.equalsIgnoreCase("Name") || col2.equalsIgnoreCase("State")) {
+                checkfirst = false;
+                tempList.add(row);
+                continue;
+            }
+
+            String stato = row[2] == null ? "" : row[2].trim().toLowerCase();
+            if (stato.equals(target)) {
+                tempList.add(row);
+            }
+        }
+        filteredList = tempList;
+    }
+
 
     /**
      * Metodo che ricerca i ristoranti in base alla cucina selezionata.<br>
@@ -475,25 +495,30 @@ public class HomeNotLoggedController {
             removeCucina(selectedCucina.toLowerCase());
         }
     }
-    private void searchingButtonActionCitta() {
-    if (selectedCittaItem == null || selectedCittaItem.trim().isEmpty()) {
-        return; // Nessun filtro città
-    }
-    
-    // Filtra per città
-    removeCitta(selectedCittaItem.toLowerCase());
-}
 
-    private void searchingButtonActionStati() {
-    String selectedStato = getSelectStato(); // Usa il getter!
-    
-    if (selectedStato == null || selectedStato.equalsIgnoreCase("Tutti gli stati")) {
-        return; // Nessun filtro stato
+    /**
+     * Metodo che ricerca i ristoranti in base alla città selezionata.<br>
+     * Chiama il metodo removeCitta per la rimozione della città selezionata se non è vuota.<br>
+     */
+    private void searchingButtonActionCitta() {
+        if (selectedCittaItem == null || selectedCittaItem.trim().isEmpty()) {
+            return; // Nessun filtro città
+        }
+        removeCitta(selectedCittaItem.toLowerCase());
     }
-    
-    // Filtra solo per stato
-    removeStato(selectedStato.toLowerCase());
-}
+
+    /**
+     * Metodo che ricerca i ristoranti in base allo stato selezionato.<br>
+     * Chiama il metodo removeStato per la rimozione dello stato selezionato se non è "Tutti gli stati".<br>
+     */
+    private void searchingButtonActionStati() {
+        String selectedStato = getSelectStato();
+        
+        if (selectedStato == null || selectedStato.equalsIgnoreCase("Tutti gli stati")) {
+            return; // Nessun filtro stato
+        }
+        removeStato(selectedStato.toLowerCase());
+    }
 
     /**
      * Metodo che imposta tutti i filtri a true.<br>
@@ -523,23 +548,24 @@ public class HomeNotLoggedController {
         java.io.File newFile = new java.io.File(newPath);
         if (newFile.exists()) {
             loginImageView.setImage(
-                    new javafx.scene.image.Image(newFile.toURI().toString())
+                new javafx.scene.image.Image(newFile.toURI().toString())
             );
-        }
-        else{
-            newPath = System.getProperty("user.dir") + "/../src/main/java/com/mycompany/theknife/data/user_1.png"; 
+        }else{
+            newPath=System.getProperty("user.dir")+ "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
             newFile = new java.io.File(newPath);
-            if (newFile.exists()) {
+            if (newFile.exists()) {       
                 loginImageView.setImage(
                         new javafx.scene.image.Image(newFile.toURI().toString())
                 );
+                
+                loginImageView.setVisible(true); 
             }
         }
     }
 
     /**
      * Metodo che riempie la listView con i ristoranti filtrati.<br>
-     * Inserisce i ristoranti se la lista non è vuota.<br>
+     * Inserisce i ristoranti se la lista non è vuota e se la riga non è l'intestazione.<br>
      * <ul>
      * <li>Imposta i valori di consegna e prenotazione.</li>
      * <li>Imposta la valutazione usando il metodo calcStelle.</li>
@@ -548,19 +574,22 @@ public class HomeNotLoggedController {
      */
     private void fillListView(ArrayList<String[]> list) {
         listViewRestaurants.getItems().clear();
-        boolean checkfirst = true;
+        boolean check = true;
         String deliveryValue, prenotationValue;
         for (String[] row : list) {
-            if (row[13].trim().equals("Rating")) {
-                continue;
-            }else {
+            if (row == null || row.length < 17) continue; 
+            String col0 = row[0] == null ? "" : row[0].trim(); 
+            String col2 = row[2] == null ? "" : row[2].trim();
+            if (col0.equalsIgnoreCase("name") || col2.equalsIgnoreCase("state") || col0.isEmpty()) { 
+                continue; 
+            } else {
                 deliveryValue = setDeliveryOrPrenotationValue(row[14]);
                 prenotationValue = setDeliveryOrPrenotationValue(row[15]);
                 String valutazione = String.valueOf(gestoreDataset.calcStelle(row[13]));
                 listViewRestaurants.getItems().add("Ristorante N: "+row[16]+" - Nome: "+row[0] + " - Stato: " + row[2] + " - Città: " + row[3]+ " - Prezzo:" + row[4] + " - Tipo: " + row[5] + " - Consegna: " + deliveryValue + " - Prenotazione: " + prenotationValue + " - Valutazione: " + valutazione);
             }
         }
-        if (list.isEmpty() || (list.size() == 1 && checkfirst == false)) {
+        if (list.isEmpty() || (list.size() == 1)) {
             listViewRestaurants.getItems().add("Nessun ristorante trovato con i filtri selezionati.");
             //listViewRestaurants.refresh();
         }
@@ -639,39 +668,43 @@ public class HomeNotLoggedController {
     private void searchingButtonAction() {
         String searchText = searchTextField.getText().toLowerCase();
         listViewRestaurants.getItems().clear();
-        boolean checkfirst = true;
         ArrayList<String[]> tempList = new ArrayList<>();
         ArrayList<String[]> tempList2 = new ArrayList<>(filteredList);
         for (String[] row : filteredList) {
-            if (checkfirst) {
-                checkfirst = false;
-            } else {
-                String nome = row[0].toLowerCase();
-                String indirizzo = row[1].toLowerCase();
-                String stato = row[2].toLowerCase();
-                String citta = row[3].toLowerCase();
-                String prezzo = row[4].toLowerCase();
-                String tipo = row[5].toLowerCase();
-                String lon = row[6].toLowerCase();
-                String lat = row[7].toLowerCase();
-                String phone = row[8].toLowerCase();
-                String url = row[9].toLowerCase();
-                String award = row[10].toLowerCase();
-                String servizi = row[11].toLowerCase();
-                String descrizione = row[12].toLowerCase();
-
-                if (!(nome.contains(searchText) || stato.contains(searchText) ||
-                    citta.contains(searchText) || prezzo.contains(searchText) ||
-                    indirizzo.contains(searchText) || lon.contains(searchText) ||
-                    lat.contains(searchText) || phone.contains(searchText) ||
-                    url.contains(searchText) || award.contains(searchText) ||
-                    servizi.contains(searchText) || descrizione.contains(searchText) ||
-                    tipo.contains(searchText))) {
-                        //tempList.add(row);
-                        tempList2.remove(row);
-                        //listViewRestaurants.getItems().add("Nome: " + row[0] + " - Stato: " + row[2] + " -Città: " + row[3] + " -Prezzo:" + row[4] + " -Tipo: " + row[5]);
-                }
+            if (row == null || row.length < 13) { 
+                tempList2.remove(row); 
+                continue; 
+            } 
+            String col0 = row[0] == null ? "" : row[0].trim().toLowerCase(); 
+            String col2 = row[2] == null ? "" : row[2].trim().toLowerCase(); 
+            if (col0.equals("name") || col2.equals("state")) { 
+                continue;
             }
+            String nome = row[0].toLowerCase();
+            String indirizzo = row[1].toLowerCase();
+            String stato = row[2].toLowerCase();
+            String citta = row[3].toLowerCase();
+            String prezzo = row[4].toLowerCase();
+            String tipo = row[5].toLowerCase();
+            String lon = row[6].toLowerCase();
+            String lat = row[7].toLowerCase();
+            String phone = row[8].toLowerCase();
+            String url = row[9].toLowerCase();
+            String award = row[10].toLowerCase();
+            String servizi = row[11].toLowerCase();
+            String descrizione = row[12].toLowerCase();
+            if (!(nome.contains(searchText) || stato.contains(searchText) ||
+                citta.contains(searchText) || prezzo.contains(searchText) ||
+                indirizzo.contains(searchText) || lon.contains(searchText) ||
+                lat.contains(searchText) || phone.contains(searchText) ||
+                url.contains(searchText) || award.contains(searchText) ||
+                servizi.contains(searchText) || descrizione.contains(searchText) ||
+                tipo.contains(searchText))) {
+                    //tempList.add(row);
+                    tempList2.remove(row);
+                    //listViewRestaurants.getItems().add("Nome: " + row[0] + " - Stato: " + row[2] + " -Città: " + row[3] + " -Prezzo:" + row[4] + " -Tipo: " + row[5]);
+            }
+            
         }
         filteredList = tempList2;
     }
@@ -746,45 +779,42 @@ public class HomeNotLoggedController {
      * @throws IOException
      */
     @FXML
-private void checkFilteredList() throws IOException {
-    filteredList = gestoreDataset.getDataSet();
-    
-    starAction();
-    searchingButtonActionTipiCucine();
-    searchingButtonActionStati();      // Filtra per stato (se selezionato)
-    searchingButtonActionCitta();      // Filtra per città (se selezionata)
-    deliveringFilterComboBoxAction2();
-    bookingFilterComboBoxAction2();
-    pricingFilterComboBoxAction();
-    searchingButtonAction();
-    
-    // RIMOSSO: tutteItemStato.setSelected(true); 
-    // NON resettare lo stato qui!
-    
-    fillListView(filteredList);
-}
+    private void checkFilteredList() throws IOException {
+        filteredList = gestoreDataset.getDataSet();
+        
+        starAction();
+        searchingButtonActionTipiCucine();
+        searchingButtonActionStati();      // Filtra per stato (se selezionato)
+        searchingButtonActionCitta();      // Filtra per città (se selezionata)
+        deliveringFilterComboBoxAction2();
+        bookingFilterComboBoxAction2();
+        pricingFilterComboBoxAction();
+        searchingButtonAction();
+        
+        fillListView(filteredList);
+    }
 
     /**
      * Metodo FXML che resetta tutti i filtri e stampa tutti i ristoranti completi.<br>
      */
     @FXML 
-private void resetButtonAction() {
-    // Reset tutti i filtri
-    setFiltersTrue();
-    ratingFilter.setRating(0);
-    searchTextField.clear();
-    
-    // Reset selezione stato e città
-    if (tutteItemStato != null) {
-        tutteItemStato.setSelected(true);
+    private void resetButtonAction() {
+        // Reset tutti i filtri
+        setFiltersTrue();
+        ratingFilter.setRating(0);
+        searchTextField.clear();
+        
+        // Reset selezione stato e città
+        if (tutteItemStato != null) {
+            tutteItemStato.setSelected(true);
+        }
+        setSelectedStato("Tutti gli stati"); // Nasconde menu città
+        selectedCittaItem = null;
+        
+        // Mostra tutti i ristoranti
+        filteredList = gestoreDataset.getDataSet();
+        fillListView(filteredList);
     }
-    setSelectedStato("Tutti gli stati"); // Nasconde menu città
-    selectedCittaItem = null;
-    
-    // Mostra tutti i ristoranti
-    filteredList = gestoreDataset.getDataSet();
-    fillListView(filteredList);
-}
 
 
     /**

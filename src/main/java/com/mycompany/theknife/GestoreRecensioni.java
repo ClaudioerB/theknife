@@ -167,7 +167,7 @@ public class GestoreRecensioni {
     private void scriviFile() {
         GestoreDataset gestoreDataset = GestoreDataset.getGestoreDataset();
         try (CSVWriter writer = new CSVWriter(new FileWriter(filePath),
-        ';',       // separatore personalizzato
+        ';',     
         CSVWriter.NO_QUOTE_CHARACTER,
         CSVWriter.DEFAULT_ESCAPE_CHARACTER,
         CSVWriter.DEFAULT_LINE_END)) {
@@ -176,7 +176,6 @@ public class GestoreRecensioni {
         writer.writeNext(riga);
         for (int i=0; i<recensioni.size(); i++){
             riga[0] = recensioni.get(i).getId();
-            //gestoreDataset.controllaDatasetRecensioniById(riga[0]);
             riga[1] = recensioni.get(i).getUtenteRecensione();
             riga[2] = recensioni.get(i).getTitolo();
             riga[3] = String.valueOf(recensioni.get(i).getStelle());
@@ -207,11 +206,11 @@ public class GestoreRecensioni {
             while ((line = reader.readLine()) != null ) {
                 if(firstLine) {
                     firstLine = false;
-                    continue; // Salta l'intestazione
+                    continue; 
                 }
                 recensioni.add(new Recensione());
                 appoggio = line.split(";");
-                recensioni.get(iRow).setId(appoggio[0]); //Poi bisogna creare il metodo dell'ID
+                recensioni.get(iRow).setId(appoggio[0]);
                 recensioni.get(iRow).setUtenteRecensione(appoggio[1]);
                 recensioni.get(iRow).setTitolo(appoggio[2]);
                 recensioni.get(iRow).setStelle(Double.parseDouble(appoggio[3]));
@@ -232,16 +231,11 @@ public class GestoreRecensioni {
      * @return numero di recensioni nel dataset
      */
     public int numeroRighe() {
-        
-        
         int righe = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            
-            
             while ((reader.readLine()) != null) {
                 righe++;
             }
-            
         } catch (IOException e) {
             System.out.println("File non trovato.");
         }
