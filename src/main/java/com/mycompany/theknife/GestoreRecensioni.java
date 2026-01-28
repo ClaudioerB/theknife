@@ -136,13 +136,14 @@ public class GestoreRecensioni {
             System.out.println("Non è presente nessun commento.");
         }
         else {
-            String date = recensione.getData(), time = recensione.getOra(), txt = recensione.getRecensione(),title=recensione.getTitolo();
+            String date = recensione.getData(), time = recensione.getOra(), txt = recensione.getRecensione(),title=recensione.getTitolo(),risposta = recensione.getRisposta();
             double star=recensione.getStelle();
             recensioni.get(id).setRecensione(txt);
             recensioni.get(id).setData(date);
             recensioni.get(id).setOra(time);
             recensioni.get(id).setStelle(star);
             recensioni.get(id).setTitolo(title);
+            recensioni.get(id).setRisposta(risposta);
             scriviFile();
         }
     }
@@ -192,7 +193,8 @@ public class GestoreRecensioni {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }  
+    }
+
     /**
      * Metodo per caricare il dataset delle recensioni dal file CSV.
      * Utilizza BufferedReader per la lettura del file CSV.
@@ -217,8 +219,11 @@ public class GestoreRecensioni {
                 recensioni.get(iRow).setRecensione(appoggio[4]);
                 recensioni.get(iRow).setData(appoggio[5]);
                 recensioni.get(iRow).setOra(appoggio[6]);
-                if(appoggio.length==8)
+                if(appoggio.length==8) {
                     recensioni.get(iRow).setRisposta(appoggio[7]);
+                } /*else {
+                    recensioni.get(iRow).setRisposta("");
+                }*/
                 iRow++;
             }
         } catch (IOException e) {

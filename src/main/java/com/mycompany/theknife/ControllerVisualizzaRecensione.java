@@ -117,10 +117,14 @@ public class ControllerVisualizzaRecensione {
         ratingRecensione.setRating(recensioneDaVisualizzare.getStelle());
         RispostaArea.setText(recensioneDaVisualizzare.getRisposta());
         setRisposta();
-        if(!isProprietario()){
+        if(isProprietario()){
+            salvaButton.setDisable(false);
+            salvaButton.setVisible(true);
+            RispostaArea.setEditable(true);
+        } else {
             salvaButton.setDisable(true);
             salvaButton.setVisible(false);
-            RispostaArea.setEditable(true);
+            RispostaArea.setEditable(false);
         }
     }
     /**
@@ -129,11 +133,25 @@ public class ControllerVisualizzaRecensione {
      */
     @FXML
     private void salvaButtonAction(){
-        this.recensioneCorrente.Risposta=RispostaArea.getText();
+        String testoRecensione = RispostaArea.getText();
+        this.recensioneCorrente.setRisposta(testoRecensione);
         
         GestoreRecensioni gestoreRecensioni=GestoreRecensioni.getGestoreRecensioni();
-        gestoreRecensioni.modificaRecensione(recensioneCorrente,recensioneCorrente);
-        gestoreRecensioni.aggiungiRecensione(recensioneCorrente);
+        int id = -1;
+        Recensione rec;
+        for (int i=0; i<gestoreRecensioni.getRecensioni().size(); i++) {
+            rec = gestoreRecensioni.getRecensioni().get(i);
+            if(rec.getUtenteRecensione().equals(recensioneCorrente.getUtenteRecensione())
+                &&rec.getData().equals(recensioneCorrente.getData())
+                &&rec.getOra().equals(recensioneCorrente.getOra())&&rec.equals(recensioneCorrente)){
+                
+                id = i;
+                break;
+            }
+        }
+        if (id != -1) {
+            gestoreRecensioni.modificaRecensioneById(id, recensioneCorrente);
+        }
         closeWindow();
     }
     /**

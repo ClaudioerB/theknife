@@ -92,16 +92,16 @@ java -jar bin/theknife-1.0-SNAPSHOT.jar
 ```
 #### 2) Jar senza dipendenze incluse — classpath con cartella lib/ (Windows)
 ```bash
-java -cp "bin;lib/*" com.mycompany.theknife.App
+java -cp "bin/theknife-1.0-SNAPSHOT.jar;bin/lib/*" com.mycompany.theknife.Launcher
 ```
 #### (Linux / macOS)
 ```bash
-java -cp "bin:lib/*" com.mycompany.theknife.App
+java -cp "bin/theknife-1.0-SNAPSHOT.jar:bin/lib/*" com.mycompany.theknife.Launcher
 ```
 #### 3) Se JavaFX non è nel JDK (modular runtime)
 - Scarica JavaFX SDK e avvia con --module-path e --add-modules:
 ```bash
-java --module-path /path/to/javafx/lib --add-modules javafx.controls,javafx.fxml -jar bin/theknife-1.0-SNAPSHOT.jar
+java --module-path bin/javafx-sdk-25-win/lib --add-modules javafx.controls,javafx.fxml -jar bin/theknife-1.0-SNAPSHOT.jar
 ```
 
 ## Debug e problemi comuni
@@ -117,7 +117,7 @@ java --module-path /path/to/javafx/lib --add-modules javafx.controls,javafx.fxml
 ### Generazione Javadoc (opzionale)
 ```bash
 mvn javadoc:javadoc
-# output in target/site/apidocs
+# output in doc/apidocs
 ```
 #### Oppure con Gradle
 ```bash

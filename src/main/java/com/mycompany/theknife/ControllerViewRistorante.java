@@ -203,9 +203,10 @@ public class ControllerViewRistorante {
             if(isProprietario()&&!recensioni.isEmpty()){
                 rispondiButton.setDisable(false);
                 rispondiButton.setVisible(true);
+            } else {
+                rispondiButton.setDisable(true);
+                rispondiButton.setVisible(false);
             }
-            rispondiButton.setDisable(true);
-            rispondiButton.setVisible(false);
         } else {
             aggiungiPreferitiButton.setDisable(true);
             rimuoviPreferitiButton.setDisable(true);
