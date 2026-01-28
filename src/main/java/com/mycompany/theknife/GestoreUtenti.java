@@ -328,7 +328,7 @@ public class GestoreUtenti {
         try (CSVWriter writer = new CSVWriter(new FileWriter(pathFavourite),
         ';',   
         CSVWriter.NO_QUOTE_CHARACTER,
-        CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+        CSVWriter.NO_ESCAPE_CHARACTER,
         CSVWriter.DEFAULT_LINE_END)) {
         String[] riga = new String[2];
         for (int i=0; i<dataSetFavourite.size(); i++){
@@ -349,7 +349,7 @@ public class GestoreUtenti {
         try (CSVWriter writer = new CSVWriter(new FileWriter(personeRistorantiPath),
         ';',   
         CSVWriter.NO_QUOTE_CHARACTER,
-        CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+        CSVWriter.NO_ESCAPE_CHARACTER,
         CSVWriter.DEFAULT_LINE_END)) {
         String[] riga = new String[2];
         for (int i=0; i<personeRistoranti.size(); i++){

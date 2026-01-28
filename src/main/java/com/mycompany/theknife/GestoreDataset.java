@@ -515,7 +515,7 @@ public class GestoreDataset {
         try (CSVWriter writer = new CSVWriter(new FileWriter(cucinePath),
                 ';',
                 CSVWriter.NO_QUOTE_CHARACTER,
-                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                CSVWriter.NO_ESCAPE_CHARACTER,
                 CSVWriter.DEFAULT_LINE_END)) {
 
             for (String riga : dataSetCucina) {
@@ -539,7 +539,7 @@ public class GestoreDataset {
         try (CSVWriter writer = new CSVWriter(new FileWriter(statiCittaPath),
                 ';',
                 CSVWriter.NO_QUOTE_CHARACTER,
-                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                CSVWriter.NO_ESCAPE_CHARACTER,
                 CSVWriter.DEFAULT_LINE_END)) {
             String[] riga = new String[2];
             for (int i = 0; i < datasetStatiCitta.size(); i++) {
@@ -863,7 +863,7 @@ public class GestoreDataset {
         try (CSVWriter writer = new CSVWriter(new FileWriter(filePath),
                 ';',
                 CSVWriter.NO_QUOTE_CHARACTER,
-                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                CSVWriter.NO_ESCAPE_CHARACTER,
                 CSVWriter.DEFAULT_LINE_END)) {
 
             for (String[] riga : dataSet) {
