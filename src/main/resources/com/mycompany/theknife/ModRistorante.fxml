@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.RangeSlider?>
 
-<AnchorPane prefHeight="1090.0" prefWidth="1880.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="880.0" prefWidth="1720.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="43.0" layoutY="115.0" text="Home">
          <font>
@@ -29,80 +29,80 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <PasswordField fx:id="passwordField" layoutX="869.0" layoutY="495.0" />
+      <PasswordField fx:id="passwordField" layoutX="867.0" layoutY="405.0" />
       <TextField fx:id="usernameTextField" layoutX="869.0" layoutY="289.0" />
-      <Label layoutX="865.0" layoutY="446.0" text="Phone Number">
+      <Label layoutX="863.0" layoutY="356.0" text="Phone Number">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button layoutX="897.0" layoutY="935.0" mnemonicParsing="false" text="Salva">
+      <Button layoutX="895.0" layoutY="803.0" mnemonicParsing="false" text="Salva">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Label layoutX="131.0" layoutY="247.0" text="Nome" textAlignment="CENTER">
+      <Label layoutX="142.0" layoutY="249.0" text="Nome" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="usernameTextField1" layoutX="89.0" layoutY="289.0" />
-      <Label layoutX="118.0" layoutY="446.0" text="Indirizzo">
+      <TextField fx:id="usernameTextField1" layoutX="100.0" layoutY="291.0" />
+      <Label layoutX="129.0" layoutY="447.0" text="Indirizzo">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="1619.0" layoutY="247.0" text="Web Site Url">
+      <Label layoutX="1517.0" layoutY="251.0" text="Web Site Url">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="1651.0" layoutY="444.0" text="Award" textAlignment="CENTER">
+      <Label layoutX="1549.0" layoutY="448.0" text="Award" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="usernameTextField2" layoutX="1610.0" layoutY="489.0" />
-      <TextField fx:id="usernameTextField11" layoutX="88.0" layoutY="494.0" />
+      <TextField fx:id="usernameTextField2" layoutX="1508.0" layoutY="493.0" />
+      <TextField fx:id="usernameTextField11" layoutX="99.0" layoutY="495.0" />
       <CheckBox layoutX="501.0" layoutY="730.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="133.0" text="Delivery">
          <font>
             <Font size="24.0" />
          </font>
       </CheckBox>
-      <CheckBox layoutX="1289.0" layoutY="730.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="186.0" text="Prenotazione">
+      <CheckBox layoutX="1225.0" layoutY="730.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="186.0" text="Prenotazione">
          <font>
             <Font size="24.0" />
          </font>
       </CheckBox>
-      <TextField fx:id="usernameTextField21" layoutX="1610.0" layoutY="289.0" />
-      <Button layoutX="821.0" layoutY="852.0" mnemonicParsing="false" text="Aggiungi un servizio">
+      <TextField fx:id="usernameTextField21" layoutX="1508.0" layoutY="293.0" />
+      <Button layoutX="814.0" layoutY="718.0" mnemonicParsing="false" text="Aggiungi un servizio">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <ListView layoutX="789.0" layoutY="603.0" prefHeight="200.0" prefWidth="312.0" />
+      <ListView layoutX="787.0" layoutY="481.0" prefHeight="200.0" prefWidth="312.0" />
       <Label layoutX="148.0" layoutY="638.0" text="Città">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="1659.0" layoutY="638.0" text="Cucina" textAlignment="CENTER">
+      <Label layoutX="1547.0" layoutY="646.0" text="Cucina" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="usernameTextField22" layoutX="1621.0" layoutY="683.0" />
+      <TextField fx:id="usernameTextField22" layoutX="1509.0" layoutY="691.0" />
       <TextField fx:id="usernameTextField111" layoutX="99.0" layoutY="688.0" />
-      <Label layoutX="915.0" layoutY="133.0" text="Prezzo" textAlignment="CENTER">
+      <Label layoutX="908.0" layoutY="123.0" text="Prezzo" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="910.0" layoutY="200.0" prefHeight="25.0" prefWidth="71.0" text="Prezzo" textAlignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="903.0" layoutY="190.0" prefHeight="25.0" prefWidth="71.0" text="Prezzo" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <RangeSlider layoutX="854.0" layoutY="162.0" prefHeight="51.0" prefWidth="192.0" />
+      <RangeSlider layoutX="847.0" layoutY="152.0" prefHeight="51.0" prefWidth="192.0" />
    </children>
 </AnchorPane>

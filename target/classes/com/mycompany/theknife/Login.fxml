@@ -11,43 +11,43 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="1080.0" prefWidth="1920.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.LoginController">
+<VBox alignment="CENTER" prefHeight="880.0" prefWidth="1720.0" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.theknife.LoginController">
     <children>
       <AnchorPane prefHeight="1095.0" prefWidth="1911.0">
          <children>
-              <Label layoutX="908.0" layoutY="169.0" text="Home">
+              <Label layoutX="808.0" layoutY="91.0" text="Home">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <ImageView fx:id="knifeImageView" fitHeight="198.0" fitWidth="224.0" layoutX="832.0" layoutY="186.0" onMouseClicked="#switchToHomeNotLogged" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="knifeImageView" fitHeight="198.0" fitWidth="224.0" layoutX="732.0" layoutY="108.0" onMouseClicked="#switchToHomeNotLogged" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png" />
                </image>
             </ImageView>
-            <Label layoutX="887.0" layoutY="452.0" text="Username" textAlignment="CENTER">
+            <Label layoutX="787.0" layoutY="374.0" text="Username" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <PasswordField fx:id="passwordField" layoutX="866.0" layoutY="617.0" />
-            <TextField fx:id="usernameTextField" layoutX="866.0" layoutY="495.0" />
-            <Label layoutX="890.0" layoutY="568.0" text="Password">
+            <PasswordField fx:id="passwordField" layoutX="766.0" layoutY="539.0" />
+            <TextField fx:id="usernameTextField" layoutX="766.0" layoutY="417.0" />
+            <Label layoutX="790.0" layoutY="490.0" text="Password">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="accediButton" layoutX="889.0" layoutY="689.0" mnemonicParsing="false" onAction="#switchToHomeLogged" text="Accedi">
+            <Button fx:id="accediButton" layoutX="789.0" layoutY="611.0" mnemonicParsing="false" onAction="#switchToHomeLogged" text="Accedi">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="registerButton" layoutX="875.0" layoutY="777.0" mnemonicParsing="false" onAction="#switchToRegister" text="Registrati">
+            <Button fx:id="registerButton" layoutX="775.0" layoutY="699.0" mnemonicParsing="false" onAction="#switchToRegister" text="Registrati">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Label fx:id="loginErrorMessageLabel" alignment="CENTER" layoutX="847.0" layoutY="545.0" text="Username o password non corrette" textFill="#f24a4a" />
+            <Label fx:id="loginErrorMessageLabel" alignment="CENTER" layoutX="747.0" layoutY="467.0" text="Username o password non corrette" textFill="#f24a4a" />
          </children>
       </AnchorPane>
     </children>
