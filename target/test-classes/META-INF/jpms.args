@@ -1,0 +1,4 @@
+--patch-module
+com.mycompany.theknife=_
+--add-reads
+com.mycompany.theknife=ALL-UNNAMED

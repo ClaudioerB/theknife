@@ -28,6 +28,8 @@ public class App extends Application {
         gestore = Gestore.getGestore();
         scene = new Scene(loadFXML("HomeNotLogged"), 1720, 880);
         stage.setScene(scene);
+        stage.setMaxWidth(1920);
+        stage.setMaxHeight(1080);
         stage.show();
     // stage.setFullScreen(true);  // ← AGGIUNGI QUESTA RIGA
     }

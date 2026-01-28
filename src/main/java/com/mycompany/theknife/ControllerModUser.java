@@ -135,19 +135,18 @@ public class ControllerModUser {
       java.io.File knifeFile = new java.io.File(knifePath);
       if (knifeFile.exists()) {       
          knifeImageView.setImage(
-            new javafx.scene.image.Image(knifeFile.toURI().toString())
+                  new javafx.scene.image.Image(knifeFile.toURI().toString())
          );
          knifeImageView.setVisible(true);
       }else{
-            knifePath=System.getProperty("user.dir")+ "../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
-            knifeFile = new java.io.File(knifePath);
-            if (knifeFile.exists()) {       
+         knifePath=System.getProperty("user.dir")+ "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
+         knifeFile = new java.io.File(knifePath);
+         if (knifeFile.exists()) {       
                knifeImageView.setImage(
-                        new javafx.scene.image.Image(knifeFile.toURI().toString())
+                     new javafx.scene.image.Image(knifeFile.toURI().toString())
                );
-               
                knifeImageView.setVisible(true); 
-            }
+         }
       }
       String changePath = System.getProperty("user.dir")
                + "/src/main/java/com/mycompany/theknife/data/refresh.png";  

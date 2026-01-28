@@ -13,12 +13,12 @@
       <children>
         <ListView fx:id="listViewRestaurants" layoutX="298.4" layoutY="513.0" prefHeight="302.0" prefWidth="1323.0" AnchorPane.bottomAnchor="227.0" AnchorPane.leftAnchor="298.0" AnchorPane.rightAnchor="259.0" AnchorPane.topAnchor="513.0" />
         <Button fx:id="searchButton" layoutX="978.0" layoutY="183.0" onAction="#checkFilteredList" prefHeight="42.0" prefWidth="38.0" text="🔍" AnchorPane.bottomAnchor="815.1999999999999" AnchorPane.leftAnchor="978.0" AnchorPane.rightAnchor="863.2" AnchorPane.topAnchor="183.0" />
-        <ImageView fx:id="knifeImageView" fitHeight="122.0" fitWidth="113.0" layoutX="218.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true" visible="true" AnchorPane.bottomAnchor="877.3820452008929" AnchorPane.leftAnchor="218.0" AnchorPane.rightAnchor="1555.2857142857142" AnchorPane.topAnchor="62.0">
+        <ImageView fx:id="knifeImageView" fitHeight="122.0" fitWidth="113.0" layoutX="211.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true" visible="true" AnchorPane.bottomAnchor="854.52490234375" AnchorPane.leftAnchor="211.0" AnchorPane.rightAnchor="1562.857142857143" AnchorPane.topAnchor="86.0">
           <image>
             <Image url="@../../../../java/com/mycompany/theknife/data/theknife_icon.png" />
           </image>
         </ImageView>
-        <ImageView fx:id="loginImageView" fitHeight="62.0" fitWidth="68.0" layoutX="1602.0" layoutY="64.0" onMouseClicked="#switchToLogin" pickOnBounds="true" preserveRatio="true" visible="true" AnchorPane.bottomAnchor="916.2857142857142" AnchorPane.leftAnchor="1602.0" AnchorPane.rightAnchor="215.71428571428578" AnchorPane.topAnchor="64.0">
+        <ImageView fx:id="loginImageView" fitHeight="62.0" fitWidth="68.0" layoutX="1601.0" layoutY="86.0" onMouseClicked="#switchToLogin" pickOnBounds="true" preserveRatio="true" visible="true" AnchorPane.bottomAnchor="895.4285714285713" AnchorPane.leftAnchor="1601.0" AnchorPane.rightAnchor="217.8571428571429" AnchorPane.topAnchor="86.0">
           <!--<image>
             <Image url="@../../../../java/com/mycompany/theknife/data/user.png" />
           </image>-->
@@ -73,7 +73,7 @@
             <Font size="17.0" />
           </font>
         </Button>
-        <Text fx:id="textUsername" layoutX="1736.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="142.13671875">
+        <Text fx:id="textUsername" layoutX="1560.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="142.13671875">
           <font>
             <Font size="18.0" />
           </font>

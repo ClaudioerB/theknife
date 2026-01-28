@@ -137,7 +137,7 @@ public class HomeLoggedController {
             );
             loginImageView.setVisible(true);
         }else{
-            path=System.getProperty("user.dir")+ "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
+            path=System.getProperty("user.dir")+ "/../src/main/java/com/mycompany/theknife/data/user.png"; 
             f = new java.io.File(path);
             if (f.exists()) {      
                 loginImageView.setImage(
@@ -601,6 +601,7 @@ public class HomeLoggedController {
     @FXML
     private void switchToLogin() throws IOException {
         App.setRoot("ModUser");
+        
     }
 
     /**
