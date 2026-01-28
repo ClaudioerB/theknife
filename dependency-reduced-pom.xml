@@ -43,6 +43,14 @@
             </goals>
             <configuration>
               <finalName>${project.artifactId}-${project.version}-app</finalName>
+              <filters>
+                <filter>
+                  <artifact>org.openjfx:*</artifact>
+                  <includes>
+                    <include>nothing</include>
+                  </includes>
+                </filter>
+              </filters>
               <transformers>
                 <transformer>
                   <mainClass>com.mycompany.theknife.Launcher</mainClass>
