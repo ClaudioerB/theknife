@@ -124,7 +124,7 @@ Prima di aprire il progetto bisogna andare nel terminale sul luogo del file dove
 ```bash
 #Dare i permessi al file desiderato in base al SO
 chmod +x Mac.sh
-chmod +x Mac.sh
+chmod +x Linux.sh
 
 # Per eseguirlo con macOS
 ./Mac.sh
