@@ -4,4 +4,4 @@ Gli autori del progetto sono:
 - Filippo Crippa 762174 CO
 - Lorenzo Filizzola 760196 CO
 
-https://github.com/Dotcla/theknife.git
+https://github.com/ClaudioerB/theknife.git
