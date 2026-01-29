@@ -17,11 +17,13 @@ The Knife è un'applicazione che mira ad aiutare a tenere traccia e trovare dive
 ## Requisiti e verifiche
 ### Prerequisiti
 
-- JDK 11+ (installato e su PATH).
+- <b>JDK 11+</b> (installato e su PATH).
 
-- Maven o Gradle (se vuoi ricompilare).
+- <b>Maven</b> o <b>Gradle</b> (se vuoi ricompilare).
 
-- JavaFX runtime se non incluso nel jar (per alcune distribuzioni di Java).
+- <b>JavaFX runtime</b> se non incluso nel jar (per alcune distribuzioni di Java).
+
+- <b>javafx-sdk</b> nella cartella <b>bin</b>, altrimenti bisogna scaricarla nel seguente link: [javafx-sdk download] (https://gluonhq.com/products/javafx/)
 
 ### Verifica 
 ```bash
@@ -113,7 +115,7 @@ Prima di aprire il progetto bisogna andare nel terminale sul luogo del file dove
 #Solo se non è presente il file Mac.command 
 cp Mac.sh Mac.command
 
-#Bisogna dargli i permessi
+#Bisogna dargli i permessi se presenta errori
 chmod +x Mac.command
 
 # Poi doppio click su Mac.command
@@ -122,14 +124,15 @@ chmod +x Mac.command
 ### MacOS / Linux (da terminale)
 Prima di aprire il progetto bisogna andare nel terminale sul luogo del file dove si trova nella cartella <b>theknife/bin/</b> ed eseguire il codice seguente
 ```bash
-#Dare i permessi al file desiderato in base al SO
-chmod +x Mac.sh
-chmod +x Linux.sh
-
 # Per eseguirlo con macOS
 ./Mac.sh
 #Per eseguirlo con Linux
 ./Linux.sh
+
+#Dare i permessi al file se presenta errori
+chmod +x Mac.sh
+chmod +x Linux.sh
+
 ```
 
 ## Debug e problemi comuni
@@ -151,8 +154,3 @@ mvn javadoc:javadoc
 ```bash
 ./gradlew javadoc
 ```
-
-
-
-
-
