@@ -553,7 +553,7 @@ public class GestoreUtenti {
      * @return true se la password e' valida, altrimenti false
      */
     public boolean controlloPassword(String password) {
-        if (password.length() >= 8 && password.matches(".*[A-Z].*") && password.matches(".*[a-z].*") && password.matches(".*\\d.*")) {
+        if (password.length() >= 8 && password.matches(".*[A-Z].*") && password.matches(".*[a-z].*") && password.matches(".*/d.*")) {
             return true; // Password valida
         } else {
             return false; // Password non valida

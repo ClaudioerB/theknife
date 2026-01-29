@@ -1,5 +1,6 @@
 package com.mycompany.theknife;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -155,52 +156,30 @@ public class HomeNotLoggedController {
         filteredList = gestoreDataset.getDataSet();
         String path = System.getProperty("user.dir")
 								+ "/src/main/java/com/mycompany/theknife/data/user.png";  
-        System.out.println("Path: " + path);
-        java.io.File f = new java.io.File(path);
-
-        System.out.println("Esiste? " + f.exists());
+        
+        if (!new File(path).exists()) {
+            path = System.getProperty("user.dir")
+                + "/../src/main/java/com/mycompany/theknife/data/user.png";
+        }
+        loginImageView.setImage(
+            new javafx.scene.image.Image(new File(path).toURI().toString())
+        );
+        loginImageView.setVisible(true);
         dataStato = GestoreDataset.getDatasetStati();
         
-        if (f.exists()) {       
-            System.out.println("Esiste? " + f.exists());
-            loginImageView.setImage(
-                    new javafx.scene.image.Image(f.toURI().toString())
-            );
-            loginImageView.setVisible(true);
-        }
-        else{
-            path = System.getProperty("user.dir")
-                    + "/../src/main/java/com/mycompany/theknife/data/user.png";
-                    System.out.println("Path: " + path);
-            java.io.File newFile = new java.io.File(path);
-            if (newFile.exists()) {
-                System.out.println("Esiste? " + f.exists());
-                loginImageView.setImage(
-                        new javafx.scene.image.Image(newFile.toURI().toString())
-                );
-                loginImageView.setVisible(true);
-            }
-        }
+      
+        
 
         String knifePath = System.getProperty("user.dir")
                 + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
-        java.io.File knifeFile = new java.io.File(knifePath);
-        if (knifeFile.exists()) {       
-            knifeImageView.setImage(
-                    new javafx.scene.image.Image(knifeFile.toURI().toString())
-            );
-            knifeImageView.setVisible(true);
-        }else{
-            knifePath=System.getProperty("user.dir")+ "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
-            knifeFile = new java.io.File(knifePath);
-            if (knifeFile.exists()) {       
-                knifeImageView.setImage(
-                        new javafx.scene.image.Image(knifeFile.toURI().toString())
-                );
-                
-                knifeImageView.setVisible(true); 
-            }
+        if (!new File(knifePath).exists()) {
+            knifePath = System.getProperty("user.dir")
+            + "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png";
         }
+            knifeImageView.setImage(
+                new javafx.scene.image.Image(new File(knifePath).toURI().toString())
+        );
+        knifeImageView.setVisible(true);
         
         setSelectedStato("Tutti gli stati");
         ratingFilter.setRating(0);
@@ -545,22 +524,16 @@ public class HomeNotLoggedController {
     @FXML
     private void changeLoginImage() {
         String newPath = System.getProperty("user.dir") + "/src/main/java/com/mycompany/theknife/data/user_1.png"; 
-        java.io.File newFile = new java.io.File(newPath);
-        if (newFile.exists()) {
-            loginImageView.setImage(
-                new javafx.scene.image.Image(newFile.toURI().toString())
-            );
-        }else{
-            newPath=System.getProperty("user.dir")+ "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
-            newFile = new java.io.File(newPath);
-            if (newFile.exists()) {       
-                loginImageView.setImage(
-                        new javafx.scene.image.Image(newFile.toURI().toString())
+        if (!new File(newPath).exists()) {
+            newPath = System.getProperty("user.dir")
+                + "/../src/main/java/com/mycompany/theknife/data/user_1.png";
+        }
+        loginImageView.setImage(
+                        new javafx.scene.image.Image(new File(newPath).toURI().toString())
                 );
                 
-                loginImageView.setVisible(true); 
-            }
-        }
+            loginImageView.setVisible(true); 
+        
     }
 
     /**

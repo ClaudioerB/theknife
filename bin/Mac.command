@@ -4,18 +4,25 @@ DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$DIR" || exit 1
 
 JAVAFX_PATH="javafx-sdk-25-mac/lib"
+JAR_FILE="theknife-1.0-SNAPSHOT.jar"
 
-# Controllo che la directory esista
 if [ ! -d "$JAVAFX_PATH" ]; then
     echo "Errore: la directory '$JAVAFX_PATH' non esiste."
     echo "Premere INVIO per uscire"
-    read
+    read -r
+    exit 1
+fi
+
+if [ ! -f "$JAR_FILE" ]; then
+    echo "Errore: il file '$JAR_FILE' non esiste nella cartella: $DIR"
+    echo "Premere INVIO per uscire"
+    read -r
     exit 1
 fi
 
 java --module-path "$JAVAFX_PATH" \
     --add-modules javafx.controls,javafx.fxml \
-    -jar "theknife-1.0-SNAPSHOT.jar"
+    -jar "$JAR_FILE"
 
 EXIT_CODE=$?
 
@@ -25,4 +32,4 @@ fi
 
 echo
 echo "Premere INVIO per uscire"
-read
+read -r

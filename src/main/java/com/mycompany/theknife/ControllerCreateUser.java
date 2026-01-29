@@ -1,5 +1,6 @@
 package com.mycompany.theknife;
 
+import java.io.File;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
@@ -85,22 +86,15 @@ public class ControllerCreateUser {
         creationStatoErrorMessageLabel.setVisible(false);
         String knifePath = System.getProperty("user.dir")
                 + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
-        java.io.File knifeFile = new java.io.File(knifePath);
-        if (knifeFile.exists()) {       
-            knifeImageView.setImage(
-                    new javafx.scene.image.Image(knifeFile.toURI().toString())
-            );
-        } else{
-            knifePath=System.getProperty("user.dir")+ "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
-            knifeFile = new java.io.File(knifePath);
-            if (knifeFile.exists()) {       
-                knifeImageView.setImage(
-                        new javafx.scene.image.Image(knifeFile.toURI().toString())
-                );
-                
-                knifeImageView.setVisible(true); 
-            }
+       
+        if (!new File(knifePath).exists()) {
+            knifePath = System.getProperty("user.dir")
+            + "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png";
         }
+            knifeImageView.setImage(
+                new javafx.scene.image.Image(new File(knifePath).toURI().toString())
+        );
+        knifeImageView.setVisible(true); 
         gestore = Gestore.getGestore();
         gestoreDataset = GestoreDataset.getGestoreDataset();
     }

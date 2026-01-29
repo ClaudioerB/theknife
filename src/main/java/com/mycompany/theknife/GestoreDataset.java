@@ -48,7 +48,6 @@ public class GestoreDataset {
                 + "/src/main/java/com/mycompany/theknife/data/tipiCucine.csv";
         statiCittaPath = System.getProperty("user.dir")
                 + "/src/main/java/com/mycompany/theknife/data/statiCitta.csv";
-
         if (!new File(cucinePath).exists()) {
             cucinePath = System.getProperty("user.dir")
                 + "/../src/main/java/com/mycompany/theknife/data/tipiCucine.csv";

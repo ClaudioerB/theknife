@@ -1,5 +1,6 @@
 package com.mycompany.theknife;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -260,23 +261,16 @@ public class ControllerCreaRistorante {
         
         String knifePath = System.getProperty("user.dir")
                 + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
-        java.io.File knifeFile = new java.io.File(knifePath);
-        if (knifeFile.exists()) {       
-            theKnifeImageView.setImage(
-                    new javafx.scene.image.Image(knifeFile.toURI().toString())
-            );
-            theKnifeImageView.setVisible(true);
-        }else{
-            knifePath=System.getProperty("user.dir")+ "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
-            knifeFile = new java.io.File(knifePath);
-            if (knifeFile.exists()) {       
-                theKnifeImageView.setImage(
-                        new javafx.scene.image.Image(knifeFile.toURI().toString())
-                );
-                
-                theKnifeImageView.setVisible(true); 
-            }
+       
+        if (!new File(knifePath).exists()) {
+            knifePath = System.getProperty("user.dir")
+            + "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png";
         }
+            theKnifeImageView.setImage(
+                new javafx.scene.image.Image(new File(knifePath).toURI().toString())
+        );
+        theKnifeImageView.setVisible(true); 
+        
     }
     /**
      * Metodo per aggiornare la lista di cucine.<br>

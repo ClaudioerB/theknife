@@ -1,5 +1,6 @@
 package com.mycompany.theknife;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -61,25 +62,16 @@ public class ControllerModRistoratore {
    @FXML
    private void initialize() {
       String knifePath = System.getProperty("user.dir")
-               + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
-      java.io.File knifeFile = new java.io.File(knifePath);
-      if (knifeFile.exists()) {       
-         knifeImageView.setImage(
-            new javafx.scene.image.Image(knifeFile.toURI().toString())
-         );
-
-         knifeImageView.setVisible(true);
-      }else{
-            knifePath=System.getProperty("user.dir")+ "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
-            knifeFile = new java.io.File(knifePath);
-            if (knifeFile.exists()) {       
-               knifeImageView.setImage(
-                        new javafx.scene.image.Image(knifeFile.toURI().toString())
-               );
-               
-               knifeImageView.setVisible(true); 
-            }
-      }
+                + "/src/main/java/com/mycompany/theknife/data/theknife_icon.png";  
+       
+        if (!new File(knifePath).exists()) {
+            knifePath = System.getProperty("user.dir")
+            + "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png";
+        }
+            knifeImageView.setImage(
+                new javafx.scene.image.Image(new File(knifePath).toURI().toString())
+        );
+        knifeImageView.setVisible(true); 
       filteredList = GestoreDataset.getDataSet();
       gestore = Gestore.getGestore();
       gestoreUtenti = GestoreUtenti.getGestoreUtenti();
