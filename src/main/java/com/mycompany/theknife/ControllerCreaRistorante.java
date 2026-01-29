@@ -267,7 +267,7 @@ public class ControllerCreaRistorante {
             );
             theKnifeImageView.setVisible(true);
         }else{
-            knifePath=System.getProperty("user.dir")+ "../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
+            knifePath=System.getProperty("user.dir")+ "/../src/main/java/com/mycompany/theknife/data/theknife_icon.png"; 
             knifeFile = new java.io.File(knifePath);
             if (knifeFile.exists()) {       
                 theKnifeImageView.setImage(

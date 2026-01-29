@@ -104,6 +104,34 @@ java -cp "bin/theknife-1.0-SNAPSHOT.jar:bin/lib/*" com.mycompany.theknife.Launch
 java --module-path bin/javafx-sdk-25-win/lib --add-modules javafx.controls,javafx.fxml -jar bin/theknife-1.0-SNAPSHOT.jar
 ```
 
+### Esecuzioni dell'applicazione
+#### Window
+Aprire la cartella del progetto <b>theknife</b> e successivamente la cartella <b>bin</b>, per far partire l'applicazione basterà fare un doppio-click su <b>Win.bat</b>
+### MacOS (doppio-click)
+Prima di aprire il progetto bisogna andare nel terminale sul luogo del file dove si trova nella cartella <b>theknife/bin/</b> ed eseguire il codice seguente
+```bash
+#Solo se non è presente il file Mac.command 
+cp Mac.sh Mac.command
+
+#Bisogna dargli i permessi
+chmod +x Mac.command
+
+# Poi doppio click su Mac.command
+```
+
+### MacOS / Linux (da terminale)
+Prima di aprire il progetto bisogna andare nel terminale sul luogo del file dove si trova nella cartella <b>theknife/bin/</b> ed eseguire il codice seguente
+```bash
+#Dare i permessi al file desiderato in base al SO
+chmod +x Mac.sh
+chmod +x Mac.sh
+
+# Per eseguirlo con macOS
+./Mac.sh
+#Per eseguirlo con Linux
+./Linux.sh
+```
+
 ## Debug e problemi comuni
 - <b>FXML LoadException / risorse non trovate:</b> verifica che i file .fxml siano nel jar e che i percorsi in FXMLLoader.getResource(...) siano corretti.
 
